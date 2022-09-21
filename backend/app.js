@@ -56,9 +56,9 @@ app.use(routes);
 
 // End Route Connections
 
-// Start Error Handlers
+// Start Error Handlers -- see Readme Phase 2
 
-// Catch and forward unhandled requests
+// 1. Catch and forward unhandled requests
 app.use((req, res, next) => {
   const err = new Error("The requested resource could not be found.");
   err.title = "Resource not found";
@@ -67,7 +67,7 @@ app.use((req, res, next) => {
   next(err);
 });
 
-// Process sequelize errors
+// 2. Process sequelize errors
 app.use((err, req, res, next) => {
   if (err instanceof ValidationError) {
     err.errors = err.errors.map(e => e.message);
@@ -76,7 +76,7 @@ app.use((err, req, res, next) => {
   next(err);
 });
 
-// Format errors and return JSON
+// 3. Format errors and return JSON
 app.use((err, req, res, next) => {
   res.status(err.status || 500);
   console.error(err);
@@ -88,7 +88,6 @@ app.use((err, req, res, next) => {
   });
 });
 
-
-
+// End Error Handling
 
 module.exports = app;

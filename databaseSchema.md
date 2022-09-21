@@ -56,3 +56,70 @@ Table Bookings (
   createdAt DATE default to current timestamp
   updateAt DATE default to current timestamp
 )
+
+Table users {
+  id integer [pk, increment]
+  firstName varchar [not null]
+  lastName varchar [not null]
+  email varchar [unique]
+  username varchar [unique, not null]
+  password varchar [not null]
+  token varchar
+}
+
+Table spots {
+  id integer [pk, increment]
+  ownerId integer
+  address varchar [not null]
+  city varchar [not null]
+  state varchar [not null]
+  lat float(9,7)
+  lng float(10,7)
+  name varchar49
+  description text [not null]
+  price integer [not null]
+  createdAt date
+  updatedAt date
+}
+
+Table images {
+  id integer [pk, increment]
+  spotId integer
+  reviewId integer
+  url url
+  preview boolean
+}
+
+Table reviews {
+  id integer [pk, increment]
+  userId integer [not null]
+  spotId integer [not null]
+  review text [not null]
+  stars integer
+  createdAt date
+  updatedAt date
+}
+
+Table bookings {
+  id integer [pk, increment]
+  spotId integer
+  userId integer
+  startDate date
+  endDate date
+  createdAt date
+  updatedAt date
+}
+
+Ref: "users"."id" < "spots"."ownerId"
+
+Ref: "spots"."id" < "images"."spotId"
+
+Ref: "users"."id" < "reviews"."userId"
+
+Ref: "images"."reviewId" < "reviews"."id"
+
+Ref: "spots"."id" < "reviews"."spotId"
+
+Ref: "spots"."id" < "bookings"."spotId"
+
+Ref: "users"."id" < "bookings"."userId"

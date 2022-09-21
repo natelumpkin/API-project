@@ -145,8 +145,8 @@ user's information.
 
 * Require Authentication: false
 * Request
-  * Method: ?
-  * URL: ?
+  * Method: POST
+  * URL: /users
   * Headers:
     * Content-Type: application/json
   * Body:
@@ -318,7 +318,7 @@ Returns the details of a spot specified by its id.
 * Require Authentication: false
 * Request
   * Method: GET
-  * URL: /spots/spotId
+  * URL: /spots/:spotId
   * Body: none
 
 * Successful Response
@@ -1336,7 +1336,7 @@ Delete an existing image for a Spot.
 * Require proper authorization: Spot must belong to the current user
 * Request
   * Method: DELETE
-  * URL: /spotImages/:reviewImageId
+  * URL: spots/:spotId/images/:imageId
   * Body: none
 
 * Successful Response
@@ -1373,7 +1373,7 @@ Delete an existing image for a Review.
 * Require proper authorization: Review must belong to the current user
 * Request
   * Method: DELETE
-  * URL: /reviewimages/:reviewImageId
+  * URL: reviews/:reviewId/images/:imageId
   * Body: none
 
 * Successful Response
