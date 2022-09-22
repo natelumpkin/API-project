@@ -2,7 +2,7 @@
 
 ## Database Schema Design
 
-`<insert database schema design here>`
+![database schema](database-schema.png)
 
 ## API Documentation
 
@@ -52,7 +52,7 @@ Returns the information about the current user that is logged in.
 * Require Authentication: true
 * Request
   * Method: GET
-  * URL: ?
+  * URL: /users/current
   * Body: none
 
 * Successful Response
@@ -79,7 +79,7 @@ information.
 * Require Authentication: false
 * Request
   * Method: POST
-  * URL: ?
+  * URL: /login
   * Headers:
     * Content-Type: application/json
   * Body:
@@ -459,7 +459,7 @@ Create and return a new image for a spot specified by id.
 * Require proper authorization: Spot must belong to the current user
 * Request
   * Method: POST
-  * URL: /spots/:spotId/images
+  * URL: /spots/:spotId/spot-images
   * Headers:
     * Content-Type: application/json
   * Body:
@@ -825,7 +825,7 @@ Create and return a new image for a review specified by id.
 * Require proper authorization: Review must belong to the current user
 * Request
   * Method: POST
-  * URL: reviews/:reviewId/images
+  * URL: reviews/:reviewId/review-images
   * Headers:
     * Content-Type: application/json
   * Body:
@@ -1336,7 +1336,7 @@ Delete an existing image for a Spot.
 * Require proper authorization: Spot must belong to the current user
 * Request
   * Method: DELETE
-  * URL: spots/:spotId/images/:imageId
+  * URL: /spot-images/:spot-imageId
   * Body: none
 
 * Successful Response
@@ -1373,7 +1373,7 @@ Delete an existing image for a Review.
 * Require proper authorization: Review must belong to the current user
 * Request
   * Method: DELETE
-  * URL: reviews/:reviewId/images/:imageId
+  * URL: /review-images/:review-imageId
   * Body: none
 
 * Successful Response
