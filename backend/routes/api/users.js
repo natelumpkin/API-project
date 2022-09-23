@@ -9,6 +9,12 @@ const validateSignup = [
     .exists({ checkFalsy: true })
     .isEmail()
     .withMessage('Please provide a valid email.'),
+  check('firstName')
+    .exists({checkFalsy: true})
+    .withMessage('Please provide a first name.'),
+  check('lastName')
+    .exists({checkFalsy: true})
+    .withMessage('Please provide a last name.'),
   check('username')
     .exists({ checkFalsy: true })
     .isLength({ min: 4 })
@@ -30,8 +36,8 @@ const router = express.Router();
 router.post('/',
   validateSignup,
   async (req, res) => {
-  const { email, password, username } = req.body;
-  const user = await User.signup({email, username, password});
+  const { email, password, username, firstName, lastName } = req.body;
+  const user = await User.signup({email, username, password, firstName, lastName});
 
   await setTokenCookie(res, user);
 
@@ -41,3 +47,18 @@ router.post('/',
 });
 
 module.exports = router;
+
+// fetch('/api/users', {
+//   method: 'POST',
+//   headers: {
+//     "Content-Type": "application/json",
+//     "XSRF-TOKEN": `iBM3Dt3U-cr-p2Lgf7uY5EiglIZygClWwqlM`
+//   },
+//   body: JSON.stringify({
+//     email: 'firestar@spider.man',
+//     firstName: 'fire',
+//     lastName: 'star',
+//     username: 'Firestar2',
+//     password: 'password'
+//   })
+// }).then(res => res.json()).then(data => console.log(data));
