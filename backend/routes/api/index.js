@@ -5,14 +5,22 @@ const { setTokenCookie, restoreUser, requireAuth } = require('../../utils/auth.j
 const { User } = require('../../db/models');
 
 
-// all Route handlers will retrieve the current user on the req obj
-// as req.user
+// all Route handlers will retrieve the current user on the req obj as req.user
 // otherwise, set req.user to null
 router.use(restoreUser);
+
+// Test if user is logged in, otherwise, error is thrown
+router.get('/test', requireAuth, (req, res) => {
+  res.json({message: 'Success'});
+})
 
 router.use('/session', sessionRouter);
 
 router.use('/users', usersRouter);
+
+// Add new routers in this section
+
+// End new routers
 
 router.post('/test', (req, res) => {
   res.json({requestBody:req.body});
