@@ -55,7 +55,7 @@ router.delete('/', (req, res) => {
 });
 
 // Get details on current user
-router.get('/', requireAuth, restoreUser, (req, res) => {
+router.get('/', requireAuth, (req, res) => {
   const { user } = req;
   if (user) {
     return res.json({
@@ -90,9 +90,5 @@ module.exports = router;
 //   headers: {
 //     "Content-Type": "application/json",
 //     "XSRF-TOKEN": `iBM3Dt3U-cr-p2Lgf7uY5EiglIZygClWwqlM`
-//   },
-//   body: JSON.stringify({
-//     credential: 'bigMagorgus',
-//     password: 'password'
-//   })
+//   }
 // }).then(res => res.json()).then(data => console.log(data));

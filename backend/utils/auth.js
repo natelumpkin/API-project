@@ -24,6 +24,8 @@ const setTokenCookie = (res, user) => {
   return token;
 }
 
+// Verifies JWT's payload. If there are any issues, such as if user cannot be found
+// or JWT is invalid, clear token cookie from response and set user to null
 const restoreUser = (req, res, next) => {
   const { token } = req.cookies;
   req.user = null;
@@ -48,7 +50,7 @@ const restoreUser = (req, res, next) => {
 };
 
 // Prevents user who are not logged in from accessing the next function (usually a route)
-const requireAuth = (req, res, next) => {
+const requireAuth = [ restoreUser, (req, res, next) => {
   if (req.user) return next();
 
   const err = new Error('Unauthorized');
@@ -56,6 +58,6 @@ const requireAuth = (req, res, next) => {
   err.errors = ['Unauthorized'];
   err.status = 401;
   return next(err);
-}
+}]
 
 module.exports = { setTokenCookie, restoreUser, requireAuth };
