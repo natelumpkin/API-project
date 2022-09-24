@@ -19,6 +19,7 @@ router.use('/session', sessionRouter);
 router.use('/users', usersRouter);
 
 // Add new routers in this section
+// use requireAuth anytime I want to protect a route from a user who is not logged in
 
 // End new routers
 

@@ -47,6 +47,7 @@ const restoreUser = (req, res, next) => {
   });
 };
 
+// Prevents user who are not logged in from accessing the next function (usually a route)
 const requireAuth = (req, res, next) => {
   if (req.user) return next();
 

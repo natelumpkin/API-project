@@ -58,3 +58,18 @@ router.get('/', restoreUser, (req, res) => {
 });
 
 module.exports = router;
+
+// Below is an example fetch request to log in a user
+// Use a similar request to test the log in function
+
+// fetch('/api/session', {
+//   method: 'POST',
+//   headers: {
+//     "Content-Type": "application/json",
+//     "XSRF-TOKEN": `iBM3Dt3U-cr-p2Lgf7uY5EiglIZygClWwqlM`
+//   },
+//   body: JSON.stringify({
+//     credential: 'bigMagorgus',
+//     password: 'password'
+//   })
+// }).then(res => res.json()).then(data => console.log(data));

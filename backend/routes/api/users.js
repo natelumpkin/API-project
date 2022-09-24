@@ -48,6 +48,9 @@ router.post('/',
 
 module.exports = router;
 
+// Below is an example fetch request to sign up a new user
+// Use a similar request to test the sign up function
+
 // fetch('/api/users', {
 //   method: 'POST',
 //   headers: {
