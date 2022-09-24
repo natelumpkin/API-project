@@ -1,5 +1,5 @@
 const express = require('express');
-const { setTokenCookie, restoreUser } = require('../../utils/auth');
+const { setTokenCookie, restoreUser, requireAuth } = require('../../utils/auth');
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
 const { User } = require('../../db/models');
@@ -54,12 +54,16 @@ router.delete('/', (req, res) => {
   return res.json({message: "Successfully cleared login cookie"});
 });
 
-// Restore session user
-router.get('/', restoreUser, (req, res) => {
+// Get details on current user
+router.get('/', requireAuth, restoreUser, (req, res) => {
   const { user } = req;
   if (user) {
     return res.json({
-      user: user.toSafeObject()
+      id: user.id,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      email: user.email,
+      username: user.username
     });
   } else return res.json({});
 });
@@ -71,6 +75,18 @@ module.exports = router;
 
 // fetch('/api/session', {
 //   method: 'POST',
+//   headers: {
+//     "Content-Type": "application/json",
+//     "XSRF-TOKEN": `iBM3Dt3U-cr-p2Lgf7uY5EiglIZygClWwqlM`
+//   },
+//   body: JSON.stringify({
+//     credential: 'bigMagorgus',
+//     password: 'password'
+//   })
+// }).then(res => res.json()).then(data => console.log(data));
+
+// fetch('/api/session', {
+//   method: 'DELETE',
 //   headers: {
 //     "Content-Type": "application/json",
 //     "XSRF-TOKEN": `iBM3Dt3U-cr-p2Lgf7uY5EiglIZygClWwqlM`
