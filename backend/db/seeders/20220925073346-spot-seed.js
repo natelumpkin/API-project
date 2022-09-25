@@ -80,7 +80,6 @@ module.exports = {
     for (let username in SpotUsers) {
       let user = await User.findOne({ where: { username: username }});
       for (let spotObj of SpotUsers[username]) {
-        console.log(spotObj);
         const {address, city, state, country, lat, lng, name, description, price } = spotObj;
         let spot = await user.createSpot({address: address, city: city, state: state, country: country, lat:lat, lng:lng, name:name, description:description, price:price })
       }
