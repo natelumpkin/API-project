@@ -14,22 +14,34 @@ module.exports = {
      * }], {});
     */
    await queryInterface.bulkInsert('Users',[{
-    email: 'magorgus@aol.com',
-    username: 'bigMagorgus',
-    firstName: 'big',
-    lastName: 'magorgus',
+    email: 'demouser1@email.com',
+    username: 'demouser1',
+    firstName: 'User1',
+    lastName: 'One',
     hashedPassword: bcrypt.hashSync('password')
    },{
-    email: 'magongus@aol.com',
-    username: 'bigMagongus',
-    firstName: 'big',
-    lastName: 'magongus',
+    email: 'demouser2@email.com',
+    username: 'demouser2',
+    firstName: 'User2',
+    lastName: 'Two',
     hashedPassword: bcrypt.hashSync('password2')
    },{
-    email: 'malongus@aol.com',
-    username: 'bigMalongus',
-    firstName: 'big',
-    lastName: 'malongus',
+    email: 'demouser3@email.com',
+    username: 'demouser3',
+    firstName: 'User3',
+    lastName: 'Three',
+    hashedPassword: bcrypt.hashSync('password3')
+   },{
+    email: 'demouser4@email.com',
+    username: 'demouser4',
+    firstName: 'User4',
+    lastName: 'Four',
+    hashedPassword: bcrypt.hashSync('password3')
+   },{
+    email: 'demouser5@email.com',
+    username: 'demouser5',
+    firstName: 'User5',
+    lastName: 'Five',
     hashedPassword: bcrypt.hashSync('password3')
    }])
   },
@@ -41,11 +53,9 @@ module.exports = {
      * Example:
      * await queryInterface.bulkDelete('People', null, {});
      */
-    const Op = Sequelize.Op;
+    const Op = require('Sequelize');
     await queryInterface.bulkDelete('Users',{
-      username: {
-        [Op.in]: ['bigMagorgus','bigMagongus','bigMalongus']
-      }
+      username: ['demouser1','demouser2','demouser3','demouser4','demouser5']
     })
   }
 };
