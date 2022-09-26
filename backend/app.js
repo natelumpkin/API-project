@@ -79,7 +79,7 @@ app.use((err, req, res, next) => {
     err.errors = [];
   }
 
-  console.log(err);
+  //console.log(err);
 
   if (err.title === 'Login failed') {
     res.status(401);
