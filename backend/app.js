@@ -75,6 +75,10 @@ app.use((err, req, res, next) => {
     err.status = 403;
   };
 
+  if (!err.errors) {
+    err.errors = [];
+  }
+
   if (err.title === 'Login failed') {
     res.status(401);
     res.json({

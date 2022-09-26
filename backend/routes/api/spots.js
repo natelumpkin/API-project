@@ -5,6 +5,7 @@ const { User, Spot, Review, SpotImage, Booking, ReviewImage, sequelize } = requi
 const router = express.Router();
 
 router.get('/', async (req, res) => {
+
   const spots = await Spot.findAll({
     attributes: {
       include: [
@@ -14,19 +15,44 @@ router.get('/', async (req, res) => {
     group: "Spot.id",
     include: [{
       model: SpotImage,
-      as: 'previewImage',
-      where: {
-       preview: true,
-      },
-      attributes: ['url']
     },
     {
       model: Review,
       attributes: []
     }]
   });
-  res.json({
-    Spots: spots
+
+  // spots.toJSON()
+  let spotList = [];
+  spots.forEach(spot => {
+    spotList.push(spot.toJSON());
+  })
+
+  spotList.forEach(spot => {
+    // iterate over spot.SpotImages
+    spot.SpotImages.forEach(spotImage => {
+      if (spotImage.preview) {
+        spot.previewImage = spotImage.url
+      } else {
+        spot.previewImage = 'No preview image available'
+      }
+    })
+    delete spot.SpotImages;
+    if (!spot.previewImage) {
+      spot.previewImage = 'No preview image available'
+    }
+
+    // if spotimage.preview = true,
+    // set previewImage = spotimage.url
+    // if spotimate.preview = false,
+    // set previewImage = 'No preview image available'
+  })
+
+
+
+
+  return res.json({
+    Spots: spotList
   });
 });
 
