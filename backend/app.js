@@ -74,11 +74,16 @@ app.use((err, req, res, next) => {
     err.title = "Validation error";
     err.status = 403;
   };
-  console.log(err.errors);
-  console.log(err.errors.includes("First Name is required."))
+
+  if (err.title === 'Login failed') {
+    res.status(401);
+    res.json({
+      message: "Invalid credentials",
+      statusCode: 401
+    })
+  }
   if (err.errors.includes("Invalid email.") || err.errors.includes("Username is required.") || err.errors.includes("First Name is required.") || err.errors.includes("Last Name is required.")) {
     res.status(400);
-    console.log(err.errors);
     let validations = {};
     for (let message of err.errors) {
       if (message === "Invalid email.") {
@@ -116,6 +121,23 @@ app.use((err, req, res, next) => {
         email: "User with that email already exists"
       }
     })
+  }
+  if (err.errors.includes('Email or username is required.') || err.errors.includes('Password is required.')) {
+    res.status(400);
+    let validations = {};
+    for (let message of err.errors) {
+      if (message === 'Email or username is required.') {
+        validations.credential = message;
+      } else if (message === 'Password is required.') {
+        validations.password = message;
+      }
+    }
+    result = {
+      message: "Validation error",
+      statusCode: 400,
+      errors: validations
+    }
+    res.json(result);
   }
   next(err);
 });
