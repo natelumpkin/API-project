@@ -56,30 +56,50 @@ router.get('/', async (req, res) => {
   });
 });
 
-router.get('/current', requireAuth, async (req, res) => {
-  const spots = Spot.findAll({
+router.get('/current', async (req, res) => {
+  let currentId = req.user.id;
+  const spots = await Spot.findAll({
     where: {
-      ownerId: req.user.id
+      ownerId: currentId
     },
-    // attributes: {
-    //   include: [
-    //     [sequelize.fn('AVG',sequelize.col('stars')),'avgRating'],
-    //   ]
-    // },
-    // group: "Spot.id",
-    // include: [{
-    //   model: SpotImage,
-    //   where: {
-    //    preview: true,
-    //   },
-    //   attributes: ['url']
-    // },
-    // {
-    //   model: Review,
-    //   attributes: []
-    // }]
+    attributes: {
+      include: [
+        [sequelize.fn('AVG',sequelize.col('stars')),'avgRating'],
+      ]
+    },
+    group: "Spot.id",
+    include: [{
+      model: SpotImage,
+    },
+    {
+      model: Review,
+      attributes: []
+    }]
   })
-  res.json(spots)
+
+  let spotList = [];
+  spots.forEach(spot => {
+    spotList.push(spot.toJSON());
+  })
+
+  spotList.forEach(spot => {
+    // iterate over spot.SpotImages
+    spot.SpotImages.forEach(spotImage => {
+      if (spotImage.preview) {
+        spot.previewImage = spotImage.url
+      } else {
+        spot.previewImage = 'No preview image available'
+      }
+    })
+    delete spot.SpotImages;
+    if (!spot.previewImage) {
+      spot.previewImage = 'No preview image available'
+    }
+  })
+
+  res.json({
+    Spots: spotList
+  })
 })
 
 router.get('/:spotId', async(req, res) => {
