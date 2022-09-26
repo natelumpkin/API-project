@@ -167,6 +167,54 @@ router.post('/', requireAuth, async (req, res) => {
   return res.json(spot);
 })
 
+router.put('/:spotId', requireAuth, async (req, res) => {
+
+  const {
+    address,
+    city,
+    state,
+    country,
+    lat,
+    lng,
+    name,
+    description,
+    price
+  } = req.body;
+
+  const spot = await Spot.findByPk(req.params.spotId);
+
+  if (!spot) {
+    res.status(404);
+    res.json({
+      message: "Spot couldn't be found",
+      statusCode: 404
+    })
+  }
+
+  if (spot.ownerId !== req.user.id) {
+    res.status(403);
+    res.json({
+      message: "Forbidden",
+      statusCode: 403
+    })
+  }
+
+  await spot.update({
+    address: address,
+    city: city,
+    state: state,
+    country: country,
+    lat: lat,
+    lng: lng,
+    name: name,
+    description: description,
+    price: price
+  })
+
+  res.json(spot);
+
+})
+
 
 
 module.exports = router;
