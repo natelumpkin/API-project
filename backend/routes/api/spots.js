@@ -102,7 +102,7 @@ router.get('/current', requireAuth, async (req, res) => {
   })
 })
 
-router.post('/:spotId/images', async (req, res) => {
+router.post('/:spotId/images', requireAuth, async (req, res) => {
   const spot = await Spot.findByPk(req.params.spotId);
 
   const { url, preview } = req.body;
@@ -146,7 +146,7 @@ router.get('/:spotId', async(req, res) => {
     group: "Spot.id",
     include: [{
       model: SpotImage,
-      attributes: ['url']
+      attributes: ['id','url','preview']
     },
     {
       model: Review,
