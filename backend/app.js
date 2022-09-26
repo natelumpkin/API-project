@@ -71,13 +71,15 @@ app.use((req, res, next) => {
 app.use((err, req, res, next) => {
   if (err instanceof ValidationError) {
     err.errors = err.errors.map(e => e.message);
-    err.title = "Validation error";
-    err.status = 403;
+    err.title = "Validation Error";
+    err.status = 400;
   };
 
   if (!err.errors) {
     err.errors = [];
   }
+
+  console.log(err);
 
   if (err.title === 'Login failed') {
     res.status(401);
@@ -156,6 +158,46 @@ app.use((err, req, res, next) => {
       statusCode: err.status
     })
   }
+
+  if (err.title === 'Validation Error') {
+    res.status(400);
+    let result = {};
+    result.message = err.title;
+    result.statusCode = err.status;
+    result.errors = {};
+    err.errors.forEach(error => {
+      if (error === "Spot.address cannot be null") {
+        result.errors.address = "Street address is required"
+      }
+      if (error === "Spot.city cannot be null") {
+        result.errors.city = "City is required"
+      }
+      if (error === "Spot.state cannot be null") {
+        result.errors.address = "State is required"
+      }
+      if (error === "Spot.country cannot be null") {
+        result.errors.country = "Country is required"
+      }
+      if (error === "Spot.description cannot be null") {
+        result.errors.description = "Description is required"
+      }
+      if (error === "Spot.price cannot be null") {
+        result.errors.price = "Price per day is required"
+      }
+      if (error === "Validation min on lat failed" || error === "Validation max on lat failed") {
+        result.errors.lat = "Latitude is not valid"
+      }
+      if (error === "Validation min on lng failed" || error === "Validation max on lng failed") {
+        result.errors.lng = "Longitude is not valid"
+      }
+      if (error === "Validation len on name failed") {
+        result.errors.name = "Name must be less than 50 characters"
+      }
+    })
+    return res.json(result);
+  }
+
+
   return res.json({
     title: err.title || 'Server Error',
     message: err.message,
