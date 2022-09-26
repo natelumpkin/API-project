@@ -74,6 +74,49 @@ app.use((err, req, res, next) => {
     err.title = "Validation error";
     err.status = 403;
   };
+  console.log(err.errors);
+  console.log(err.errors.includes("First Name is required."))
+  if (err.errors.includes("Invalid email.") || err.errors.includes("Username is required.") || err.errors.includes("First Name is required.") || err.errors.includes("Last Name is required.")) {
+    res.status(400);
+    console.log(err.errors);
+    let validations = {};
+    for (let message of err.errors) {
+      if (message === "Invalid email.") {
+        validations.email = message;
+      } else if (message === "Username is required.") {
+        validations.username = message;
+      } else if (message === "First Name is required.") {
+        validations.firstName = message;
+      } else if (message === "Last Name is required.") {
+        validations.lastName = message;
+      }
+    }
+    result = {
+      message: "Validation error",
+      statusCode: 400,
+      errors: validations
+    }
+    return res.json(result);
+  }
+  if (err.errors.includes("username must be unique")) {
+    res.status(err.status);
+    return res.json({
+      message: "User already exists",
+      statusCode: err.status,
+      errors: {
+        username: "User with that username already exists"
+      }
+    })
+  } else if (err.errors.includes("email must be unique")) {
+    res.status(err.status)
+    return res.json({
+      message: "User already exists",
+      statusCode: err.status,
+      errors: {
+        email: "User with that email already exists"
+      }
+    })
+  }
   next(err);
 });
 
@@ -81,7 +124,13 @@ app.use((err, req, res, next) => {
 app.use((err, req, res, next) => {
   res.status(err.status || 500);
   console.error(err);
-  res.json({
+  if (err.title === 'Unauthorized') {
+    return res.json({
+      message: "Authentication required",
+      statusCode: err.status
+    })
+  }
+  return res.json({
     title: err.title || 'Server Error',
     message: err.message,
     errors: err.errors,
