@@ -11,6 +11,14 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      Booking.belongsTo(
+        models.Spot,
+        { foreignKey: 'spotId' }
+      ),
+      Booking.belongsTo(
+        models.User,
+        { foreignKey: 'userId' }
+      )
     }
   }
   Booking.init({
@@ -28,11 +36,16 @@ module.exports = (sequelize, DataTypes) => {
         async cannotConflict(value) {
           // find all records of same spotId
           let sameIdRecords = await Booking.findAll({ where: { spotId: this.spotId } })
+          let strDate = value.toString();
+
           for (let bookingRecord of sameIdRecords) {
+
             // if value is after startDate AND before endDate
             // throw new err
-            if (Validator.isAfter(value,bookingRecord.startDate) && Validator.isBefore(value,bookingRecord.endDate)) {
-              throw new Error;
+            //Validator.isAfter(strDate,bookingRecord.startDate.toString());
+            //console.log("startdate:", strDate, "other booking startdate: ", bookingRecord.startDate, "other booking enddate ", bookingRecord.endDate)
+            if (Validator.isAfter(strDate,bookingRecord.startDate.toString()) && Validator.isBefore(strDate,bookingRecord.endDate.toString())) {
+              throw new Error('Startdate cannot conflict with other booking dates');
             }
           }
         }
@@ -42,23 +55,30 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.DATE,
       validate: {
         // must be after startDate
-        isAfter: this.startDate,
+        afterStartDate(value) {
+          let endDate = value.toString();
+          // if not is after, then throw error
+          if (!Validator.isAfter(endDate,this.startDate.toString())) {
+            throw new Error('End date cannot be on or before start date');
+          }
+        },
         // cannot be between startDate and EndDate
         // of another record of the same spotId
         async cannotConflict(value) {
           // find all records of same spotId
           // if value is after startDate AND before endDate
           // throw new err
+          let strDate = value.toString();
           let sameIdRecords = await Booking.findAll({ where: { spotId: this.spotId } })
           for (let bookingRecord of sameIdRecords) {
             // if value is after startDate AND before endDate
             // throw new err
-            if (Validator.isAfter(value,bookingRecord.startDate) && Validator.isBefore(value,bookingRecord.endDate)) {
-              throw new Error;
+            if (Validator.isAfter(strDate,bookingRecord.startDate.toString()) && Validator.isBefore(strDate,bookingRecord.endDate.toString())) {
+              throw new Error('Enddate cannot conflict with other booking dates');
             }
           }
         }
-      }
+       }
     }
   }, {
     sequelize,
