@@ -43,10 +43,10 @@ module.exports = {
      * }], {});
     */
    for (let username in UserSpotReviews) {
-    let user = await User.findOne({where: { username: username}})
+    const user = await User.findOne({where: { username: username}})
     for (let spotname in UserSpotReviews[username]) {
-      let spot = await Spot.findOne({where: {name: spotname}})
-      let spotId = spot.id;
+      const spot = await Spot.findOne({where: {name: spotname}})
+      const spotId = spot.id;
       const {review, stars} = UserSpotReviews[username][spotname];
       await user.createReview({spotId: spotId, review: review, stars: stars})
     }
