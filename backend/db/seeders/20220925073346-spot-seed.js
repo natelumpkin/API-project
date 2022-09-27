@@ -1,6 +1,6 @@
 'use strict';
 
-const Op = require('Sequelize');
+
 const { User } = require('../models')
 
 const SpotUsers =
