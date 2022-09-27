@@ -92,8 +92,36 @@ router.post('/:reviewId/images', requireAuth, async (req, res) => {
     id: newImage.id,
     url: newImage.url
   });
-
-
 })
+
+router.put('/:reviewId', requireAuth, async (req, res) => {
+  const reviewToUpdate = await Review.findByPk(req.params.reviewId);
+  if (!reviewToUpdate) {
+    res.status(404);
+    return res.json({
+      message: "Review couldn't be found",
+      statuscode: 404
+    });
+  }
+
+  if (reviewToUpdate.userId !== req.user.id) {
+    res.status(403);
+    return res.json({
+      message: "Forbidden",
+      statuscode: 403
+    })
+  }
+
+  const {review, stars} = req.body;
+
+  await reviewToUpdate.update({
+    review: review,
+    stars: stars
+  });
+
+  return res.json(reviewToUpdate);
+})
+
+
 
 module.exports = router;
