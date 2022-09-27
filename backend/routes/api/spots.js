@@ -11,6 +11,7 @@ const router = express.Router();
 // Post image to spot /:spotId/images
 // Post review to spot /:spotId/reviews
 // Get reviews by spot /:spotId/reviews
+// Get bookings by spot /:spotId/bookings
 // Get spot by id /:spotId
 // Post new spot /
 // Put spot /:spotId
@@ -212,6 +213,39 @@ router.get('/:spotId/reviews', async (req, res) => {
   })
 
   return res.json(reviews);
+})
+
+router.get('/:spotId/bookings', requireAuth, async (req, res) => {
+  const spot = await Spot.findByPk(req.params.spotId);
+
+  if (!spot) {
+    res.status(404);
+    res.json({
+      message: "Spot couldn't be found",
+      statusCode: 404
+    })
+  }
+
+  if (req.user.id === spot.ownerId) {
+    const bookings = await Booking.findAll({
+      where: {
+        spotId: req.params.spotId
+      },
+      include: {
+        model: User,
+        attributes: ['id','firstName','lastName']
+      }
+    });
+    return res.json(bookings);
+  } else {
+    const bookings = await Booking.findAll({
+      where: {
+        spotId: req.params.spotId
+      },
+      attributes:  ['spotId','startDate','endDate']
+    });
+    return res.json(bookings);
+  }
 })
 
 router.get('/:spotId', async(req, res) => {
