@@ -12,7 +12,7 @@ router.get('/', async (req, res) => {
         [sequelize.fn('AVG',sequelize.col('stars')),'avgRating'],
       ]
     },
-    group: "Spot.id",
+    group: ['Spot.id','SpotImages.id'],
     include: [{
       model: SpotImage,
     },
