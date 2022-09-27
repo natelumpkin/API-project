@@ -164,9 +164,7 @@ router.post('/:spotId/reviews', requireAuth, async (req, res) => {
       userId: req.user.id,
       spotId: req.params.spotId
     }
-  })
-
-  console.log(existentReviews);
+  });
 
   if (existentReviews.length) {
     res.status(403);
