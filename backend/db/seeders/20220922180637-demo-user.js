@@ -53,7 +53,7 @@ module.exports = {
      * Example:
      * await queryInterface.bulkDelete('People', null, {});
      */
-    const Op = require('Sequelize');
+
     await queryInterface.bulkDelete('Users',{
       username: ['demouser1','demouser2','demouser3','demouser4','demouser5']
     })
