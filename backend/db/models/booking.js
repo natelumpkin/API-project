@@ -13,11 +13,11 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
       Booking.belongsTo(
         models.Spot,
-        { foreignKey: 'spotId', onDelete: 'CASCADE', hooks: true }
+        { foreignKey: 'spotId' }
       ),
       Booking.belongsTo(
         models.User,
-        { foreignKey: 'userId', onDelete: 'CASCADE', hooks: true }
+        { foreignKey: 'userId' }
       )
     }
   }

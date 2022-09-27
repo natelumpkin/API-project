@@ -202,11 +202,13 @@ app.use((err, req, res, next) => {
       if (error === "Startdate cannot conflict with other booking dates") {
         res.status(403);
         result.statusCode = 403;
+        result.message = "Sorry, this spot is already booked for the specified dates"
         result.errors.startDate = "Start date conflicts with an existing booking"
       }
       if (error === "Enddate cannot conflict with other booking dates") {
         res.status(403);
         result.statusCode = 403;
+        result.message = "Sorry, this spot is already booked for the specified dates"
         result.errors.endDate = "End date conflicts with an existing booking"
       }
       if (error === "End date cannot be on or before start date") {
