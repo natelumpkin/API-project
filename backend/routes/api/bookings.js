@@ -42,4 +42,32 @@ router.get('/current', requireAuth, async (req, res) => {
   res.json(bookingList);
 });
 
+router.put('/:bookingId', requireAuth, async (req, res) => {
+  const booking = await Booking.findByPk(req.params.bookingId);
+
+  if (!booking) {
+    res.status(404);
+    return res.json({
+      message: "Booking couldn't be found",
+      statusCode: 404
+    })
+  };
+
+  if (req.user.id !== booking.userId) {
+    res.status(403);
+    return res.json({
+      message: "Forbidden"
+    });
+  }
+
+  const { startDate, endDate } = req.body;
+
+  await booking.update({
+    startDate: startDate,
+    endDate: endDate
+  })
+
+  res.json(booking);
+})
+
 module.exports = router;
