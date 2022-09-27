@@ -4,6 +4,18 @@ const { User, Spot, Review, SpotImage, Booking, ReviewImage, sequelize } = requi
 
 const router = express.Router();
 
+// Table of Contents
+
+// Get all spots /
+// Get current spot /current
+// Post image to spot /:spotId/images
+// Post review to spot /:spotId/reviews
+// Get reviews by spot /:spotId/reviews
+// Get spot by id /:spotId
+// Post new spot /
+// Put spot /:spotId
+// Delete spot /:spotId
+
 router.get('/', async (req, res) => {
 
   const spots = await Spot.findAll({
@@ -133,6 +145,75 @@ router.post('/:spotId/images', requireAuth, async (req, res) => {
     url: newimage.url,
     preview: newimage.preview
   });
+})
+
+router.post('/:spotId/reviews', requireAuth, async (req, res) => {
+  const { review, stars } = req.body;
+  const spot = await Spot.findByPk(req.params.spotId);
+
+  if (!spot) {
+    res.status(404);
+    return res.json({
+      message: "Spot couldn't be found",
+      statusCode: 404
+    })
+  }
+
+  const existentReviews = await Review.findAll({
+    where: {
+      userId: req.user.id,
+      spotId: req.params.spotId
+    }
+  })
+
+  console.log(existentReviews);
+
+  if (existentReviews.length) {
+    res.status(403);
+    return res.json({
+      message: "User already has a review for this spot",
+      statusCode: 403
+    })
+  }
+
+  let newReview = await spot.createReview({
+    userId: req.user.id,
+    review: review,
+    stars: stars
+  })
+
+  res.status(201)
+  return res.json(newReview)
+})
+
+router.get('/:spotId/reviews', async (req, res) => {
+  const spot = await Spot.findByPk(req.params.spotId);
+
+  if (!spot) {
+    res.status(404);
+    return res.json({
+      message: "Spot couldn't be found",
+      statusCode: 404
+    })
+  }
+
+  const reviews = await Review.findAll({
+    where: {
+      spotId: req.params.spotId
+    },
+    include: [
+      {
+        model: User,
+        attributes: ['id','firstName','lastName']
+      },
+      {
+        model: ReviewImage,
+        attributes: ['id','url']
+      }
+    ]
+  })
+
+  return res.json(reviews);
 })
 
 router.get('/:spotId', async(req, res) => {
