@@ -29,7 +29,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER
     },
     startDate: {
-      type: DataTypes.DATE,
+      type: DataTypes.DATEONLY,
       validate: {
         async cannotConflict(value) {
           let sameIdRecords = await Booking.findAll({ where: { spotId: this.spotId } })
@@ -44,7 +44,7 @@ module.exports = (sequelize, DataTypes) => {
       }
     },
     endDate: {
-      type: DataTypes.DATE,
+      type: DataTypes.DATEONLY,
       validate: {
         afterStartDate(value) {
           let endDate = value.toString();
