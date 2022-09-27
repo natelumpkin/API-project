@@ -193,6 +193,12 @@ app.use((err, req, res, next) => {
       if (error === "Validation len on name failed") {
         result.errors.name = "Name must be less than 50 characters"
       }
+      if (error === "Review.review cannot be null") {
+        result.errors.review = "Review text is required"
+      }
+      if (error === "Validation min on stars failed" || error === "Validation max on stars failed" || error.includes("is not a valid integer")) {
+        result.errors.stars = "Stars must be an integer from 1 to 5"
+      }
     })
     return res.json(result);
   }
