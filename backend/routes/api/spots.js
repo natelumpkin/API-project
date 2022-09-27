@@ -143,7 +143,7 @@ router.get('/:spotId', async(req, res) => {
         [sequelize.fn('AVG',sequelize.col('stars')),'avgRating']
       ]
     },
-    group: ["Spot.id","SpotImages.id"],
+    group: ["Spot.id","SpotImages.id","Reviews.id","Owner.id"],
     include: [{
       model: SpotImage,
       attributes: ['id','url','preview']
