@@ -17,7 +17,7 @@ router.get('/current', requireAuth, async (req, res) => {
       {
         model: Spot,
         attributes: {
-          exclude: ['createdAt','updatedAt']
+          exclude: ['createdAt','updatedAt','description']
         },
         include: {
           model: SpotImage,
@@ -47,7 +47,9 @@ router.get('/current', requireAuth, async (req, res) => {
     delete review.Spot.SpotImages;
   })
 
-  res.json(reviewList);
+  res.json({
+    Reviews: reviewList
+  });
 });
 
 router.post('/:reviewId/images', requireAuth, async (req, res) => {

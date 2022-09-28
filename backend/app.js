@@ -110,19 +110,19 @@ app.use((err, req, res, next) => {
     return res.json(result);
   }
   if (err.errors.includes("username must be unique")) {
-    res.status(err.status);
+    res.status(403);
     return res.json({
       message: "User already exists",
-      statusCode: err.status,
+      statusCode: 403,
       errors: {
         username: "User with that username already exists"
       }
     })
   } else if (err.errors.includes("email must be unique")) {
-    res.status(err.status)
+    res.status(403)
     return res.json({
       message: "User already exists",
-      statusCode: err.status,
+      statusCode: 403,
       errors: {
         email: "User with that email already exists"
       }
@@ -198,6 +198,21 @@ app.use((err, req, res, next) => {
       }
       if (error === "Validation min on stars failed" || error === "Validation max on stars failed" || error.includes("is not a valid integer")) {
         result.errors.stars = "Stars must be an integer from 1 to 5"
+      }
+      if (error === "Startdate cannot conflict with other booking dates") {
+        res.status(403);
+        result.statusCode = 403;
+        result.message = "Sorry, this spot is already booked for the specified dates"
+        result.errors.startDate = "Start date conflicts with an existing booking"
+      }
+      if (error === "Enddate cannot conflict with other booking dates") {
+        res.status(403);
+        result.statusCode = 403;
+        result.message = "Sorry, this spot is already booked for the specified dates"
+        result.errors.endDate = "End date conflicts with an existing booking"
+      }
+      if (error === "End date cannot be on or before start date") {
+        result.errors.endDate = "endDate cannot be on or before startDate"
       }
     })
     return res.json(result);

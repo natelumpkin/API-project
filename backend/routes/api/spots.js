@@ -10,7 +10,9 @@ const router = express.Router();
 // Get current spot /current
 // Post image to spot /:spotId/images
 // Post review to spot /:spotId/reviews
+// Post booking to spot /:spotId/bookings
 // Get reviews by spot /:spotId/reviews
+// Get bookings by spot /:spotId/bookings
 // Get spot by id /:spotId
 // Post new spot /
 // Put spot /:spotId
@@ -184,6 +186,36 @@ router.post('/:spotId/reviews', requireAuth, async (req, res) => {
   return res.json(newReview)
 })
 
+router.post('/:spotId/bookings', requireAuth, async (req, res) => {
+  const spot = await Spot.findByPk(req.params.spotId);
+
+  if (!spot) {
+    res.status(404);
+    return res.json({
+      message: "Spot couldn't be found",
+      statusCode: 404
+    })
+  }
+
+  if (req.user.id === spot.ownerId) {
+    res.status(403);
+    return res.json({
+      message: "Forbidden",
+      statusCode: 403
+    })
+  }
+
+  const { startDate, endDate } = req.body;
+
+  const newBooking = await spot.createBooking({
+    userId: req.user.id,
+    startDate: startDate,
+    endDate: endDate
+  })
+
+  return res.json(newBooking);
+})
+
 router.get('/:spotId/reviews', async (req, res) => {
   const spot = await Spot.findByPk(req.params.spotId);
 
@@ -211,7 +243,42 @@ router.get('/:spotId/reviews', async (req, res) => {
     ]
   })
 
-  return res.json(reviews);
+  return res.json({
+    Reviews: reviews
+    });
+})
+
+router.get('/:spotId/bookings', requireAuth, async (req, res) => {
+  const spot = await Spot.findByPk(req.params.spotId);
+
+  if (!spot) {
+    res.status(404);
+    return res.json({
+      message: "Spot couldn't be found",
+      statusCode: 404
+    })
+  }
+
+  if (req.user.id === spot.ownerId) {
+    const bookings = await Booking.findAll({
+      where: {
+        spotId: req.params.spotId
+      },
+      include: {
+        model: User,
+        attributes: ['id','firstName','lastName']
+      }
+    });
+    return res.json(bookings);
+  } else {
+    const bookings = await Booking.findAll({
+      where: {
+        spotId: req.params.spotId
+      },
+      attributes:  ['spotId','startDate','endDate']
+    });
+    return res.json({Bookings: bookings});
+  }
 })
 
 router.get('/:spotId', async(req, res) => {

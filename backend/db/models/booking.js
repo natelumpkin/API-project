@@ -13,11 +13,11 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
       Booking.belongsTo(
         models.Spot,
-        { foreignKey: 'spotId', onDelete: 'CASCADE', hooks: true }
+        { foreignKey: 'spotId' }
       ),
       Booking.belongsTo(
         models.User,
-        { foreignKey: 'userId', onDelete: 'CASCADE', hooks: true }
+        { foreignKey: 'userId' }
       )
     }
   }
@@ -29,14 +29,14 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER
     },
     startDate: {
-      type: DataTypes.DATE,
+      type: DataTypes.DATEONLY,
       validate: {
         async cannotConflict(value) {
           let sameIdRecords = await Booking.findAll({ where: { spotId: this.spotId } })
           let strDate = value.toString();
-
+          console.log(strDate);
           for (let bookingRecord of sameIdRecords) {
-            if (Validator.isAfter(strDate,bookingRecord.startDate.toString()) && Validator.isBefore(strDate,bookingRecord.endDate.toString())) {
+            if ((Validator.isAfter(strDate,bookingRecord.startDate.toString()) && Validator.isBefore(strDate,bookingRecord.endDate.toString())) || strDate === bookingRecord.startDate.toString()) {
               throw new Error('Startdate cannot conflict with other booking dates');
             }
           }
@@ -44,7 +44,7 @@ module.exports = (sequelize, DataTypes) => {
       }
     },
     endDate: {
-      type: DataTypes.DATE,
+      type: DataTypes.DATEONLY,
       validate: {
         afterStartDate(value) {
           let endDate = value.toString();
@@ -57,7 +57,7 @@ module.exports = (sequelize, DataTypes) => {
           let strDate = value.toString();
           let sameIdRecords = await Booking.findAll({ where: { spotId: this.spotId } })
           for (let bookingRecord of sameIdRecords) {
-            if (Validator.isAfter(strDate,bookingRecord.startDate.toString()) && Validator.isBefore(strDate,bookingRecord.endDate.toString())) {
+            if ((Validator.isAfter(strDate,bookingRecord.startDate.toString()) && Validator.isBefore(strDate,bookingRecord.endDate.toString())) || strDate === bookingRecord.endDate.toString()) {
               throw new Error('Enddate cannot conflict with other booking dates');
             }
           }
