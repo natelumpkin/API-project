@@ -94,6 +94,15 @@ router.put('/:bookingId', requireAuth, async (req, res) => {
 });
 
 router.delete('/:bookingId', requireAuth, async (req, res) => {
+
+  if (isNaN(req.params.bookingId)) {
+    res.status(400);
+    return res.json({
+      message: `${req.params.bookingId} is not a valid bookingId. Please provide an integer`,
+      statusCode: 400
+    })
+  }
+
   const booking = await Booking.findByPk(req.params.bookingId, {
     include: {
       model: Spot
