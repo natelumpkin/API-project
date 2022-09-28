@@ -26,7 +26,6 @@ router.get('/', async (req, res, next) => {
   // Begin search query
 
   // Get all search params through deconstructing
-  // If query exists, add it into where object
 
   let {
     page,
