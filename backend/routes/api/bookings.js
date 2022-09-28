@@ -29,22 +29,30 @@ router.get('/current', requireAuth, async (req, res) => {
   })
 
   bookingList.forEach(booking => {
-    console.log(booking.Spot.SpotImages);
+    let previewImageExists;
     booking.Spot.SpotImages.forEach(spotImage => {
-      if (spotImage.preview) {
-        booking.Spot.previewImage = spotImage.url
-      } else {
-        booking.Spot.previewImage = 'No preview image available'
+      if (spotImage.preview === true) {
+        booking.Spot.previewImage = spotImage.url;
+        previewImageExists = true;
       }
     })
+    if (!previewImageExists) {
+      booking.Spot.previewImage = "No preview image uploaded."
+    }
     delete booking.Spot.SpotImages;
   })
 
-  res.json(bookingList);
+  res.json({Bookings: bookingList});
 });
 
 router.put('/:bookingId', requireAuth, async (req, res) => {
+
+  console.log('before query')
+  console.log(req.params.bookingId);
+
   const booking = await Booking.findByPk(req.params.bookingId);
+
+  console.log('after query')
 
   if (!booking) {
     res.status(404);
@@ -63,10 +71,9 @@ router.put('/:bookingId', requireAuth, async (req, res) => {
 
   const { startDate, endDate } = req.body;
 
+
+
   const now = new Date().toString();
-  // console.log(now);
-  // console.log(Validator.isAfter(now,booking.endDate));
-  // console.log(booking.endDate);
 
   if (Validator.isAfter(now,booking.endDate)) {
     res.status(403);
@@ -76,15 +83,14 @@ router.put('/:bookingId', requireAuth, async (req, res) => {
     })
   }
 
+
+
   await booking.update({
     startDate: startDate,
     endDate: endDate
   })
 
-  return res.json({
-    startDate: booking.startDate,
-    endDate: booking.endDate
-  });
+  return res.json(booking);
 });
 
 router.delete('/:bookingId', requireAuth, async (req, res) => {

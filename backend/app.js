@@ -110,19 +110,19 @@ app.use((err, req, res, next) => {
     return res.json(result);
   }
   if (err.errors.includes("username must be unique")) {
-    res.status(err.status);
+    res.status(403);
     return res.json({
       message: "User already exists",
-      statusCode: err.status,
+      statusCode: 403,
       errors: {
         username: "User with that username already exists"
       }
     })
   } else if (err.errors.includes("email must be unique")) {
-    res.status(err.status)
+    res.status(403)
     return res.json({
       message: "User already exists",
-      statusCode: err.status,
+      statusCode: 403,
       errors: {
         email: "User with that email already exists"
       }

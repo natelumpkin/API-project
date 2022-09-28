@@ -42,9 +42,10 @@ router.post('/',
   let token = await setTokenCookie(res, user);
   let result = {
     id: user.id,
-    email: user.email,
     firstName: user.firstName,
     lastName: user.lastName,
+    email: user.email,
+    username: user.username,
     token: token
   };
 

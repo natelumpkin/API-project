@@ -243,7 +243,9 @@ router.get('/:spotId/reviews', async (req, res) => {
     ]
   })
 
-  return res.json(reviews);
+  return res.json({
+    Reviews: reviews
+    });
 })
 
 router.get('/:spotId/bookings', requireAuth, async (req, res) => {
@@ -275,7 +277,7 @@ router.get('/:spotId/bookings', requireAuth, async (req, res) => {
       },
       attributes:  ['spotId','startDate','endDate']
     });
-    return res.json(bookings);
+    return res.json({Bookings: bookings});
   }
 })
 
