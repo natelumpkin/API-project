@@ -17,7 +17,7 @@ module.exports = (sequelize, DataTypes) => {
       ),
       Booking.belongsTo(
         models.User,
-        { foreignKey: 'userId' }
+        { foreignKey: 'userId'}
       )
     }
   }
@@ -34,7 +34,6 @@ module.exports = (sequelize, DataTypes) => {
         async cannotConflict(value) {
           let sameIdRecords = await Booking.findAll({ where: { spotId: this.spotId } })
           let strDate = value.toString();
-          console.log(strDate);
           for (let bookingRecord of sameIdRecords) {
             if ((Validator.isAfter(strDate,bookingRecord.startDate.toString()) && Validator.isBefore(strDate,bookingRecord.endDate.toString())) || strDate === bookingRecord.startDate.toString()) {
               throw new Error('Startdate cannot conflict with other booking dates');
