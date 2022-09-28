@@ -96,7 +96,7 @@ router.get('/', async (req, res, next) => {
   errorResult.errors.maxPrice = 'Maximum price must be greater than or equal to 0'
  }
 
- // Search query additions to where object
+ // Add query additions to where object
 
   if (minLat && !maxLat) {
     where.lat = {[Op.gte]: minLat};
@@ -138,8 +138,6 @@ router.get('/', async (req, res, next) => {
     return res.json(errorResult);
   }
 
-  console.log("limit: ", limit, "offset: ", offset)
-
   const newSpots = await Spot.findAll({
     where,
     include: [{
@@ -170,11 +168,6 @@ router.get('/', async (req, res, next) => {
   //   }],
   // });
 
-  // Get aggregate data for each spot
-
-
-
-
   // Turn spotslist to iterable object
   let spotList = [];
   newSpots.forEach(spot => {
@@ -182,28 +175,79 @@ router.get('/', async (req, res, next) => {
     spotList.push(spot.toJSON());
   })
 
+  // Get aggregate data in a single query
+
+  const reviews = await Review.findAll({
+    attributes: {
+      include: [
+        [
+          sequelize.fn('AVG',sequelize.col('stars')),'avgRating'
+        ]
+      ]
+    },
+    group: 'spotId'
+  })
+
+  const reviewList = [];
+  reviews.forEach(review => {
+    reviewList.push(review.toJSON());
+  })
+
+  //console.log(reviewList);
+
+  // for (let i = 0; i < spotList.length; i++) {
+  //   let spot = spotList[i];
+  //   let review = reviewList[i];
+  //   if (review) {
+  //     spot.avgRating = review.avgRating
+  //   } else {
+  //     spot.avgRating = 'No reviews available'
+  //   }
+  // }
+
+
+
+
+
+
   // add aggregate data onto each Spot
-  for (let i = 0; i < newSpots.length; i++) {
-    let spot = newSpots[i];
+  // for (let i = 0; i < newSpots.length; i++) {
+  //   let spot = newSpots[i];
 
-    let reviewList = await Review.findAll({
-      where: {
-        spotId: spot.id
-      },
-      attributes: {
-        include:[
-          [
-            sequelize.fn('AVG',sequelize.col('stars')),'avgRating'
-          ]
-        ],
-      }
-    })
+  //   let reviewList = await Review.findAll({
+  //     where: {
+  //       spotId: spot.id
+  //     },
+  //     attributes: {
+  //       include:[
+  //         [
+  //           sequelize.fn('AVG',sequelize.col('stars')),'avgRating'
+  //         ]
+  //       ],
+  //     }
+  //   })
 
-    spotList[i].avgRating = reviewList[0].dataValues.avgRating;
-  }
+  //   spotList[i].avgRating = reviewList[0].dataValues.avgRating;
+  // }
 
   // Turn SpotImages key to previewImage key
+
+  // for every spot, iterate over reviewList to find the
+  // matching spotId
+  // if it exists, add avgRating
+  // if it doesn't say no reviews available
   spotList.forEach(spot => {
+    let reviewFound;
+    reviewList.forEach(review => {
+      if (spot.id === review.spotId) {
+        spot.avgRating = review.avgRating;
+        reviewFound = true;
+      }
+    })
+    if (!reviewFound) {
+      spot.avgRating = "No reviews available for this spot"
+    }
+
     spot.SpotImages.forEach(spotImage => {
       if (spotImage.preview) {
         spot.previewImage = spotImage.url
@@ -219,7 +263,9 @@ router.get('/', async (req, res, next) => {
 
   // add page and size to result
   return res.json({
-    Spots: spotList
+    Spots: spotList,
+    page: page,
+    size: size
   });
 });
 
