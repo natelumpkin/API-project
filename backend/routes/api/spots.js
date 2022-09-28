@@ -184,7 +184,7 @@ router.get('/', async (req, res, next) => {
         ]
       ]
     },
-    group: 'spotId'
+    group: ['spotId','review.Id']
   })
 
   const reviewList = [];
