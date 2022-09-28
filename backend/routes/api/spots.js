@@ -143,7 +143,8 @@ router.get('/', async (req, res, next) => {
       model: SpotImage,
     }],
     limit: limit,
-    offset: offset
+    offset: offset,
+    order: ['id']
   });
 
   // Perform query
