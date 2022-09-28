@@ -5,6 +5,16 @@ const { User, Spot, Review, SpotImage, Booking, ReviewImage, sequelize } = requi
 const router = express.Router();
 
 router.delete('/:imageId', requireAuth, async (req, res) => {
+
+  if (!req.params.imageId) {
+    res.status(400);
+    return res.json({
+      "message": "Bad Request",
+      statuscode: 400,
+      message: "Image id must be an integer greater than 0"
+    })
+  }
+
   const image = await ReviewImage.findByPk(req.params.imageId,
     {
       include: {
