@@ -53,6 +53,18 @@ router.get('/current', requireAuth, async (req, res) => {
 });
 
 router.post('/:reviewId/images', requireAuth, async (req, res) => {
+
+  if (isNaN(req.params.reviewId)) {
+    res.status(400);
+    res.json({
+      message: "Bad request",
+      statusCode: 400,
+      errors: [
+        "reviewId must be an integer greater than 0"
+      ]
+    })
+  }
+
   const review = await Review.findByPk(req.params.reviewId, {
     include: {
       model: ReviewImage
