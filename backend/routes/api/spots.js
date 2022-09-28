@@ -1,6 +1,9 @@
 const express = require('express');
-const { requireAuth } = require('../../utils/auth')
+const { requireAuth } = require('../../utils/auth');
+const { Op } = require('sequelize');
 const { User, Spot, Review, SpotImage, Booking, ReviewImage, sequelize } = require('../../db/models');
+const { ValidationError } = require('sequelize');
+const review = require('../../db/models/review');
 
 const router = express.Router();
 
@@ -18,32 +21,189 @@ const router = express.Router();
 // Put spot /:spotId
 // Delete spot /:spotId
 
-router.get('/', async (req, res) => {
+router.get('/', async (req, res, next) => {
 
-  const spots = await Spot.findAll({
-    attributes: {
-      include: [
-        [sequelize.fn('AVG',sequelize.col('stars')),'avgRating'],
-      ]
-    },
-    group: ['Spot.id','SpotImages.id'],
+  // Begin search query
+
+  // Get all search params through deconstructing
+  // If query exists, add it into where object
+
+  let {
+    page,
+    size,
+    minLat,
+    maxLat,
+    minLng,
+    maxLng,
+    minPrice,
+    maxPrice
+  } = req.query;
+
+  const where = {};
+
+  const errorResult = {
+    message: "Validation error",
+    statusCode: 400,
+    errors: {}
+  }
+
+// Set default page and size, or send errors if incorrect values
+
+  if (!page) {
+    page = 1;
+  } else if (page > 10) {
+    page = 10
+  } else if (isNaN(page) || page <= 0) {
+    errorResult.errors.page = 'Page must be greater than or equal to 1'
+  } else {
+    page = parseInt(page);
+  };
+
+  if (!size) {
+    size = 20
+  } else if (size > 20) {
+    size = 20
+  } else if (isNaN(size) || size <= 0) {
+    errorResult.errors.size = 'Size must be greater than or equal to 1'
+  } else {
+    size = parseInt(size);
+  };
+
+  // For pagination,
+  // Create limit and offset values based on page and size
+
+  const limit = size;
+  const offset = size * (page - 1);
+
+  // Search query error handling
+
+ if (minLat < -90 || minLat > 90) {
+  errorResult.errors.minLat = 'Minimum latitude is invalid'
+ }
+ if (maxLat < -90 || maxLat > 90) {
+  errorResult.errors.maxLat = 'Maximum latitude is invalid'
+ }
+ if (minLng < -180 || minLng > 180) {
+  errorResult.errors.minLng = 'Minimum longitude is invalid'
+ }
+ if (maxLng < -180 || maxLng > 180) {
+  errorResult.errors.maxLng = 'Maximum longitude is invalid'
+ }
+ if (minPrice < 0) {
+  errorResult.errors.minPrice = 'Minimum price must be greater than or equal to 0'
+ }
+ if (maxPrice < 0) {
+  errorResult.errors.maxPrice = 'Maximum price must be greater than or equal to 0'
+ }
+
+ // Search query additions to where object
+
+  if (minLat && !maxLat) {
+    where.lat = {[Op.gte]: minLat};
+  }
+  else if (maxLat && !minLat) {
+    where.lat = {[Op.lte]: maxLat};
+  } else if (minLat && maxLat) {
+    where.lat = {
+      [Op.gte]: minLat,
+      [Op.lte]: maxLat
+    }
+  }
+  if (minLng && !maxLng) {
+    where.lng = {[Op.gte]: minLng};
+  }
+  else if (maxLng && !minLng) {
+    where.lng = {[Op.lte]: maxLng};
+  } else if (maxLng && minLng) {
+    where.lng = {
+      [Op.gte]: minLng,
+      [Op.lte]: maxLng
+    }
+  }
+  if (minPrice && !maxPrice) {
+    where.price = {[Op.gte]: minPrice};
+  }
+  else if (maxPrice && !minPrice) {
+    where.price = {[Op.lte]: maxPrice};
+  } else if (minPrice && maxPrice) {
+    where.price = {
+      [Op.gte]: minPrice,
+      [Op.lte]: maxPrice
+    }
+  }
+
+  // Send error result if there are any errors
+  if (Object.keys(errorResult.errors).length) {
+    res.status(400);
+    return res.json(errorResult);
+  }
+
+  console.log("limit: ", limit, "offset: ", offset)
+
+  const newSpots = await Spot.findAll({
+    where,
     include: [{
       model: SpotImage,
-    },
-    {
-      model: Review,
-      attributes: []
-    }]
+    }],
+    limit: limit,
+    offset: offset
   });
 
-  // spots.toJSON()
+  // Perform query
+  // Add where, limit, and offset as options
+  // const spots = await Spot.findAll({
+  //   attributes: {
+  //     include: [
+  //       [sequelize.fn('AVG',sequelize.col('stars')),'avgRating'],
+  //     ]
+  //   },
+  //   where,
+  //   limit: limit,
+  //   offset: offset,
+  //   group: ['Spot.id','SpotImages.id'],
+  //   include: [{
+  //     model: SpotImage,
+  //   },
+  //   {
+  //     model: Review,
+  //     //attributes: []
+  //   }],
+  // });
+
+  // Get aggregate data for each spot
+
+
+
+
+  // Turn spotslist to iterable object
   let spotList = [];
-  spots.forEach(spot => {
+  newSpots.forEach(spot => {
+    // Turn each spot into iterable object
     spotList.push(spot.toJSON());
   })
 
+  // add aggregate data onto each Spot
+  for (let i = 0; i < newSpots.length; i++) {
+    let spot = newSpots[i];
+
+    let reviewList = await Review.findAll({
+      where: {
+        spotId: spot.id
+      },
+      attributes: {
+        include:[
+          [
+            sequelize.fn('AVG',sequelize.col('stars')),'avgRating'
+          ]
+        ],
+      }
+    })
+
+    spotList[i].avgRating = reviewList[0].dataValues.avgRating;
+  }
+
+  // Turn SpotImages key to previewImage key
   spotList.forEach(spot => {
-    // iterate over spot.SpotImages
     spot.SpotImages.forEach(spotImage => {
       if (spotImage.preview) {
         spot.previewImage = spotImage.url
@@ -55,16 +215,9 @@ router.get('/', async (req, res) => {
     if (!spot.previewImage) {
       spot.previewImage = 'No preview image available'
     }
-
-    // if spotimage.preview = true,
-    // set previewImage = spotimage.url
-    // if spotimate.preview = false,
-    // set previewImage = 'No preview image available'
   })
 
-
-
-
+  // add page and size to result
   return res.json({
     Spots: spotList
   });
