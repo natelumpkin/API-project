@@ -15,7 +15,6 @@ const store = configureStore();
 
 if (process.env !== 'production') {
   restoreCSRF();
-
   window.store = store;
   window.csrfFetch = csrfFetch;
   window.sessionActions = sessionActions;

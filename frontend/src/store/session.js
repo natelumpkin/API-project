@@ -39,13 +39,31 @@ export const logInUser = (user) => async dispatch => {
 }
 
 export const getCurrentUser = () => async dispatch => {
-  const response = await fetch('/api/session');
+  const response = await csrfFetch('/api/session');
 
-  const user = await response.json();
+  if (response.ok) {
+    const user = await response.json();
+    dispatch(setUser(user))
+    return user;
+  }
+}
 
-  dispatch(setUser(user))
-
-  return user;
+export const signUpNewUser = (userInfo) => async dispatch => {
+  const { email, username, password, firstName, lastName } = userInfo;
+  const options = {
+    method: 'POST',
+    body: JSON.stringify({
+      email,
+      username,
+      password,
+      firstName,
+      lastName
+    })
+  }
+  const response = await csrfFetch('/api/users', options);
+  const userData = await response.json();
+  dispatch(setUser(userData));
+  return userData;
 }
 
 // REDUCER

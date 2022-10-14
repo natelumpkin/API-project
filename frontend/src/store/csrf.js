@@ -6,8 +6,8 @@ export async function csrfFetch(url, options = {}) {
 
   if (options.method.toUpperCase() !== "GET") {
     options.headers['Content-Type'] = options.headers['Content-Type'] || 'application/json';
-    options.headers['XSRF-TOKEN'] = Cookies.get('XSRF-TOKEN')
-  };
+    options.headers['XSRF-TOKEN'] = Cookies.get('XSRF-TOKEN');
+  }
 
   const res = await window.fetch(url, options)
 
@@ -18,5 +18,6 @@ export async function csrfFetch(url, options = {}) {
 
 
 export function restoreCSRF() {
+  console.log('RESTORE CSRF RUNNING');
   return csrfFetch('/api/csrf/restore');
 }

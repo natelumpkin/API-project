@@ -14,11 +14,11 @@ function App() {
   const [isLoaded, setIsLoaded] = useState(false)
 
   useEffect(() => {
-    dispatch(getCurrentUser())
-      .then(setIsLoaded(true));
+    dispatch(getCurrentUser());
+      // .then(setIsLoaded(true));
   },[dispatch])
 
-  return isLoaded && (
+  return (
     <Switch>
       <Route path='/login'>
         <LoginFormPage />
