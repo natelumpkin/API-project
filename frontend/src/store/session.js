@@ -35,7 +35,7 @@ export const logInUser = (user) => async dispatch => {
 
   dispatch(setUser(userData));
 
-  return response;
+  return userData;
 }
 
 // REDUCER
