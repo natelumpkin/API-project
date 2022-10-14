@@ -4,27 +4,31 @@
   "description": "![database schema](database-schema.png)",
   "main": "index.js",
   "dependencies": {
-    "buffer-writer": "^2.0.0",
     "bcryptjs": "^2.4.3",
-    "lodash": "^4.17.21",
-    "pg": "^8.8.0",
-    "packet-reader": "^1.0.0",
+    "buffer-writer": "^2.0.0",
     "express-validator": "^6.14.2",
+    "js-cookie": "^3.0.1",
+    "lodash": "^4.17.21",
+    "packet-reader": "^1.0.0",
+    "pg": "^8.8.0",
+    "pg-connection-string": "^2.5.0",
     "pg-int8": "^1.0.1",
     "pg-pool": "^3.5.2",
-    "pg-types": "^2.2.0",
-    "pg-connection-string": "^2.5.0",
     "pg-protocol": "^1.5.0",
-    "postgres-array": "^2.0.0",
+    "pg-types": "^2.2.0",
     "pgpass": "^1.0.5",
+    "postgres-array": "^2.0.0",
     "postgres-bytea": "^1.0.0",
-    "split2": "^4.1.0",
     "postgres-date": "^1.0.7",
-    "xtend": "^4.0.2",
+    "postgres-interval": "^1.2.0",
+    "react-redux": "^8.0.4",
+    "react-router-dom": "^5.3.4",
+    "redux": "^4.2.0",
+    "redux-thunk": "^2.4.1",
+    "split2": "^4.1.0",
     "validator": "^13.7.0",
-    "postgres-interval": "^1.2.0"
+    "xtend": "^4.0.2"
   },
-  "devDependencies": {},
   "scripts": {
     "install": "npm --prefix backend install backend",
     "dev:backend": "npm install --prefix backend start",
@@ -42,5 +46,8 @@
   "bugs": {
     "url": "https://github.com/natelumpkin/API-project/issues"
   },
-  "homepage": "https://github.com/natelumpkin/API-project#readme"
+  "homepage": "https://github.com/natelumpkin/API-project#readme",
+  "devDependencies": {
+    "redux-logger": "^3.0.6"
+  }
 }

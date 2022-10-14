@@ -143,7 +143,7 @@ app.use((err, req, res, next) => {
       statusCode: 400,
       errors: validations
     }
-    res.json(result);
+    return res.json(result);
   }
   next(err);
 });

@@ -47,13 +47,10 @@ router.get('/current', requireAuth, async (req, res) => {
 
 router.put('/:bookingId', requireAuth, async (req, res) => {
 
-  console.log('before query')
-  console.log(req.params.bookingId);
-
+  // Find the booking by ID
   const booking = await Booking.findByPk(req.params.bookingId);
 
-  console.log('after query')
-
+  // Error message if there is no booking
   if (!booking) {
     res.status(404);
     return res.json({
@@ -62,6 +59,7 @@ router.put('/:bookingId', requireAuth, async (req, res) => {
     })
   };
 
+  // Error message if current user is not the owner of the booking
   if (req.user.id !== booking.userId) {
     res.status(403);
     return res.json({
@@ -69,12 +67,13 @@ router.put('/:bookingId', requireAuth, async (req, res) => {
     });
   }
 
+  // Extract variables from request body
   const { startDate, endDate } = req.body;
 
-
-
+  // Find today's date
   const now = new Date().toString();
 
+  // Import Validator object to check if current date is after end date of booking
   if (Validator.isAfter(now,booking.endDate)) {
     res.status(403);
     return res.json({
@@ -83,8 +82,7 @@ router.put('/:bookingId', requireAuth, async (req, res) => {
     })
   }
 
-
-
+  // Update
   await booking.update({
     startDate: startDate,
     endDate: endDate
