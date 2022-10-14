@@ -39,7 +39,7 @@ router.use('/review-images', reviewImagesRouter);
 // End new routers
 
 router.post('/test', (req, res) => {
-  res.json({requestBody:req.body});
+  res.json({requestBody: req.body});
 });
 
 

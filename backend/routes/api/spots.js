@@ -147,27 +147,6 @@ router.get('/', async (req, res, next) => {
     order: ['id']
   });
 
-  // Perform query
-  // Add where, limit, and offset as options
-  // const spots = await Spot.findAll({
-  //   attributes: {
-  //     include: [
-  //       [sequelize.fn('AVG',sequelize.col('stars')),'avgRating'],
-  //     ]
-  //   },
-  //   where,
-  //   limit: limit,
-  //   offset: offset,
-  //   group: ['Spot.id','SpotImages.id'],
-  //   include: [{
-  //     model: SpotImage,
-  //   },
-  //   {
-  //     model: Review,
-  //     //attributes: []
-  //   }],
-  // });
-
   // Turn spotslist to iterable object
   let spotList = [];
   newSpots.forEach(spot => {
@@ -193,49 +172,10 @@ router.get('/', async (req, res, next) => {
     reviewList.push(review.toJSON());
   })
 
-  //console.log(reviewList);
-
-  // for (let i = 0; i < spotList.length; i++) {
-  //   let spot = spotList[i];
-  //   let review = reviewList[i];
-  //   if (review) {
-  //     spot.avgRating = review.avgRating
-  //   } else {
-  //     spot.avgRating = 'No reviews available'
-  //   }
-  // }
-
-
-
-
-
-
-  // add aggregate data onto each Spot
-  // for (let i = 0; i < newSpots.length; i++) {
-  //   let spot = newSpots[i];
-
-  //   let reviewList = await Review.findAll({
-  //     where: {
-  //       spotId: spot.id
-  //     },
-  //     attributes: {
-  //       include:[
-  //         [
-  //           sequelize.fn('AVG',sequelize.col('stars')),'avgRating'
-  //         ]
-  //       ],
-  //     }
-  //   })
-
-  //   spotList[i].avgRating = reviewList[0].dataValues.avgRating;
-  // }
 
   // Turn SpotImages key to previewImage key
+  // and add aggregate data onto each spot
 
-  // for every spot, iterate over reviewList to find the
-  // matching spotId
-  // if it exists, add avgRating
-  // if it doesn't say no reviews available
   spotList.forEach(spot => {
     let reviewFound;
     reviewList.forEach(review => {
@@ -485,7 +425,7 @@ router.get('/:spotId', async(req, res) => {
     attributes: {
       include: [
         [sequelize.fn('COUNT',sequelize.col('review')),'numReviews'],
-        [sequelize.fn('AVG',sequelize.col('stars')),'avgRating']
+        [sequelize.fn('AVG',sequelize.col('stars')),'avgStarRating']
       ]
     },
     group: ["Spot.id","SpotImages.id","Reviews.id","Owner.id"],
