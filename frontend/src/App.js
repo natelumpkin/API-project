@@ -15,12 +15,9 @@ function App() {
   const [isLoaded, setIsLoaded] = useState(false)
 
   useEffect(() => {
-    console.log('use effect 1 in App.js is running')
     dispatch(getCurrentUser())
     setIsLoaded(true);
   },[dispatch]);
-
-  console.log('isLoaded', isLoaded)
 
   return (
     <>

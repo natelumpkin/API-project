@@ -18,6 +18,5 @@ export async function csrfFetch(url, options = {}) {
 
 
 export function restoreCSRF() {
-  console.log('RESTORE CSRF RUNNING');
   return csrfFetch('/api/csrf/restore');
 }
