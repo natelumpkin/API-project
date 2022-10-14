@@ -38,6 +38,16 @@ export const logInUser = (user) => async dispatch => {
   return userData;
 }
 
+export const logOutUser = () => async dispatch => {
+  const response = await csrfFetch('/api/session', {
+    method: 'DELETE'
+  });
+
+  const data = await response.json();
+  dispatch(removeUser());
+  return data;
+}
+
 export const getCurrentUser = () => async dispatch => {
   const response = await csrfFetch('/api/session');
 
