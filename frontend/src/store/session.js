@@ -38,6 +38,16 @@ export const logInUser = (user) => async dispatch => {
   return userData;
 }
 
+export const getCurrentUser = () => async dispatch => {
+  const response = await fetch('/api/session');
+
+  const user = await response.json();
+
+  dispatch(setUser(user))
+
+  return user;
+}
+
 // REDUCER
 
 const initialState = {
