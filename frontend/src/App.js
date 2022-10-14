@@ -1,6 +1,6 @@
 // Packages
 import { Route, Switch } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 
 // Thunks
@@ -9,25 +9,34 @@ import { getCurrentUser } from './store/session';
 // Components
 import LoginFormPage from './components/LoginFormPage';
 import SignupFormPage from './components/SignUpFormPage';
+import Navigation from './components/Navigation';
 
 function App() {
   const dispatch = useDispatch();
   const [isLoaded, setIsLoaded] = useState(false)
 
   useEffect(() => {
+    console.log('use effect 1 in App.js is running')
     dispatch(getCurrentUser())
-      .then(() => setIsLoaded(true));
-  },[dispatch])
+    setIsLoaded(true);
+  },[dispatch]);
+
+  console.log('isLoaded', isLoaded)
 
   return (
-    <Switch>
-      <Route path='/login'>
-        <LoginFormPage />
-      </Route>
-      <Route path='/signup'>
-        <SignupFormPage />
-      </Route>
-    </Switch>
+    <>
+      <Navigation isLoaded={isLoaded} />
+      {isLoaded && (
+      <Switch>
+        <Route path='/login'>
+          <LoginFormPage />
+        </Route>
+        <Route path='/signup'>
+          <SignupFormPage />
+        </Route>
+      </Switch>
+    )}
+    </>
   );
 }
 
