@@ -7,7 +7,6 @@ import { useDispatch } from 'react-redux';
 import { getCurrentUser } from './store/session';
 
 // Components
-import LoginFormPage from './components/LoginFormPage';
 import SignupFormPage from './components/SignUpFormPage';
 import Navigation from './components/Navigation';
 
@@ -28,9 +27,6 @@ function App() {
       <Navigation isLoaded={isLoaded} />
       {isLoaded && (
       <Switch>
-        <Route path='/login'>
-          <LoginFormPage />
-        </Route>
         <Route path='/signup'>
           <SignupFormPage />
         </Route>

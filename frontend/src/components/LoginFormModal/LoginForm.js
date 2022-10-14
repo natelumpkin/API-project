@@ -1,11 +1,10 @@
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Redirect } from 'react-router-dom';
 import * as sessionActions from '../../store/session';
 import './LoginForm.css'
 
 
-const LoginFormPage = () => {
+const LoginForm = () => {
 
   const dispatch = useDispatch();
   const sessionUser = useSelector(state => state.session.user)
@@ -23,14 +22,6 @@ const LoginFormPage = () => {
         if (data && data.message) setErrors([data.message]);
       });
     }
-
-  if (sessionUser) {
-    return (
-      <Redirect to='/'/>
-    )
-  }
-
-
 
   return (
     <div className='form-card'>
@@ -61,4 +52,4 @@ const LoginFormPage = () => {
   )
 }
 
-export default LoginFormPage;
+export default LoginForm;
