@@ -5,6 +5,7 @@ const normalizeSpots = (spotData) => {
   // set a key in result that is its id, and the value is the spot
   // return the object
   let res = {};
+  console.log(spotData);
   for (let spot of spotData.Spots) {
     res[spot.id] = spot
   };

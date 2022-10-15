@@ -24,10 +24,10 @@ const loadSingleSpot = (spotData) => {
 }
 
 // do I really need userId for this?
-const loadUserSpots = (userId) => {
+const loadUserSpots = (spotData) => {
   return {
     type: CURRENT_SPOTS,
-    userId
+    spotData
   }
 }
 
@@ -49,6 +49,16 @@ export const getSpotById = (spotId) => async (dispatch) => {
   const spotData = await response.json();
 
   dispatch(loadSingleSpot(spotData));
+
+  return spotData;
+}
+
+export const getCurrentUserSpots = () => async dispatch => {
+  const response = await csrfFetch('/api/spots/current');
+
+  const spotData = await response.json();
+
+  dispatch(loadUserSpots(spotData));
 
   return spotData;
 }
@@ -76,7 +86,7 @@ const spotReducer = (state = initialState, action) => {
         },
         userSpots: { ...state.userSpots}
       }
-      newState.spotData = normalizeSpots(action.spots);
+      newState.allSpots = normalizeSpots(action.spots);
       return newState;
     };
     case ONE_SPOT: {
@@ -90,6 +100,19 @@ const spotReducer = (state = initialState, action) => {
       newState.singleSpot.owner = action.spotData.Owner
       delete newState.singleSpot.spotData.SpotImages;
       delete newState.singleSpot.spotData.Owner;
+      return newState;
+    };
+    case CURRENT_SPOTS: {
+      const newState = {
+        allSpots: { ...state.allSpots },
+        singleSpot: {
+          spotData: { ...state.singleSpot.spotData },
+          spotImages: [ ...state.singleSpot.spotImages ],
+          owner: { ...state.singleSpot.owner }
+        },
+        userSpots: {}
+      };
+      newState.userSpots = normalizeSpots(action.spotData);
       return newState;
     }
     default: {
