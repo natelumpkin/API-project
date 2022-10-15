@@ -10,7 +10,7 @@ const router = express.Router();
 // Table of Contents
 
 // Get all spots /
-// Get current spot /current
+// Get spots of current user /current
 // Post image to spot /:spotId/images
 // Post review to spot /:spotId/reviews
 // Post booking to spot /:spotId/bookings
