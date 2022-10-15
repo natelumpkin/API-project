@@ -16,11 +16,10 @@ const loadAllSpots = (spotData) => {
   }
 }
 
-// do I really need spotId for this?
-const loadSingleSpot = (spotId) => {
+const loadSingleSpot = (spotData) => {
   return {
     type: ONE_SPOT,
-    spotId
+    spotData
   }
 }
 
@@ -44,6 +43,16 @@ export const getAllSpots = () => async (dispatch) => {
   return spotData;
 }
 
+export const getSpotById = (spotId) => async (dispatch) => {
+  const response = await csrfFetch(`/api/spots/${spotId}`);
+
+  const spotData = await response.json();
+
+  dispatch(loadSingleSpot(spotData));
+
+  return spotData;
+}
+
 // REDUCER AND INITIAL STATE
 
 const initialState = {
@@ -61,13 +70,26 @@ const spotReducer = (state = initialState, action) => {
     case ALL_SPOTS: {
       const newState = {
         singleSpot: {
-          spotData: { ...[state.singleSpot.spotData] },
-          spotImages: [ ...[state.singleSpot.spotImages] ],
-          owner: { ...[state.singleSpot.owner] }
+          spotData: { ...state.singleSpot.spotData },
+          spotImages: [ ...state.singleSpot.spotImages ],
+          owner: { ...state.singleSpot.owner }
         },
-        userSpots: { ...[state.userSpots]}
+        userSpots: { ...state.userSpots}
       }
       newState.spotData = normalizeSpots(action.spots);
+      return newState;
+    };
+    case ONE_SPOT: {
+      const newState = {
+        allSpots: { ...state.allSpots},
+        userSpots: { ...state.userSpots},
+        singleSpot: {}
+      };
+      newState.singleSpot.spotData = action.spotData;
+      newState.singleSpot.spotImages = action.spotData.SpotImages;
+      newState.singleSpot.owner = action.spotData.Owner
+      delete newState.singleSpot.spotData.SpotImages;
+      delete newState.singleSpot.spotData.Owner;
       return newState;
     }
     default: {
