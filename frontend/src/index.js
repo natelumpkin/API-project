@@ -11,7 +11,8 @@ import { ModalProvider } from './context/Modal';
 import configureStore from './store';
 import { restoreCSRF, csrfFetch } from './store/csrf';
 import * as sessionActions from './store/session';
-import * as spotActions from './store/spot'
+import * as spotActions from './store/spot';
+import * as reviewActions from './store/review';
 
 const store = configureStore();
 
@@ -21,6 +22,7 @@ if (process.env !== 'production') {
   window.csrfFetch = csrfFetch;
   window.sessionActions = sessionActions;
   window.spotActions = spotActions;
+  window.reviewActions = reviewActions;
 }
 
 function Root () {
