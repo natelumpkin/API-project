@@ -317,6 +317,7 @@ const spotReducer = (state = initialState, action) => {
       return newState;
     };
     case DELETE_SPOTIMAGE: {
+      // I'm not completely convinced this is working correctly
       const spotImagesCopy = [...state.singleSpot.spotImages ];
       console.log('SPOT IMAGES COPY: ', spotImagesCopy);
       const indexToRemove = spotImagesCopy.findIndex(image => image.id === action.imageId);
