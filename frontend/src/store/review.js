@@ -18,10 +18,10 @@ const loadUserReviews = (reviewData) => {
   }
 };
 
-const loadSpotReviews = (spotId) => {
+const loadSpotReviews = (reviewData) => {
   return {
     type: SPOT_REVIEWS,
-    spotId
+    reviewData
   }
 };
 
@@ -63,6 +63,20 @@ export const getUserReviews = () => async (dispatch) => {
   dispatch(loadUserReviews(reviewData));
 
   return reviewData;
+};
+
+export const getReviewsBySpot = (spotId) => async (dispatch) => {
+  const response = await csrfFetch(`/api/spots/${spotId}/reviews`);
+
+  if (response.ok) {
+    const reviewData = await response.json();
+    dispatch(loadSpotReviews(reviewData));
+    return reviewData;
+  }
+  else {
+    const errorMessage = await response.json()
+    return errorMessage;
+  }
 }
 
 // INITIAL STATE AND REDUCER
@@ -93,6 +107,25 @@ const reviewReducer = (state = initialState, action) => {
       }
       // Add normalized user data under user key
       newState.user = normalizeReviews(action.reviewData);
+      return newState;
+    }
+    case SPOT_REVIEWS: {
+      const newState = {
+        user: {},
+        spot: {}
+      };
+      for (let userReviewId in state.user) {
+        newState.user[userReviewId] = {
+          ...newState.user[userReviewId],
+          User: {
+            ...newState.user[userReviewId].User
+          },
+          ReviewImages: [
+            ...newState.user[userReviewId].ReviewImages
+          ]
+        }
+      }
+      newState.spot = normalizeReviews(action.reviewData);
       return newState;
     }
     default: {
