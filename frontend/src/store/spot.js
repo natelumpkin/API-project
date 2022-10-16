@@ -7,7 +7,7 @@ const ALL_SPOTS = '/spots/getAllSpots';
 const ONE_SPOT = '/spots/getSpotById';
 const CURRENT_SPOTS = '/spots/getCurrentUserSpots';
 const CREATE_SPOT = '/spots/createNewSpot';
-const UPDATE_SPOT = '/spots/updateSpot';
+// const UPDATE_SPOT = '/spots/updateSpot';
 const DELETE_SPOT = '/spots/deleteSpot'
 
 // ACTION CREATORS
@@ -41,12 +41,12 @@ const addSpot = (spotData) => {
 }
 
 // do I need this or do I use addSpot?
-const updateSpot = (spotData) => {
-  return {
-    type: UPDATE_SPOT,
-    spotData
-  }
-}
+// const updateSpot = (spotData) => {
+//   return {
+//     type: UPDATE_SPOT,
+//     spotData
+//   }
+// }
 
 const removeSpot = (spotId) => {
   return {
@@ -101,7 +101,6 @@ export const createNewSpot = (spotData) => async dispatch => {
   });
 
   if (response.ok) {
-    console.log('create new spot made it past response.ok')
     const newSpot = await response.json();
     dispatch(addSpot(newSpot));
     return newSpot;
@@ -109,6 +108,23 @@ export const createNewSpot = (spotData) => async dispatch => {
     const errorMessage = await response.json();
     return errorMessage;
     }
+}
+
+export const updateSpotById = (spotId, spotData) => async dispatch => {
+  const response = await csrfFetch(`/api/spots/${spotId}`, {
+    method: 'PUT',
+    body: JSON.stringify(spotData)
+  });
+
+  if (response.ok) {
+    const updatedSpot = await response.json();
+    dispatch(addSpot(updatedSpot));
+    console.log(updatedSpot);
+    return updatedSpot
+  } else {
+    const errorMessage = await response.json();
+    return errorMessage;
+  }
 }
 
 const badReqBody = {
@@ -121,6 +137,18 @@ const badReqBody = {
   name: '',
   description: '',
   price: -100
+}
+
+const goodReqBody = {
+  address: '666 Updated Ave',
+  city: 'Updateville',
+  state: 'UD',
+  country: 'UPD',
+  lat: 90,
+  lt: -90,
+  name: 'Updated Spot',
+  description: 'The most updated spot in the whole world!',
+  price: 900
 }
 
 // REDUCER AND INITIAL STATE
