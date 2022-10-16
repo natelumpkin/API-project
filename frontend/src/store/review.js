@@ -79,6 +79,30 @@ export const getReviewsBySpot = (spotId) => async (dispatch) => {
   }
 }
 
+export const createReviewBySpotId = (spotId, reviewData) => async dispatch => {
+  const response = await csrfFetch(`/api/spots/${spotId}/reviews`,{
+    method: 'POST',
+    body: JSON.stringify(reviewData)
+  });
+
+  if (response.ok) {
+    const reviewData = await response.json();
+    dispatch(addReview(reviewData));
+    return reviewData;
+  }
+  else {
+    const errorMessage = await response.json()
+    return errorMessage;
+  }
+}
+
+// DEMO-DATA FOR REVIEW BODY
+
+const review = {
+  review: 'This is a test review',
+  stars: 3
+}
+
 // INITIAL STATE AND REDUCER
 
 const initialState = {
@@ -127,6 +151,43 @@ const reviewReducer = (state = initialState, action) => {
       }
       newState.spot = normalizeReviews(action.reviewData);
       return newState;
+    };
+    case CREATE_REVIEW: {
+      const newState = {
+        user: {},
+        spot: {}
+      }
+    // maintain state in user reviews
+    for (let userReviewId in state.user) {
+      newState.user[userReviewId] = {
+        ...state.user[userReviewId],
+        User: {
+          ...state.user[userReviewId].User
+        },
+        ReviewImages: [
+          ...state.user[userReviewId].ReviewImages
+        ]
+      }
+    }
+    // maintain state in spot reviews
+    for (let spotReviewId in state.spot) {
+      newState.spot[spotReviewId] = {
+        ...state.spot[spotReviewId],
+        User: {
+          ...state.spot[spotReviewId].User
+        },
+        ReviewImages: [
+          ...state.spot[spotReviewId].ReviewImages
+        ]
+      }
+    }
+    // add review data as new ID in spot reviews
+    newState.spot[action.reviewData.id] = action.reviewData;
+    // make sure empty array exists under ReviewImages
+    if (!newState.spot[action.reviewData.id.ReviewImages]) {
+      newState.spot[action.reviewData.id.ReviewImages] = [];
+    }
+    return newState;
     }
     default: {
       return state;

@@ -230,9 +230,9 @@ export const deleteSpotImageById = (imageId) => async dispatch => {
 const initialState = {
   allSpots: {},
   singleSpot: {
-    spotData: {},
-    spotImages: [],
-    owner: {}
+    // spotData: {},
+    SpotImages: [],
+    Owner: {}
   },
   userSpots: {}
 }
@@ -242,9 +242,10 @@ const spotReducer = (state = initialState, action) => {
     case ALL_SPOTS: {
       const newState = {
         singleSpot: {
-          spotData: { ...state.singleSpot.spotData },
-          spotImages: [ ...state.singleSpot.spotImages ],
-          owner: { ...state.singleSpot.owner }
+          // spotData: { ...state.singleSpot.spotData },
+          ...state.singleSpot,
+          SpotImages: [ ...state.singleSpot.SpotImages ],
+          Owner: { ...state.singleSpot.Owner }
         },
         userSpots: { ...state.userSpots}
       }
@@ -257,20 +258,20 @@ const spotReducer = (state = initialState, action) => {
         userSpots: { ...state.userSpots},
         singleSpot: {}
       };
-      newState.singleSpot.spotData = action.spotData;
-      newState.singleSpot.spotImages = action.spotData.SpotImages;
-      newState.singleSpot.owner = action.spotData.Owner
-      delete newState.singleSpot.spotData.SpotImages;
-      delete newState.singleSpot.spotData.Owner;
+      newState.singleSpot = action.spotData;
+      // newState.singleSpot.spotImages = action.spotData.SpotImages;
+      // newState.singleSpot.owner = action.spotData.Owner
+      // delete newState.singleSpot.spotData.SpotImages;
+      // delete newState.singleSpot.spotData.Owner;
       return newState;
     };
     case CURRENT_SPOTS: {
       const newState = {
         allSpots: { ...state.allSpots },
         singleSpot: {
-          spotData: { ...state.singleSpot.spotData },
-          spotImages: [ ...state.singleSpot.spotImages ],
-          owner: { ...state.singleSpot.owner }
+          ...state.singleSpot,
+          SpotImages: [ ...state.singleSpot.SpotImages ],
+          Owner: { ...state.singleSpot.Owner }
         },
         userSpots: {}
       };
@@ -281,9 +282,9 @@ const spotReducer = (state = initialState, action) => {
       const newState = {
         allSpots: { ...state.allSpots },
         singleSpot: {
-          spotData: { ...state.singleSpot.spotData },
-          spotImages: [ ...state.singleSpot.spotImages ],
-          owner: { ...state.singleSpot.owner }
+          ...state.singleSpot,
+          SpotImages: [ ...state.singleSpot.SpotImages ],
+          Owner: { ...state.singleSpot.Owner }
         },
         userSpots: { ...state.userSpots}
       };
@@ -294,9 +295,9 @@ const spotReducer = (state = initialState, action) => {
       const newState = {
         allSpots: { ...state.allSpots },
         singleSpot: {
-          spotData: { ...state.singleSpot.spotData },
-          spotImages: [ ...state.singleSpot.spotImages ],
-          owner: { ...state.singleSpot.owner }
+          ...state.singleSpot,
+          SpotImages: [ ...state.singleSpot.SpotImages ],
+          Owner: { ...state.singleSpot.Owner }
         },
         userSpots: { ...state.userSpots }
       };
@@ -307,9 +308,9 @@ const spotReducer = (state = initialState, action) => {
       const newState = {
         allSpots: { ...state.allSpots },
         singleSpot: {
-          spotData: { ...state.singleSpot.spotData },
-          spotImages: [ ...state.singleSpot.spotImages ],
-          owner: { ...state.singleSpot.owner }
+          ...state.singleSpot,
+          SpotImages: [ ...state.singleSpot.SpotImages ],
+          Owner: { ...state.singleSpot.Owner }
         },
         userSpots: { ...state.userSpots }
       };
@@ -318,7 +319,7 @@ const spotReducer = (state = initialState, action) => {
     };
     case DELETE_SPOTIMAGE: {
       // I'm not completely convinced this is working correctly
-      const spotImagesCopy = [...state.singleSpot.spotImages ];
+      const spotImagesCopy = [...state.singleSpot.SpotImages ];
       console.log('SPOT IMAGES COPY: ', spotImagesCopy);
       const indexToRemove = spotImagesCopy.findIndex(image => image.id === action.imageId);
       console.log('INDEX TO REMOVE: ', indexToRemove)
@@ -327,9 +328,9 @@ const spotReducer = (state = initialState, action) => {
       const newState = {
         allSpots: { ...state.allSpots },
         singleSpot: {
-          spotData: { ...state.singleSpot.spotData },
+          ...state.singleSpot,
           spotImages: [ ...spotImagesCopy ],
-          owner: { ...state.singleSpot.owner }
+          owner: { ...state.singleSpot.Owner }
         },
         userSpots: { ...state.userSpots }
       };
