@@ -9,6 +9,8 @@ const CURRENT_SPOTS = '/spots/getCurrentUserSpots';
 const CREATE_SPOT = '/spots/createNewSpot';
 // const UPDATE_SPOT = '/spots/updateSpot';
 const DELETE_SPOT = '/spots/deleteSpot'
+const ADD_SPOTIMAGE = '/spots/addSpotImage';
+const DELETE_SPOTIMAGE = '/spots/deleteSpotImage';
 
 // ACTION CREATORS
 
@@ -52,6 +54,20 @@ const removeSpot = (spotId) => {
   return {
     type: DELETE_SPOT,
     spotId
+  }
+}
+
+const addImage = (imageData) => {
+  return {
+    type: ADD_SPOTIMAGE,
+    imageData
+  }
+}
+
+const removeImage = (imageId) => {
+  return {
+    type: DELETE_SPOT,
+    imageId
   }
 }
 
@@ -137,7 +153,22 @@ export const deleteSpotById = (spotId) => async dispatch => {
     return deleteMessage;
   } else {
     const errorMessage = await response.json();
-    console.log(errorMessage);
+    return errorMessage;
+  }
+}
+
+export const addSpotImageById = (spotId, imageData) => async dispatch => {
+  const response = await csrfFetch(`/api/spots/${spotId}/images`, {
+    method: 'POST',
+    body: JSON.stringify(imageData)
+  });
+
+  if (response.ok) {
+    const spotImage = await response.json();
+    dispatch(addImage(spotImage));
+    return spotImage
+  } else {
+    const errorMessage = await response.json();
     return errorMessage;
   }
 }
@@ -164,6 +195,16 @@ const goodReqBody = {
   name: 'Updated Spot',
   description: 'The most updated spot in the whole world!',
   price: 900
+}
+
+const imageBody = {
+  url: 'www.imageUrl.com',
+  preview: false
+}
+
+const badImageBody = {
+  url: 1,
+  preview: 'preview'
 }
 
 // REDUCER AND INITIAL STATE
@@ -242,6 +283,19 @@ const spotReducer = (state = initialState, action) => {
         userSpots: { ...state.userSpots }
       };
       delete newState.allSpots[action.spotId];
+      return newState;
+    }
+    case ADD_SPOTIMAGE: {
+      const newState = {
+        allSpots: { ...state.allSpots },
+        singleSpot: {
+          spotData: { ...state.singleSpot.spotData },
+          spotImages: [ ...state.singleSpot.spotImages ],
+          owner: { ...state.singleSpot.owner }
+        },
+        userSpots: { ...state.userSpots }
+      };
+      newState.singleSpot.spotImages = [ ...newState.singleSpot.spotImages, action.imageData ];
       return newState;
     }
     default: {
