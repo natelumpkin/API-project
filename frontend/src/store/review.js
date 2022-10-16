@@ -96,11 +96,30 @@ export const createReviewBySpotId = (spotId, reviewData) => async dispatch => {
   }
 }
 
+export const deleteReviewById = (reviewId) => async dispatch => {
+  const response = await csrfFetch(`/api/reviews/${reviewId}`, {
+    method: 'DELETE'
+  });
+
+  if (response.ok) {
+    const deleteMessage = await response.json();
+    dispatch(removeReview(reviewId));
+    return deleteMessage;
+  } else {
+    const errorMessage = await response.json();
+    return errorMessage;
+  }
+}
+
 // DEMO-DATA FOR REVIEW BODY
 
 const review = {
   review: 'This is a test review',
   stars: 3
+}
+
+const image = {
+  url: 'test url'
 }
 
 // INITIAL STATE AND REDUCER
@@ -188,6 +207,40 @@ const reviewReducer = (state = initialState, action) => {
       newState.spot[action.reviewData.id.ReviewImages] = [];
     }
     return newState;
+    }
+    case DELETE_REVIEW: {
+      // copy prevstate into newstate
+      // delete the associated review id at both user and spot
+      // return newstate
+      const newState = {
+        spot: {},
+        user: {}
+      };
+      for (let spotReviewId in state.spot) {
+        newState.spot[spotReviewId] = {
+          ...state.spot[spotReviewId],
+          User: {
+            ...state.spot[spotReviewId].User
+          },
+          ReviewImages: [
+            ...state.spot[spotReviewId].ReviewImages
+          ]
+        }
+      }
+      for (let userReviewId in state.user) {
+        newState.user[userReviewId] = {
+          ...state.user[userReviewId],
+          User: {
+            ...state.user[userReviewId].User
+          },
+          ReviewImages: [
+            ...state.user[userReviewId].ReviewImages
+          ]
+        }
+      }
+      delete newState.user[action.reviewId];
+      delete newState.spot[action.reviewId];
+      return newState;
     }
     default: {
       return state;
