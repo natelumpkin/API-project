@@ -33,6 +33,11 @@ const LandingPage = () => {
 
   return (
     <div>
+      {
+        spotsArray.map(spot => (
+          <SpotCard key={spot.id} spot={spot}/>
+        ))
+      }
     </div>
   )
 };
