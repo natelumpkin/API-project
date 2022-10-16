@@ -6,8 +6,8 @@ const USER_REVIEWS = '/reviews/getCurrentUserReviews';
 const SPOT_REVIEWS = '/reviews/getReviewsBySpotId';
 const CREATE_REVIEW = '/reviews/createReviewBySpotId';
 const DELETE_REVIEW = '/reviews/deleteReviewById';
-const ADD_REVIEW_IMAGE = 'reviews/addReviewImage';
-const DELETE_REVIEW_IMAGE = 'reviews/deleteReviewImage';
+// const ADD_REVIEW_IMAGE = 'reviews/addReviewImage';
+// const DELETE_REVIEW_IMAGE = 'reviews/deleteReviewImage';
 
 // ACTION CREATORS
 
@@ -39,19 +39,21 @@ const removeReview = (reviewId) => {
   }
 };
 
-const addImage = (imageData) => {
-  return {
-    type: ADD_REVIEW_IMAGE,
-    imageData
-  }
-};
+// As far can I can tell, review images are not an airbnb feature, so I don't need to clone them
 
-const removeImage = (imageId) => {
-  return {
-    type: DELETE_REVIEW_IMAGE,
-    imageId
-  }
-};
+// const addImage = (imageData) => {
+//   return {
+//     type: ADD_REVIEW_IMAGE,
+//     imageData
+//   }
+// };
+
+// const removeImage = (imageId) => {
+//   return {
+//     type: DELETE_REVIEW_IMAGE,
+//     imageId
+//   }
+// };
 
 // THUNKS
 
