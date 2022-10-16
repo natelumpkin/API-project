@@ -66,7 +66,7 @@ const addImage = (imageData) => {
 
 const removeImage = (imageId) => {
   return {
-    type: DELETE_SPOT,
+    type: DELETE_SPOTIMAGE,
     imageId
   }
 }
@@ -173,39 +173,57 @@ export const addSpotImageById = (spotId, imageData) => async dispatch => {
   }
 }
 
-const badReqBody = {
-  address: '',
-  city: '',
-  state: '',
-  country: '',
-  lat: 10000,
-  lng: -10000,
-  name: '',
-  description: '',
-  price: -100
+export const deleteSpotImageById = (imageId) => async dispatch => {
+  const response = await csrfFetch(`/api/spot-images/${imageId}`, {
+    method: 'DELETE'
+  });
+
+  if (response.ok) {
+    const deleteMessage = await response.json();
+    dispatch(removeImage(imageId));
+    return deleteMessage;
+  } else {
+    const errorMessage = await response.json();
+    console.log(errorMessage);
+    return errorMessage;
+  }
 }
 
-const goodReqBody = {
-  address: '666 Updated Ave',
-  city: 'Updateville',
-  state: 'UD',
-  country: 'UPD',
-  lat: 90,
-  lt: -90,
-  name: 'Updated Spot',
-  description: 'The most updated spot in the whole world!',
-  price: 900
-}
+// SOME DEMO DATA FOR TESTING REQUESTS
 
-const imageBody = {
-  url: 'www.imageUrl.com',
-  preview: false
-}
+// const badReqBody = {
+//   address: '',
+//   city: '',
+//   state: '',
+//   country: '',
+//   lat: 10000,
+//   lng: -10000,
+//   name: '',
+//   description: '',
+//   price: -100
+// }
 
-const badImageBody = {
-  url: 1,
-  preview: 'preview'
-}
+// const goodReqBody = {
+//   address: '666 Updated Ave',
+//   city: 'Updateville',
+//   state: 'UD',
+//   country: 'UPD',
+//   lat: 90,
+//   lt: -90,
+//   name: 'Updated Spot',
+//   description: 'The most updated spot in the whole world!',
+//   price: 900
+// }
+
+// const imageBody = {
+//   url: 'www.imageUrl.com',
+//   preview: false
+// }
+
+// const badImageBody = {
+//   url: 1,
+//   preview: 'preview'
+// }
 
 // REDUCER AND INITIAL STATE
 
@@ -296,6 +314,25 @@ const spotReducer = (state = initialState, action) => {
         userSpots: { ...state.userSpots }
       };
       newState.singleSpot.spotImages = [ ...newState.singleSpot.spotImages, action.imageData ];
+      return newState;
+    };
+    case DELETE_SPOTIMAGE: {
+      const spotImagesCopy = [...state.singleSpot.spotImages ];
+      console.log('SPOT IMAGES COPY: ', spotImagesCopy);
+      const indexToRemove = spotImagesCopy.findIndex(image => image.id === action.imageId);
+      console.log('INDEX TO REMOVE: ', indexToRemove)
+      spotImagesCopy.splice(indexToRemove, 1);
+      console.log('SPOT IMAGES COPY AFTER SPLICE: ', spotImagesCopy)
+      const newState = {
+        allSpots: { ...state.allSpots },
+        singleSpot: {
+          spotData: { ...state.singleSpot.spotData },
+          spotImages: [ ...spotImagesCopy ],
+          owner: { ...state.singleSpot.owner }
+        },
+        userSpots: { ...state.userSpots }
+      };
+      console.log('NEW STATE: ', newState)
       return newState;
     }
     default: {
