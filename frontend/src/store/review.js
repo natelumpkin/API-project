@@ -96,12 +96,12 @@ const reviewReducer = (state = initialState, action) => {
       // load in Spot Reviews from previous state
       for (let spotReviewId in state.spot) {
         newState.spot[spotReviewId] = {
-          ...newState.spot[spotReviewId],
+          ...state.spot[spotReviewId],
           User: {
-            ...newState.spot[spotReviewId].User
+            ...state.spot[spotReviewId].User
           },
           ReviewImages: [
-            ...newState.spot[spotReviewId].ReviewImages
+            ...state.spot[spotReviewId].ReviewImages
           ]
         }
       }
@@ -116,12 +116,12 @@ const reviewReducer = (state = initialState, action) => {
       };
       for (let userReviewId in state.user) {
         newState.user[userReviewId] = {
-          ...newState.user[userReviewId],
+          ...state.user[userReviewId],
           User: {
-            ...newState.user[userReviewId].User
+            ...state.user[userReviewId].User
           },
           ReviewImages: [
-            ...newState.user[userReviewId].ReviewImages
+            ...state.user[userReviewId].ReviewImages
           ]
         }
       }
