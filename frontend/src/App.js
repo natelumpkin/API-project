@@ -9,6 +9,7 @@ import { getCurrentUser } from './store/session';
 // Components
 import SignupFormPage from './components/SignUpFormPage';
 import Navigation from './components/Navigation';
+import LandingPage from './components/LandingPage';
 
 function App() {
   const dispatch = useDispatch();
@@ -26,6 +27,9 @@ function App() {
       <Switch>
         <Route path='/signup'>
           <SignupFormPage />
+        </Route>
+        <Route exact path='/'>
+          <LandingPage />
         </Route>
       </Switch>
     )}
