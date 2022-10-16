@@ -119,10 +119,25 @@ export const updateSpotById = (spotId, spotData) => async dispatch => {
   if (response.ok) {
     const updatedSpot = await response.json();
     dispatch(addSpot(updatedSpot));
-    console.log(updatedSpot);
     return updatedSpot
   } else {
     const errorMessage = await response.json();
+    return errorMessage;
+  }
+}
+
+export const deleteSpotById = (spotId) => async dispatch => {
+  const response = await csrfFetch(`/api/spots/${spotId}`, {
+    method: 'DELETE'
+  });
+
+  if (response.ok) {
+    const deleteMessage = await response.json();
+    dispatch(removeSpot(spotId));
+    return deleteMessage;
+  } else {
+    const errorMessage = await response.json();
+    console.log(errorMessage);
     return errorMessage;
   }
 }
@@ -214,6 +229,19 @@ const spotReducer = (state = initialState, action) => {
         userSpots: { ...state.userSpots}
       };
       newState.allSpots[action.spotData.id] = action.spotData;
+      return newState;
+    }
+    case DELETE_SPOT: {
+      const newState = {
+        allSpots: { ...state.allSpots },
+        singleSpot: {
+          spotData: { ...state.singleSpot.spotData },
+          spotImages: [ ...state.singleSpot.spotImages ],
+          owner: { ...state.singleSpot.owner }
+        },
+        userSpots: { ...state.userSpots }
+      };
+      delete newState.allSpots[action.spotId];
       return newState;
     }
     default: {
