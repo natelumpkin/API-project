@@ -10,7 +10,7 @@ const SpotCard = ({ spot }) => {
         </div>
       <div className="spotcard-bottom-holder">
         <div>{spot.city},{spot.state}</div>
-        <div>{spot.avgRating}</div>
+        <div>{spot.avgRating} <i className="fa-solid fa-star"></i></div>
         <div>${spot.price} night</div>
       </div>
       </div>

@@ -51,9 +51,10 @@ const SpotDetails = () => {
           <h2>{singleSpot.name}</h2>
           <div>
             <h4>
-              {singleSpot.avgStarRating}
+              {singleSpot.avgStarRating} <i className="fa-solid fa-star"></i>
+              <span> • </span>
               <span>
-                <Link>{singleSpot.numReviews}{singleSpot.numReviews > 1 && `reviews`}{singleSpot.numReviews === 1 && 'review'}</Link>
+                <Link>{singleSpot.numReviews} {singleSpot.numReviews > 1 && `reviews`}{singleSpot.numReviews === 1 && 'review'}</Link>
               </span>
               <span>{singleSpot.city}, {singleSpot.state}, {singleSpot.country}</span>
             </h4>
