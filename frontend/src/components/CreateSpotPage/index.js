@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import { useHistory, Link } from 'react-router-dom';
 
 import { createNewSpot, addSpotImageById } from '../../store/spot';
 
@@ -37,8 +37,8 @@ const CreateSpotPage = () => {
     if (!address.length) locationErrors.push('Street address')
     if (!city.length) locationErrors.push('City')
     if (!country.length) locationErrors.push('Country')
-    if (lat === undefined || isNaN(lat) || lat < -90 || lat > 90) locationErrors.push('Latitude')
-    if (lng === undefined || isNaN(lng) || lng < -180 || lng > 180) locationErrors.push('Longitude')
+    if (lat === '' || isNaN(lat) || lat < -90 || lat > 90) locationErrors.push('Latitude')
+    if (lng === '' || isNaN(lng) || lng < -180 || lng > 180) locationErrors.push('Longitude')
     console.log(lat);
     console.log(!lng)
     console.log(isNaN(lng));
@@ -171,8 +171,9 @@ const CreateSpotPage = () => {
   }
 
   return (
-    <>
+    <div>
     <h2>Host Your Home</h2>
+    <Link to='/'>Exit</Link>
     <div>
       <form onSubmit={submitSpot}>
         <div>
@@ -212,7 +213,7 @@ const CreateSpotPage = () => {
           <input id='photo5' type='text' value={url5} onChange={(e) => seturl5(e.target.value)}></input>
           {photoErrors.length > 0 && (
               <div className='photo-errors'>
-                At least one photo is required
+                A preview photo is required
               </div>
             )}
         </div>
@@ -246,7 +247,7 @@ const CreateSpotPage = () => {
         <button>Publish Your Listing</button>
       </form>
     </div>
-    </>
+    </div>
   )
 }
 

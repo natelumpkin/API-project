@@ -26,6 +26,8 @@ const SpotDetails = () => {
   }, [])
 
   const singleSpot = useSelector(state => state.spots.singleSpot);
+  const userInfo = useSelector(state => state.session.user);
+  console.log('userInfo slice of state: ', userInfo)
   console.log('singleSpot slice of state!: ', singleSpot)
 
   const spotImages = singleSpot.SpotImages;
@@ -49,6 +51,13 @@ const SpotDetails = () => {
       <div className="details-main-holder">
         <div className="title-card">
           <h2>{singleSpot.name}</h2>
+          {userInfo.id === singleSpot.ownerId && (
+            <div>
+              <Link to={`/spots/${singleSpot.id}/edit`}>
+                Edit
+              </Link>
+            </div>
+          )}
           <div>
             <h4>
               {singleSpot.avgStarRating} <i className="fa-solid fa-star"></i>
