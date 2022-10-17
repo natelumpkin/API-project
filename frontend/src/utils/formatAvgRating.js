@@ -2,7 +2,7 @@
 // takes multi decimal string or number from raw data and converts it into two decimals
 
 const formatAvgRating = (rating) => {
-
+  console.log('FORMAT AVG RATING rating VARIABLE: ', rating)
   let stringRating = rating.toString();
   let ratingArr = stringRating.split('.');
 

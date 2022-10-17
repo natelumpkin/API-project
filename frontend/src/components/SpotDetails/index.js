@@ -1,20 +1,28 @@
 import { useSelector, useDispatch } from "react-redux";
 import { useParams, Link } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 // Thunks and Utils
 import { getSpotById } from "../../store/spot";
 import { getReviewsBySpot } from "../../store/review";
+import formatAvgRating from "../../utils/formatAvgRating";
+
+// Context
+
+import { Modal } from "../../context/Modal";
 
 // Components
 import ReviewsPreview from "./ReviewsPreview";
 import SpotImagesCard from "./SpotImagesCard";
+import SpotReviews from "../SpotReviewsModal/SpotReviews";
 
 
 const SpotDetails = () => {
   // console.log('Spot details is trying to render!')
 
   const { spotId } = useParams();
+
+  const [showModal, setShowModal] = useState(false);
 
   // console.log('Spot Id from use params!: ', spotId)
 
@@ -27,11 +35,12 @@ const SpotDetails = () => {
 
   const singleSpot = useSelector(state => state.spots.singleSpot);
   const userInfo = useSelector(state => state.session.user);
-  console.log('userInfo slice of state: ', userInfo)
+  // console.log('userInfo slice of state: ', userInfo)
   console.log('singleSpot slice of state!: ', singleSpot)
 
+  // FORMATTING STATE FOR RENDERING
+
   const spotImages = singleSpot.SpotImages;
-  // console.log('spotImages: ', spotImages)
   const ownerInfo = singleSpot.Owner;
   let previewImg;
   let nonPreviewImgs;
@@ -44,7 +53,11 @@ const SpotDetails = () => {
     })
   }
 
+  let formattedAvgRating
+  if (singleSpot.avgStarRating) formattedAvgRating = formatAvgRating(singleSpot.avgStarRating)
 
+
+  // RETURN STATEMENT
 
   return (
     <div>
@@ -60,10 +73,10 @@ const SpotDetails = () => {
           )}
           <div>
             <h4>
-              {singleSpot.avgStarRating} <i className="fa-solid fa-star"></i>
+              {formattedAvgRating} <i className="fa-solid fa-star"></i>
               <span> • </span>
               <span>
-                <Link>{singleSpot.numReviews} {(singleSpot.numReviews > 1 || singleSpot.numReviews < 1) && `reviews`}{singleSpot.numReviews === 1 && 'review'}</Link>
+                <Link onClick={() => setShowModal(true)}>{singleSpot.numReviews} {(singleSpot.numReviews > 1 || singleSpot.numReviews < 1) && `reviews`}{singleSpot.numReviews === 1 && 'review'}</Link>
               </span>
               <span>{singleSpot.city}, {singleSpot.state}, {singleSpot.country}</span>
             </h4>
@@ -80,6 +93,7 @@ const SpotDetails = () => {
         </div>
         <div className="spot-reviews-card">
           <ReviewsPreview spotId={spotId} avgRating={singleSpot.avgStarRating} numReviews={singleSpot.numReviews}/>
+          <button onClick={() => setShowModal(true)}>Show all {singleSpot.numReviews} reviews</button>
         </div>
         <div className="location-card">
           <h2>Where you'll be</h2>
@@ -89,7 +103,11 @@ const SpotDetails = () => {
           </div>
         </div>
       </div>
-      {/* <BottomIndex /> */}
+      {showModal && (
+        <Modal onClose={() => setShowModal(false)}>
+          <SpotReviews spotId={spotId} avgRating={formattedAvgRating} numReviews={singleSpot.numReviews}/>
+        </Modal>
+      )}
     </div>
   )
 }
