@@ -1,5 +1,10 @@
 import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
 
+// Thunks and Utils
+import { getAllSpots } from "../../store/spot";
+
+// Components
 import SpotCard from "./SpotCard";
 
 const LandingPage = () => {
@@ -9,11 +14,30 @@ const LandingPage = () => {
 
   // get the list of all spots by dispatching getallspots thunk on load
   // listen for changes in case a spot is deleted
-  const state = useSelector(state => state)
+  const dispatch = useDispatch();
 
+  useEffect(() => {
+    console.log('LANDING PAGE DISPATCH GET ALL SPOTS RUNNING')
+    dispatch(getAllSpots());
+  }, []);
+
+  const allSpots = useSelector(state => state.spots.allSpots);
+  console.log('LANDING PAGE allSpots store: ', allSpots)
+
+
+  const spotsArray = [];
+  for (let spot in allSpots) {
+    spotsArray.push(allSpots[spot]);
+  }
+  console.log('LANDING PAGE spotsArray after pushing spots data: ', spotsArray)
 
   return (
     <div>
+      {
+        spotsArray.map(spot => (
+          <SpotCard key={spot.id} spot={spot}/>
+        ))
+      }
     </div>
   )
 };
