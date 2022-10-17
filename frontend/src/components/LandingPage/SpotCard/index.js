@@ -1,9 +1,9 @@
 import { Link } from "react-router-dom";
 
 const SpotCard = ({ spot }) => {
-  console.log('SPOT CARD spot PROP: ', spot)
+  // console.log('SPOT CARD spot PROP: ', spot)
   return (
-    <Link>
+    <Link to={`/spots/${spot.id}`}>
       <div className="spotcard-top-holder">
         <div className="spotcard-preview-image-holder">
           <img src={spot.url} alt='preview image of spot'/>

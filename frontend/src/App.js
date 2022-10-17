@@ -10,6 +10,7 @@ import { getCurrentUser } from './store/session';
 import SignupFormPage from './components/SignUpFormPage';
 import Navigation from './components/Navigation';
 import LandingPage from './components/LandingPage';
+import SpotDetails from './components/SpotDetails';
 
 function App() {
   const dispatch = useDispatch();
@@ -30,6 +31,9 @@ function App() {
         </Route>
         <Route exact path='/'>
           <LandingPage />
+        </Route>
+        <Route path='/spots/:spotId'>
+          <SpotDetails />
         </Route>
       </Switch>
     )}
