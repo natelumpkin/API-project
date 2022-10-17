@@ -3,7 +3,7 @@ import { Modal } from '../../context/Modal';
 
 import DeleteForm from './DeleteForm';
 
-const DeleteSpotModal = () => {
+const DeleteSpotModal = ({spotId}) => {
   const [showModal, setShowModal] = useState(false);
 
   return (
@@ -11,7 +11,7 @@ const DeleteSpotModal = () => {
       <span onClick={() => setShowModal(true)}>Deactivate Listing</span>
       {showModal && (
         <Modal onClose={() => setShowModal(false)}>
-          <DeleteForm />
+          <DeleteForm spotId={spotId} />
         </Modal>
       )}
     </>

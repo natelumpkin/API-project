@@ -231,7 +231,7 @@ const UpdateSpotForm = () => {
             )}
         </div>
         <button>Publish Your Listing</button>
-        <DeleteSpotModal />
+        <DeleteSpotModal spotId={spotId}/>
       </form>
     </div>
     </div>
