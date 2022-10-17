@@ -127,32 +127,14 @@ const CreateSpotPage = () => {
       }
 
       const photo1 = { url: url1, preview: true }
-      let photo2;
-      let photo3;
-      let photo4;
-      let photo5;
-      if (url2) {photo2 = { url: url2, preview: false }}
-      if (url3) {photo3 = { url: url3, preview: false }}
-      if (url4) {photo4 = { url: url4, preview: false }}
-      if (url5) {photo5 = { url: url5, preview: false }}
+
 
       console.log('photo1: ', photo1);
       const newSpot = await dispatch(createNewSpot(spotData));
       if (photo1) {
         const newPhoto1 = await dispatch(addSpotImageById(newSpot.id, photo1))
       }
-      if (photo2) {
-        const newPhoto2 = await dispatch(addSpotImageById(newSpot.id, photo2))
-      }
-      if (photo3) {
-        const newPhoto3 = await dispatch(addSpotImageById(newSpot.id, photo3))
-      }
-      if (photo4) {
-        const newPhoto4 = await dispatch(addSpotImageById(newSpot.id, photo4))
-      }
-      if (photo5) {
-        const newPhoto5 = await dispatch(addSpotImageById(newSpot.id, photo5))
-      }
+
 
       reset();
       history.push(`/spots/${newSpot.id}`)
@@ -201,16 +183,8 @@ const CreateSpotPage = () => {
         </div>
         <div>
           <h4>Please add up to 5 photos</h4>
-          <label htmlFor='previewPhoto'>Preview Photo URL</label>
-          <input id="previewPhoto" type='text' value={url1} onChange={(e) => seturl1(e.target.value)}></input>
-          <label htmlFor='photo2'>URL</label>
-          <input id='photo2' type='text' value={url2} onChange={(e) => seturl2(e.target.value)}></input>
-          <label htmlFor='photo3'>URL</label>
-          <input id='photo3' type='text' value={url3} onChange={(e) => seturl3(e.target.value)}></input>
-          <label htmlFor='photo4'>URL</label>
-          <input id='photo4' type='text' value={url4} onChange={(e) => seturl4(e.target.value)}></input>
-          <label htmlFor='photo5'>URL</label>
-          <input id='photo5' type='text' value={url5} onChange={(e) => seturl5(e.target.value)}></input>
+          <label htmlFor='previewPhoto'>Preview Photo</label>
+          <input id="previewPhoto" placeholder='URL here...' type='text' value={url1} onChange={(e) => seturl1(e.target.value)}></input>
           {photoErrors.length > 0 && (
               <div className='photo-errors'>
                 A preview photo is required
