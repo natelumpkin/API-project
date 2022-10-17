@@ -1,5 +1,5 @@
 import { csrfFetch } from "./csrf";
-import normalizeSpots from "./utils/normalizeSpots";
+import normalizeSpots from "../utils/normalizeSpots";
 
 // ACTION TYPES
 
@@ -84,6 +84,7 @@ export const getAllSpots = () => async (dispatch) => {
 }
 
 export const getSpotById = (spotId) => async (dispatch) => {
+
   const response = await csrfFetch(`/api/spots/${spotId}`);
 
   const spotData = await response.json();
@@ -97,6 +98,7 @@ export const getSpotById = (spotId) => async (dispatch) => {
 }
 
 export const getCurrentUserSpots = () => async dispatch => {
+
   const response = await csrfFetch('/api/spots/current');
 
   const spotData = await response.json();
@@ -158,6 +160,8 @@ export const deleteSpotById = (spotId) => async dispatch => {
 }
 
 export const addSpotImageById = (spotId, imageData) => async dispatch => {
+  console.log('spotId: ', spotId)
+  console.log('imageData: ', imageData)
   const response = await csrfFetch(`/api/spots/${spotId}/images`, {
     method: 'POST',
     body: JSON.stringify(imageData)
@@ -314,7 +318,7 @@ const spotReducer = (state = initialState, action) => {
         },
         userSpots: { ...state.userSpots }
       };
-      newState.singleSpot.spotImages = [ ...newState.singleSpot.spotImages, action.imageData ];
+      newState.singleSpot.SpotImages = [ ...newState.singleSpot.SpotImages, action.imageData ];
       return newState;
     };
     case DELETE_SPOTIMAGE: {

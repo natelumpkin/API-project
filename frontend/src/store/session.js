@@ -21,6 +21,7 @@ const removeUser = () => {
 // THUNKS
 
 export const logInUser = (user) => async dispatch => {
+
   const { credential, password } = user;
 
   const response = await csrfFetch('/api/session', {
@@ -49,6 +50,7 @@ export const logOutUser = () => async dispatch => {
 }
 
 export const getCurrentUser = () => async dispatch => {
+
   const response = await csrfFetch('/api/session');
   const user = await response.json();
   dispatch(setUser(user))

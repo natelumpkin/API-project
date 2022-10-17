@@ -1,6 +1,6 @@
 import { csrfFetch } from "./csrf";
 
-import normalizeReviews from "./utils/normalizeReviews";
+import normalizeReviews from "../utils/normalizeReviews";
 
 const USER_REVIEWS = '/reviews/getCurrentUserReviews';
 const SPOT_REVIEWS = '/reviews/getReviewsBySpotId';

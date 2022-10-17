@@ -17,19 +17,18 @@ const LandingPage = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    console.log('LANDING PAGE DISPATCH GET ALL SPOTS RUNNING')
     dispatch(getAllSpots());
   }, []);
 
   const allSpots = useSelector(state => state.spots.allSpots);
-  console.log('LANDING PAGE allSpots store: ', allSpots)
+  // console.log('LANDING PAGE allSpots store: ', allSpots)
 
 
   const spotsArray = [];
   for (let spot in allSpots) {
     spotsArray.push(allSpots[spot]);
   }
-  console.log('LANDING PAGE spotsArray after pushing spots data: ', spotsArray)
+  // console.log('LANDING PAGE spotsArray after pushing spots data: ', spotsArray)
 
   return (
     <div>

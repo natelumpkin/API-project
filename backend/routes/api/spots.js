@@ -189,11 +189,12 @@ router.get('/', async (req, res, next) => {
     }
 
     spot.SpotImages.forEach(spotImage => {
+
       if (spotImage.preview) {
         spot.previewImage = spotImage.url
-      } else {
-        spot.previewImage = 'No preview image available'
-      }
+       } //else {
+      //   spot.previewImage = 'No preview image available'
+      // }
     })
     delete spot.SpotImages;
     if (!spot.previewImage) {
