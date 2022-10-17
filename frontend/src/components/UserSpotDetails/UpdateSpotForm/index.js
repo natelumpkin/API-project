@@ -10,6 +10,7 @@ import DeleteSpotModal from "../../DeleteSpotModal";
 const UpdateSpotForm = () => {
   const dispatch = useDispatch();
   const { spotId } = useParams();
+  console.log('UPDATE SPOT FORM spotId is now: ', spotId)
   const history = useHistory();
 
   const spotInfo = useSelector(state => state.spots.singleSpot);
