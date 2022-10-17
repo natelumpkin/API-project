@@ -4,6 +4,8 @@ import { useState } from "react";
 
 import { updateSpotById, addSpotImageById } from "../../../store/spot";
 
+import DeleteSpotModal from "../../DeleteSpotModal";
+
 
 const UpdateSpotForm = () => {
   const dispatch = useDispatch();
@@ -229,7 +231,7 @@ const UpdateSpotForm = () => {
             )}
         </div>
         <button>Publish Your Listing</button>
-        <Link to={`/spots/${spotId}/delete`}>Deactivate Listing</Link>
+        <DeleteSpotModal />
       </form>
     </div>
     </div>
