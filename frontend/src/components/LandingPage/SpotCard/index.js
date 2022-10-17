@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 
 const SpotCard = ({ spot }) => {
   // console.log('SPOT CARD spot PROP: ', spot)
-  console.log('SPOT CARD SPOT: ', spot)
+  //console.log('SPOT CARD SPOT: ', spot)
   return (
     <Link to={`/spots/${spot.id}`}>
       <div className="spotcard-top-holder">

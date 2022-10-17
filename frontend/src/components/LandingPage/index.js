@@ -17,7 +17,6 @@ const LandingPage = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    // console.log('LANDING PAGE DISPATCH GET ALL SPOTS RUNNING')
     dispatch(getAllSpots());
   }, []);
 

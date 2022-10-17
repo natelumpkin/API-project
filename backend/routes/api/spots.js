@@ -189,7 +189,7 @@ router.get('/', async (req, res, next) => {
     }
 
     spot.SpotImages.forEach(spotImage => {
-      console.log(spotImage)
+
       if (spotImage.preview) {
         spot.previewImage = spotImage.url
        } //else {

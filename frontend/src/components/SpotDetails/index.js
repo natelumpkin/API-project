@@ -21,7 +21,6 @@ const SpotDetails = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    // console.log('Use effect 1 is running in SpotDetails!')
     dispatch(getSpotById(spotId))
     dispatch(getReviewsBySpot(spotId))
   }, [])
