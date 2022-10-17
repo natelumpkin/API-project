@@ -1,5 +1,5 @@
 import { csrfFetch } from "./csrf";
-import normalizeSpots from "./utils/normalizeSpots";
+import normalizeSpots from "../utils/normalizeSpots";
 
 // ACTION TYPES
 

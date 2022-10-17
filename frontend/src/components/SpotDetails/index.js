@@ -4,27 +4,32 @@ import { useEffect } from "react";
 
 // Thunks and Utils
 import { getSpotById } from "../../store/spot";
+import { getReviewsBySpot } from "../../store/review";
+
+// Components
+import ReviewsPreview from "./ReviewsPreview";
 
 
 const SpotDetails = () => {
-  console.log('Spot details is trying to render!')
+  // console.log('Spot details is trying to render!')
 
   const { spotId } = useParams();
 
-  console.log('Spot Id from use params!: ', spotId)
+  // console.log('Spot Id from use params!: ', spotId)
 
   const dispatch = useDispatch();
 
   useEffect(() => {
-    console.log('Use effect 1 is running in SpotDetails!')
+    // console.log('Use effect 1 is running in SpotDetails!')
     dispatch(getSpotById(spotId))
+    dispatch(getReviewsBySpot(spotId))
   }, [])
 
   const singleSpot = useSelector(state => state.spots.singleSpot);
-  console.log('singleSpot slice of state!: ', singleSpot)
+  // console.log('singleSpot slice of state!: ', singleSpot)
 
   const spotImages = singleSpot.SpotImages;
-  console.log('spotImages: ', spotImages)
+  // console.log('spotImages: ', spotImages)
   const ownerInfo = singleSpot.Owner;
   let previewImg;
   let nonPreviewImgs;
@@ -71,7 +76,7 @@ const SpotDetails = () => {
           <p>{singleSpot.description}</p>
         </div>
         <div className="spot-reviews-card">
-
+          <ReviewsPreview spotId={spotId} avgRating={singleSpot.avgStarRating} numReviews={singleSpot.numReviews}/>
         </div>
         <div className="location-card">
           <h2>Where you'll be</h2>
