@@ -21,6 +21,10 @@ const ReviewsPreview = ({spotId, avgRating, numReviews}) => {
 
   console.log('REVIEWS ARRAY AFTER FLATTENING: ', reviewsArr)
 
+  if (!numReviews) {
+    return null;
+  }
+
   return (
     <div>
       <span><i className="fa-solid fa-star"/>{formattedAvgRating}</span>

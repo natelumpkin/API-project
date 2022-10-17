@@ -8,6 +8,7 @@ import { getReviewsBySpot } from "../../store/review";
 
 // Components
 import ReviewsPreview from "./ReviewsPreview";
+import SpotImagesCard from "./SpotImagesCard";
 
 
 const SpotDetails = () => {
@@ -26,7 +27,7 @@ const SpotDetails = () => {
   }, [])
 
   const singleSpot = useSelector(state => state.spots.singleSpot);
-  // console.log('singleSpot slice of state!: ', singleSpot)
+  console.log('singleSpot slice of state!: ', singleSpot)
 
   const spotImages = singleSpot.SpotImages;
   // console.log('spotImages: ', spotImages)
@@ -54,21 +55,14 @@ const SpotDetails = () => {
               {singleSpot.avgStarRating} <i className="fa-solid fa-star"></i>
               <span> • </span>
               <span>
-                <Link>{singleSpot.numReviews} {singleSpot.numReviews > 1 && `reviews`}{singleSpot.numReviews === 1 && 'review'}</Link>
+                <Link>{singleSpot.numReviews} {(singleSpot.numReviews > 1 || singleSpot.numReviews < 1) && `reviews`}{singleSpot.numReviews === 1 && 'review'}</Link>
               </span>
               <span>{singleSpot.city}, {singleSpot.state}, {singleSpot.country}</span>
             </h4>
           </div>
         </div>
         <div className="picture-card">
-          <div className="preview-image">
-            {previewImg && <img src={previewImg.url} alt='preview image'/>}
-          </div>
-          <div className="other-images">
-            {nonPreviewImgs && nonPreviewImgs.length && nonPreviewImgs.map(image => (
-              <img key={image.id} src={image.url} alt='non preview image' />
-            ))}
-          </div>
+          <SpotImagesCard previewImg={previewImg} nonPreviewImgs={nonPreviewImgs}/>
         </div>
         <div className="user-info">
           <h2>Spot hosted by {ownerInfo.firstName}</h2>
