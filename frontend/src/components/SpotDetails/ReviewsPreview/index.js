@@ -8,7 +8,7 @@ import ReviewCard from "../ReviewCard";
 const ReviewsPreview = ({spotId, avgRating, numReviews}) => {
 
   const reviews = useSelector(state => state.reviews.spot);
-  // console.log('REVIEWS SLICE OF STATE: ', reviews);
+  console.log('REVIEWS SLICE OF STATE: ', reviews);
   const reviewsArr = [];
 
   for (let review in reviews) {

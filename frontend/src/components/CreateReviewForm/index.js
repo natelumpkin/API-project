@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 
 import { createReviewBySpotId } from "../../store/review";
+import { getSpotById } from "../../store/spot";
 
 
 const CreateReviewForm = ({spotId, spotInfo, userInfo}) => {
@@ -35,6 +36,7 @@ const CreateReviewForm = ({spotId, spotInfo, userInfo}) => {
 
     console.log('DISPATCHING CREATE REVIEW')
     dispatch(createReviewBySpotId(spotId, reviewData))
+      .then(() => dispatch(getSpotById(spotId)));
 
     setReview('')
     setStars(5)
