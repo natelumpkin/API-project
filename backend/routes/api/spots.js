@@ -458,8 +458,45 @@ router.get('/:spotId', async(req, res) => {
       attributes: ['id','firstName','lastName']
     }]
   });
+
   if (spot) {
-  res.json(spot);
+
+  const spotObj = spot.toJSON();
+
+  const reviews = await Review.findAll({
+    where: {
+      spotId: req.params.spotId
+    }
+  })
+
+  const reviewList = [];
+  reviews.forEach(review => {
+    reviewList.push(review.toJSON());
+  })
+
+  if (reviewList.length > 0) {
+
+  let numReviews = 0;
+  let sumStars = 0;
+  reviewList.forEach(review => {
+    if (spot.id === review.spotId) {
+      numReviews++;
+      sumStars += review.stars;
+      reviewFound = true;
+    }
+  })
+
+  let avgRating = sumStars / numReviews;
+
+  spotObj.avgStarRating = avgRating;
+  spotObj.numReviews = numReviews;
+} else {
+  spotObj.avgStarRating = null;
+  spotObj.numReviews = 0;
+}
+
+  res.json(spotObj);
+
   } else {
     res.status(404);
     res.json({
