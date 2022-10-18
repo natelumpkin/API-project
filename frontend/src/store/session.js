@@ -77,9 +77,16 @@ export const signUpNewUser = (userInfo) => async dispatch => {
     })
   }
   const response = await csrfFetch('/api/users', options);
-  const userData = await response.json();
-  dispatch(setUser(userData));
-  return userData;
+
+    if (response.ok) {
+      const userData = await response.json();
+      dispatch(setUser(userData));
+      return userData;
+    } else {
+      const errorMessage = await response.json();
+      return errorMessage;
+    }
+
 }
 
 // REDUCER

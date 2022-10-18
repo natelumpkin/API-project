@@ -43,6 +43,9 @@ function App() {
         <Route path='/create-a-spot'>
           <CreateSpotPage/>
         </Route>
+        <Route>
+          404 Page Not Found
+        </Route>
       </Switch>
     )}
     </>

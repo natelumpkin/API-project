@@ -1,5 +1,5 @@
 import { useSelector, useDispatch } from "react-redux";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useHistory } from "react-router-dom";
 import { useEffect, useState } from "react";
 
 // Thunks and Utils
@@ -20,6 +20,7 @@ import CreateReviewForm from "../CreateReviewForm";
 
 const SpotDetails = () => {
   //console.log('SPOT DETAILS IS TRYING TO RENDER')
+  const history = useHistory();
 
   const { spotId } = useParams();
 
@@ -32,9 +33,10 @@ const SpotDetails = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getSpotById(spotId))
+    const variable = dispatch(getSpotById(spotId))
       .then(() => dispatch(getReviewsBySpot(spotId)))
       .then(() => setisLoaded(true))
+      .catch(() => history.push('/not-found'))
   }, [dispatch, isLoaded])
 
   const singleSpot = useSelector(state => state.spots.singleSpot);
