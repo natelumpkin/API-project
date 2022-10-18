@@ -94,6 +94,7 @@ export const createReviewBySpotId = (spotId, reviewData) => async dispatch => {
   }
   else {
     const errorMessage = await response.json()
+    console.log(errorMessage);
     return errorMessage;
   }
 }
