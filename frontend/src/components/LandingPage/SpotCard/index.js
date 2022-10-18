@@ -6,7 +6,8 @@ const SpotCard = ({ spot }) => {
   // console.log('SPOT CARD spot PROP: ', spot)
   //console.log('SPOT CARD SPOT: ', spot)
 
-  const formattedAvgRating = formatAvgRating(spot.avgRating)
+  let formattedAvgRating;
+  if (spot.avgRating) formattedAvgRating = formatAvgRating(spot.avgRating)
 
   return (
     <Link to={`/spots/${spot.id}`}>

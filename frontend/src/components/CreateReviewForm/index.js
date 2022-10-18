@@ -55,6 +55,15 @@ const CreateReviewForm = ({spotId, spotInfo, userInfo}) => {
         <label htmlFor="stars">Stars</label>
         <input id="stars" type="numeric" min={1} max={5} value={stars} onChange={(e) => setStars(e.target.value)}></input>
         <button>Submit Review</button>
+        {validationErrors.length > 0 && (
+          <div>
+            <ul>
+              {validationErrors.map(error => (
+                <li>{error}</li>
+              ))}
+            </ul>
+          </div>
+        )}
       </form>
     </div>
   )
