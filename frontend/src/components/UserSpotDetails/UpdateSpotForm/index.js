@@ -14,7 +14,6 @@ const UpdateSpotForm = () => {
   const history = useHistory();
 
   const spotInfo = useSelector(state => state.spots.singleSpot);
-  console.log('UPDATE SPOT FORM spotInfo.SpotImages slice of state: ', spotInfo.SpotImages)
 
   const [address, setAddress] = useState(spotInfo.address);
   const [city, setCity] = useState(spotInfo.city)
@@ -26,14 +25,7 @@ const UpdateSpotForm = () => {
   const [description, setDescription] = useState(spotInfo.description)
   const [price, setPrice] = useState(spotInfo.price)
 
-  const [url1, seturl1] = useState('')
-  const [url2, seturl2] = useState('')
-  const [url3, seturl3] = useState('')
-  const [url4, seturl4] = useState('')
-  const [url5, seturl5] = useState('')
-
   const [locationErrors, setLocationErrors] = useState([])
-  const [photoErrors, setPhotoErrors] = useState([])
   const [descriptionErrors, setDescriptionErrors] = useState([])
   const [priceErrors, setPriceErrors] = useState([])
 
@@ -51,13 +43,6 @@ const UpdateSpotForm = () => {
     console.log(lng > 180);
     console.log(locationErrors);
     return locationErrors;
-  }
-
-  const handlePhotoErrors = () => {
-    let errors = [];
-    console.log('url1: ', url1);
-    if (!url1.length) errors.push('At least one photo is required')
-    return errors;
   }
 
   const handleDescriptionErrors = () => {
@@ -83,15 +68,9 @@ const UpdateSpotForm = () => {
     setName('')
     setDescription('')
     setPrice(100)
-    seturl1('')
-    seturl2('')
-    seturl3('')
-    seturl4('')
-    seturl5('')
     setLocationErrors([])
     setDescriptionErrors([])
     setPriceErrors([])
-    setPhotoErrors([])
   }
 
   const submitSpot = async (e) => {
@@ -101,8 +80,6 @@ const UpdateSpotForm = () => {
   setLocationErrors(locationErrors);
   console.log('location errors: ', locationErrors);
 
-  const photoErrors = handlePhotoErrors();
-  setPhotoErrors(photoErrors);
 
   const descriptionErrors = handleDescriptionErrors();
   setDescriptionErrors(descriptionErrors);
@@ -112,7 +89,6 @@ const UpdateSpotForm = () => {
 
   if (locationErrors.length > 0 || descriptionErrors.length > 0 || priceErrors.length > 0) {
     console.log('location errors:', locationErrors)
-    console.log('photo errors: ', photoErrors)
     console.log('description errors: ', descriptionErrors)
     console.log('price errors: ', priceErrors)
     console.log('entering if statement')
@@ -131,33 +107,7 @@ const UpdateSpotForm = () => {
         price
       }
 
-      const photo1 = { url: url1, preview: true }
-      let photo2;
-      let photo3;
-      let photo4;
-      let photo5;
-      if (url2) {photo2 = { url: url2, preview: false }}
-      if (url3) {photo3 = { url: url3, preview: false }}
-      if (url4) {photo4 = { url: url4, preview: false }}
-      if (url5) {photo5 = { url: url5, preview: false }}
-
-      console.log('photo1: ', photo1);
       const newSpot = await dispatch(updateSpotById(spotId, spotData));
-      if (photo1) {
-        const newPhoto1 = await dispatch(addSpotImageById(newSpot.id, photo1))
-      }
-      if (photo2) {
-        const newPhoto2 = await dispatch(addSpotImageById(newSpot.id, photo2))
-      }
-      if (photo3) {
-        const newPhoto3 = await dispatch(addSpotImageById(newSpot.id, photo3))
-      }
-      if (photo4) {
-        const newPhoto4 = await dispatch(addSpotImageById(newSpot.id, photo4))
-      }
-      if (photo5) {
-        const newPhoto5 = await dispatch(addSpotImageById(newSpot.id, photo5))
-      }
 
       reset();
       history.push(`/spots/${newSpot.id}`)

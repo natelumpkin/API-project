@@ -209,6 +209,7 @@ router.get('/', async (req, res, next) => {
        } //else {
       //   spot.previewImage = 'No preview image available'
       // }
+
     })
     delete spot.SpotImages;
     if (!spot.previewImage) {
