@@ -19,14 +19,14 @@ import CreateReviewForm from "../CreateReviewForm";
 
 
 const SpotDetails = () => {
-  console.log('SPOT DETAILS IS TRYING TO RENDER')
+  //console.log('SPOT DETAILS IS TRYING TO RENDER')
 
   const { spotId } = useParams();
 
   const [showModal, setShowModal] = useState(false);
   const [showReviewForm, setShowReviewForm] = useState(false);
   const [isLoaded, setisLoaded] = useState(false);
-  console.log('SPOT DETAILS IS TRYING TO RENDER. IS LOADED VARIABLE: ', isLoaded)
+  //console.log('SPOT DETAILS IS TRYING TO RENDER. IS LOADED VARIABLE: ', isLoaded)
   // console.log('Spot Id from use params!: ', spotId)
 
   const dispatch = useDispatch();
@@ -114,7 +114,7 @@ const SpotDetails = () => {
           <p>{singleSpot.description}</p>
         </div>
         <div className="spot-reviews-card">
-          <ReviewsPreview spotId={spotId} avgRating={singleSpot.avgStarRating} numReviews={singleSpot.numReviews}/>
+          <ReviewsPreview setShowModal={setShowModal} spotId={spotId} avgRating={singleSpot.avgStarRating} numReviews={singleSpot.numReviews}/>
           <button onClick={() => setShowModal(true)}>Show all {singleSpot.numReviews} reviews</button>
           {userInfo && userInfo.id !== singleSpot.ownerId && !currentUserHasReviewed &&
             <button onClick={() => setShowReviewForm(true)}>Review this Spot</button>
