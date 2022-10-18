@@ -6,8 +6,10 @@ import './LoginForm.css'
 
 const LoginForm = () => {
 
+  console.log('LOGIN FORM IS TRYING TO RENDER')
+
   const dispatch = useDispatch();
-  const sessionUser = useSelector(state => state.session.user)
+  //const sessionUser = useSelector(state => state.session.user)
   const [credential, setCredential] = useState('');
   const [password, setPassword] = useState('')
   const [errors, setErrors] = useState([]);
@@ -15,11 +17,12 @@ const LoginForm = () => {
   const submitForm = async (e) => {
     e.preventDefault();
     setErrors([]);
-    return dispatch(sessionActions.logInUser({ credential, password }))
-      .catch(async (res) => {
-        const data = await res.json();
-        if (data && data.message) setErrors([data.message]);
-      });
+    const response = await dispatch(sessionActions.logInUser({ credential, password }));
+    if (response && response.message) return setErrors([response.message]);
+      // .catch(async (res) => {
+      //   const data = await res.json();
+      //   if (data && data.message) setErrors([data.message]);
+      // });
     }
 
   return (

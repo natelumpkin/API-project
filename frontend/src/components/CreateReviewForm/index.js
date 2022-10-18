@@ -3,9 +3,10 @@ import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 
 import { createReviewBySpotId } from "../../store/review";
+import { getSpotById } from "../../store/spot";
 
 
-const CreateReviewForm = ({spotId, spotInfo, userInfo}) => {
+const CreateReviewForm = ({spotId, spotInfo, setShowReviewForm}) => {
 
   const dispatch = useDispatch();
   const history = useHistory();
@@ -17,7 +18,8 @@ const CreateReviewForm = ({spotId, spotInfo, userInfo}) => {
   const handleValidationErrors = () => {
     const errors = [];
     if (!review.length) errors.push('Please enter a review')
-    if (stars <= 0 || stars > 5) errors.push('Please enter a rating from 1 to 5')
+    if (stars <= 0 || stars > 5) errors.push('Stars: Please enter a number from 1 to 5')
+    if (isNaN(stars)) errors.push('Stars: Please enter a number between 1 and 5')
     return errors;
   }
 
@@ -25,7 +27,7 @@ const CreateReviewForm = ({spotId, spotInfo, userInfo}) => {
     e.preventDefault();
 
     const validationErrors = handleValidationErrors();
-    console.log('VALIDATION ERRORS FOR CREATE REVIEW FORM: ', validationErrors);
+    //console.log('VALIDATION ERRORS FOR CREATE REVIEW FORM: ', validationErrors);
     if (validationErrors.length) return setValidationErrors(validationErrors);
 
     const reviewData = {
@@ -33,19 +35,21 @@ const CreateReviewForm = ({spotId, spotInfo, userInfo}) => {
       stars: stars
     }
 
-    console.log('DISPATCHING CREATE REVIEW')
+    //console.log('DISPATCHING CREATE REVIEW')
     dispatch(createReviewBySpotId(spotId, reviewData))
+      .then(() => dispatch(getSpotById(spotId)));
 
     setReview('')
     setStars(5)
     setValidationErrors([])
-
+    setShowReviewForm(false);
     history.push(`/spots/${spotId}`)
   }
 
 
   return (
     <div>
+      <div><i className="fa-solid fa-xmark" onClick={() => setShowReviewForm(false)}></i></div>
       <h4>Review {spotInfo.Owner.firstName}'s Spot {spotInfo.name}</h4>
       <form onSubmit={handleSubmit}>
         <label htmlFor="review">Review</label>
@@ -53,6 +57,15 @@ const CreateReviewForm = ({spotId, spotInfo, userInfo}) => {
         <label htmlFor="stars">Stars</label>
         <input id="stars" type="numeric" min={1} max={5} value={stars} onChange={(e) => setStars(e.target.value)}></input>
         <button>Submit Review</button>
+        {validationErrors.length > 0 && (
+          <div>
+            <ul>
+              {validationErrors.map(error => (
+                <li>{error}</li>
+              ))}
+            </ul>
+          </div>
+        )}
       </form>
     </div>
   )

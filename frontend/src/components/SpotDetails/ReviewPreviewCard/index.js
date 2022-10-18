@@ -2,14 +2,16 @@ import { useSelector } from "react-redux";
 import { useState } from "react";
 
 import getMonthFromDate from "../../../utils/getMonthFromDate";
+import formatReviewPreview from "../../../utils/formatReviewPreview";
 
 import DeleteReviewForm from "../../DeleteReviewForm";
 import { Modal } from "../../../context/Modal";
 
-// Individual Review Card containing userName, date Review was made,
-// and preview of review text
+// Review preview card only displays first 6 reviews
+// And only displays the first 180 characters, ending with a ...
+// Each review that is cut off has a show more link that brings up the modal
 
-const ReviewCard = ({review, spotId}) => {
+const ReviewPreviewCard = ({review, spotId, setShowModal}) => {
 
   const currentUser = useSelector(state => state.session.user);
 
@@ -18,6 +20,9 @@ const ReviewCard = ({review, spotId}) => {
   const [showDeleteReviewForm, setShowDeleteReviewForm] = useState(false);
 
   let formattedDate = getMonthFromDate(review.createdAt)
+  let formattedReview = formatReviewPreview(review.review);
+  let enableShowMoreButton;
+  if (formattedReview.length < review.review.length) enableShowMoreButton = true;
 
   //console.log('REVIEW CARD prop: ', review)
 
@@ -32,7 +37,12 @@ const ReviewCard = ({review, spotId}) => {
         <h5>{formattedDate}</h5>
       </div>
       <div>
-        <p>{review.review}</p>
+        <p>{formattedReview}</p>
+        {enableShowMoreButton && (
+          <div>
+            <h4 onClick={() => setShowModal(true)}>Show more {'>'}</h4>
+          </div>
+        )}
       </div>
     </div>
     {showDeleteReviewForm && (
@@ -44,4 +54,4 @@ const ReviewCard = ({review, spotId}) => {
   )
 }
 
-export default ReviewCard;
+export default ReviewPreviewCard;

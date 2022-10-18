@@ -111,7 +111,7 @@ export const getCurrentUserSpots = () => async dispatch => {
 
 export const createNewSpot = (spotData) => async dispatch => {
 
-  console.log('RESPONSE BEFORE FETCH')
+  //console.log('RESPONSE BEFORE FETCH')
 
   const response = await csrfFetch('/api/spots', {
     method: 'POST',
@@ -160,8 +160,8 @@ export const deleteSpotById = (spotId) => async dispatch => {
 }
 
 export const addSpotImageById = (spotId, imageData) => async dispatch => {
-  console.log('spotId: ', spotId)
-  console.log('imageData: ', imageData)
+  // console.log('spotId: ', spotId)
+  // console.log('imageData: ', imageData)
   const response = await csrfFetch(`/api/spots/${spotId}/images`, {
     method: 'POST',
     body: JSON.stringify(imageData)
@@ -188,7 +188,7 @@ export const deleteSpotImageById = (imageId) => async dispatch => {
     return deleteMessage;
   } else {
     const errorMessage = await response.json();
-    console.log(errorMessage);
+    //console.log(errorMessage);
     return errorMessage;
   }
 }
@@ -324,11 +324,11 @@ const spotReducer = (state = initialState, action) => {
     case DELETE_SPOTIMAGE: {
       // I'm not completely convinced this is working correctly
       const spotImagesCopy = [...state.singleSpot.SpotImages ];
-      console.log('SPOT IMAGES COPY: ', spotImagesCopy);
+     // console.log('SPOT IMAGES COPY: ', spotImagesCopy);
       const indexToRemove = spotImagesCopy.findIndex(image => image.id === action.imageId);
-      console.log('INDEX TO REMOVE: ', indexToRemove)
+      //console.log('INDEX TO REMOVE: ', indexToRemove)
       spotImagesCopy.splice(indexToRemove, 1);
-      console.log('SPOT IMAGES COPY AFTER SPLICE: ', spotImagesCopy)
+      //console.log('SPOT IMAGES COPY AFTER SPLICE: ', spotImagesCopy)
       const newState = {
         allSpots: { ...state.allSpots },
         singleSpot: {
@@ -338,7 +338,7 @@ const spotReducer = (state = initialState, action) => {
         },
         userSpots: { ...state.userSpots }
       };
-      console.log('NEW STATE: ', newState)
+      //console.log('NEW STATE: ', newState)
       return newState;
     }
     default: {

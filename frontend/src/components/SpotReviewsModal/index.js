@@ -12,7 +12,7 @@ function SpotReviewsModal() {
       <button onClick={() => setShowModal(true)}>Log In</button>
       {showModal && (
         <Modal onClose={() => setShowModal(false)}>
-          <SpotReviews />
+          <SpotReviews/>
         </Modal>
       )}
     </>

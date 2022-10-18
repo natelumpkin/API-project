@@ -3,23 +3,25 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { getReviewsBySpot } from "../../../store/review";
 import formatAvgRating from "../../../utils/formatAvgRating";
-import ReviewCard from "../ReviewCard";
+import ReviewPreviewCard from "../ReviewPreviewCard";
 
-const ReviewsPreview = ({spotId, avgRating, numReviews}) => {
+const ReviewsPreview = ({spotId, avgRating, numReviews, setShowModal}) => {
 
   const reviews = useSelector(state => state.reviews.spot);
-  // console.log('REVIEWS SLICE OF STATE: ', reviews);
+  //console.log('REVIEWS SLICE OF STATE: ', reviews);
   const reviewsArr = [];
 
   for (let review in reviews) {
     reviewsArr.push(reviews[review]);
   }
 
+  let previewReviewsArr = reviewsArr.slice(0,6);
+
   let formattedAvgRating;
   if (avgRating) formattedAvgRating = formatAvgRating(avgRating);
   //console.log(formattedAvgRating);
 
-  console.log('REVIEWS ARRAY AFTER FLATTENING: ', reviewsArr)
+  //console.log('REVIEWS ARRAY AFTER FLATTENING: ', reviewsArr)
 
   if (!numReviews) {
     return null;
@@ -31,8 +33,8 @@ const ReviewsPreview = ({spotId, avgRating, numReviews}) => {
       <span> • </span>
       <span>{numReviews} {numReviews > 1 && `reviews`}{numReviews === 1 && 'review'}</span>
       <div>
-        {reviewsArr.length && reviewsArr.map(review => (
-          <ReviewCard key={review.id} review={review}/>
+        {previewReviewsArr.length && previewReviewsArr.map(review => (
+          <ReviewPreviewCard setShowModal={setShowModal} key={review.id} spotId={spotId} review={review}/>
         ))}
       </div>
     </div>

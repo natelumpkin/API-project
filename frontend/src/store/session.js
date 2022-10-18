@@ -32,11 +32,16 @@ export const logInUser = (user) => async dispatch => {
     })
   });
 
-  const userData = await response.json();
+  if (response.ok) {
+    const userData = await response.json();
+    dispatch(setUser(userData));
+    return userData;
+  } else {
+    const errorMessage = await response.json();
+    return errorMessage;
+  }
 
-  dispatch(setUser(userData));
 
-  return userData;
 }
 
 export const logOutUser = () => async dispatch => {
@@ -52,9 +57,11 @@ export const logOutUser = () => async dispatch => {
 export const getCurrentUser = () => async dispatch => {
 
   const response = await csrfFetch('/api/session');
-  const user = await response.json();
-  dispatch(setUser(user))
-  return user;
+  if (response.ok) {
+    const user = await response.json();
+    dispatch(setUser(user))
+    return user;
+  }
 }
 
 export const signUpNewUser = (userInfo) => async dispatch => {

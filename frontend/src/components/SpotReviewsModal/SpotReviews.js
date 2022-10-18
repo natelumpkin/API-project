@@ -4,10 +4,12 @@ import { useSelector, useDispatch } from "react-redux";
 import { getReviewsBySpot } from "../../store/review";
 import ReviewCard from "../SpotDetails/ReviewCard";
 
-const SpotReviews = ({spotId, avgRating, numReviews}) => {
+const SpotReviews = ({spotId, avgRating, numReviews, setShowModal}) => {
 
   const dispatch = useDispatch();
   const reviews = useSelector(state => state.reviews.spot)
+  // console.log('SPOTREVIEWS IS TRYING TO RENDER');
+  // console.log('SPOT REVIEWS reviews SLICE OF STATE: ', reviews)
 
   const reviewsArr = [];
 
@@ -17,12 +19,15 @@ const SpotReviews = ({spotId, avgRating, numReviews}) => {
 
 
   useEffect(() => {
-    console.log('Hello from Spot Reviews use effect')
+   // console.log('Hello from Spot Reviews use effect')
     dispatch(getReviewsBySpot(spotId))
   }, [])
 
   return (
     <div>
+      <div>
+      <i className="fa-solid fa-xmark" onClick={() => setShowModal(false)}></i>
+      </div>
       <div><h4>
               {avgRating} <i className="fa-solid fa-star"></i>
               <span> • </span>
@@ -33,7 +38,7 @@ const SpotReviews = ({spotId, avgRating, numReviews}) => {
       </div>
       <div>
       {reviewsArr.length ? reviewsArr.map(review => (
-          <ReviewCard key={review.id} review={review}/>
+          <ReviewCard key={review.id} review={review} spotId={spotId}/>
         )) : <h4>No reviews available</h4>}
       </div>
     </div>

@@ -89,12 +89,13 @@ export const createReviewBySpotId = (spotId, reviewData) => async dispatch => {
 
   if (response.ok) {
     const reviewData = await response.json();
-    dispatch(addReview(reviewData));
+    //console.log(reviewData);
+    dispatch(getReviewsBySpot(spotId));
     return reviewData;
   }
   else {
     const errorMessage = await response.json()
-    console.log(errorMessage);
+    //console.log(errorMessage);
     return errorMessage;
   }
 }

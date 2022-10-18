@@ -176,7 +176,7 @@ router.get('/', async (req, res, next) => {
     reviewList.push(review.toJSON());
   })
 
-  console.log("review list: ", reviewList)
+  //console.log("review list: ", reviewList)
 
 
   // Turn SpotImages key to previewImage key
@@ -209,6 +209,7 @@ router.get('/', async (req, res, next) => {
        } //else {
       //   spot.previewImage = 'No preview image available'
       // }
+
     })
     delete spot.SpotImages;
     if (!spot.previewImage) {

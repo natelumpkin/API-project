@@ -21,11 +21,7 @@ const CreateSpotPage = () => {
   const [description, setDescription] = useState('')
   const [price, setPrice] = useState(100)
 
-  const [url1, seturl1] = useState('')
-  const [url2, seturl2] = useState('')
-  const [url3, seturl3] = useState('')
-  const [url4, seturl4] = useState('')
-  const [url5, seturl5] = useState('')
+  const [url1, seturl1] = useState('');
 
   const [locationErrors, setLocationErrors] = useState([])
   const [photoErrors, setPhotoErrors] = useState([])
@@ -37,20 +33,16 @@ const CreateSpotPage = () => {
     if (!address.length) locationErrors.push('Street address')
     if (!city.length) locationErrors.push('City')
     if (!country.length) locationErrors.push('Country')
-    if (lat === '' || isNaN(lat) || lat < -90 || lat > 90) locationErrors.push('Latitude')
-    if (lng === '' || isNaN(lng) || lng < -180 || lng > 180) locationErrors.push('Longitude')
-    console.log(lat);
-    console.log(!lng)
-    console.log(isNaN(lng));
-    console.log(lng < -180);
-    console.log(lng > 180);
-    console.log(locationErrors);
+    if (lat === '') locationErrors.push('Latitude')
+    if (lng === '') locationErrors.push('Longitude')
+    if (isNaN(lat) || lat < -90 || lat > 90) locationErrors.push('Please provide a valid latitude')
+    if (isNaN(lng) || lng < -180 || lng > 180) locationErrors.push('Please provide a valid longitude')
     return locationErrors;
   }
 
   const handlePhotoErrors = () => {
     let errors = [];
-    console.log('url1: ', url1);
+    //console.log('url1: ', url1);
     if (!url1.length) errors.push('At least one photo is required')
     return errors;
   }
@@ -58,6 +50,7 @@ const CreateSpotPage = () => {
   const handleDescriptionErrors = () => {
     let errors = [];
     if (!name.length) errors.push('Name')
+    if (name.length > 50) errors.push('Please provide a name under 50 characters')
     if (!description.length) errors.push('Description')
     return errors;
   }
@@ -65,6 +58,7 @@ const CreateSpotPage = () => {
   const handlePriceErrors = () => {
     let errors = [];
     if (price < 1) errors.push('Please give your spot a price per night')
+    if (isNaN(price)) errors.push('Please enter a number')
     return errors;
   }
 
@@ -78,11 +72,6 @@ const CreateSpotPage = () => {
     setName('')
     setDescription('')
     setPrice(100)
-    seturl1('')
-    seturl2('')
-    seturl3('')
-    seturl4('')
-    seturl5('')
     setLocationErrors([])
     setDescriptionErrors([])
     setPriceErrors([])
@@ -94,7 +83,7 @@ const CreateSpotPage = () => {
 
   const locationErrors = handleLocationErrors();
   setLocationErrors(locationErrors);
-  console.log('location errors: ', locationErrors);
+  //console.log('location errors: ', locationErrors);
 
   const photoErrors = handlePhotoErrors();
   setPhotoErrors(photoErrors);
@@ -106,11 +95,11 @@ const CreateSpotPage = () => {
   setPriceErrors(priceErrors);
 
   if (locationErrors.length > 0 || photoErrors.length > 0 || descriptionErrors.length > 0 || priceErrors.length > 0) {
-    console.log('location errors:', locationErrors)
-    console.log('photo errors: ', photoErrors)
-    console.log('description errors: ', descriptionErrors)
-    console.log('price errors: ', priceErrors)
-    console.log('entering if statement')
+    // console.log('location errors:', locationErrors)
+    // console.log('photo errors: ', photoErrors)
+    // console.log('description errors: ', descriptionErrors)
+    // console.log('price errors: ', priceErrors)
+    // console.log('entering if statement')
     return;
   } else {
 
@@ -129,7 +118,7 @@ const CreateSpotPage = () => {
       const photo1 = { url: url1, preview: true }
 
 
-      console.log('photo1: ', photo1);
+      //console.log('photo1: ', photo1);
       const newSpot = await dispatch(createNewSpot(spotData));
       if (photo1) {
         const newPhoto1 = await dispatch(addSpotImageById(newSpot.id, photo1))
@@ -143,12 +132,12 @@ const CreateSpotPage = () => {
   }
 
   const incrementPrice = (e) => {
-    console.log('increment running')
+    //console.log('increment running')
     setPrice(price + 1);
   }
 
   const decrementPrice = (e) => {
-    console.log('decrement running')
+    //console.log('decrement running')
     setPrice(price - 1);
   }
 
