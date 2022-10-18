@@ -25,15 +25,17 @@ const SpotDetails = () => {
 
   const [showModal, setShowModal] = useState(false);
   const [showReviewForm, setShowReviewForm] = useState(false);
-
+  const [isLoaded, setisLoaded] = useState(false);
+  console.log('SPOT DETAILS IS TRYING TO RENDER. IS LOADED VARIABLE: ', isLoaded)
   // console.log('Spot Id from use params!: ', spotId)
 
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(getSpotById(spotId))
-    dispatch(getReviewsBySpot(spotId))
-  }, [])
+      .then(() => dispatch(getReviewsBySpot(spotId)))
+      .then(() => setisLoaded(true))
+  }, [dispatch, isLoaded])
 
   const singleSpot = useSelector(state => state.spots.singleSpot);
   const userInfo = useSelector(state => state.session.user);
@@ -61,6 +63,12 @@ const SpotDetails = () => {
 
   // RETURN STATEMENT
 
+  if (!isLoaded) {
+    return (
+      <p>...Loading spot details</p>
+    )
+  } else {
+    console.log('ATTEMPTING TO LOAD MAIN BODY', 'IS LOADING VARIABLE: ', isLoaded)
   return (
     <div>
       <div className="details-main-holder">
@@ -118,6 +126,7 @@ const SpotDetails = () => {
       )}
     </div>
   )
+      }
 }
 
 export default SpotDetails;

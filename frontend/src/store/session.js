@@ -32,11 +32,16 @@ export const logInUser = (user) => async dispatch => {
     })
   });
 
-  const userData = await response.json();
+  if (response.ok) {
+    const userData = await response.json();
+    dispatch(setUser(userData));
+    return userData;
+  } else {
+    const errorMessage = await response.json();
+    return errorMessage;
+  }
 
-  dispatch(setUser(userData));
 
-  return userData;
 }
 
 export const logOutUser = () => async dispatch => {

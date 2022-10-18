@@ -15,11 +15,12 @@ const LoginForm = () => {
   const submitForm = async (e) => {
     e.preventDefault();
     setErrors([]);
-    return dispatch(sessionActions.logInUser({ credential, password }))
-      .catch(async (res) => {
-        const data = await res.json();
-        if (data && data.message) setErrors([data.message]);
-      });
+    const response = await dispatch(sessionActions.logInUser({ credential, password }));
+    if (response && response.message) return setErrors([response.message]);
+      // .catch(async (res) => {
+      //   const data = await res.json();
+      //   if (data && data.message) setErrors([data.message]);
+      // });
     }
 
   return (
