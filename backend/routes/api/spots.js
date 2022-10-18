@@ -156,15 +156,19 @@ router.get('/', async (req, res, next) => {
 
   // Get aggregate data in a single query
 
+  // const reviews = await Review.findAll({
+  //   attributes: {
+  //     include: [
+  //       [
+  //         sequelize.fn('AVG',sequelize.col('stars')),'avgRating'
+  //       ]
+  //     ]
+  //   },
+  //   group: ['spotId', "id"]
+  // })
+
   const reviews = await Review.findAll({
-    attributes: {
-      include: [
-        [
-          sequelize.fn('AVG',sequelize.col('stars')),'avgRating'
-        ]
-      ]
-    },
-    group: ['spotId','id']
+    order: [ 'spotId' ]
   })
 
   const reviewList = [];
@@ -172,21 +176,31 @@ router.get('/', async (req, res, next) => {
     reviewList.push(review.toJSON());
   })
 
+  console.log("review list: ", reviewList)
+
 
   // Turn SpotImages key to previewImage key
   // and add aggregate data onto each spot
 
   spotList.forEach(spot => {
     let reviewFound;
+    let numReviews = 0;
+    let sumStars = 0;
     reviewList.forEach(review => {
       if (spot.id === review.spotId) {
-        spot.avgRating = review.avgRating;
+        numReviews++;
+        sumStars += review.stars;
         reviewFound = true;
       }
     })
+
+    let avgRating = sumStars / numReviews;
+    spot.avgRating = avgRating;
+
     if (!reviewFound) {
       spot.avgRating = "No reviews available for this spot"
     }
+
 
     spot.SpotImages.forEach(spotImage => {
 
