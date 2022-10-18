@@ -198,7 +198,7 @@ router.get('/', async (req, res, next) => {
     spot.avgRating = avgRating;
 
     if (!reviewFound) {
-      spot.avgRating = "No reviews available for this spot"
+      spot.avgRating = null;
     }
 
 

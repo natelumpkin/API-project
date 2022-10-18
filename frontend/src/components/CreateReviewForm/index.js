@@ -25,7 +25,7 @@ const CreateReviewForm = ({spotId, spotInfo, userInfo}) => {
     e.preventDefault();
 
     const validationErrors = handleValidationErrors();
-    console.log(validationErrors);
+    console.log('VALIDATION ERRORS FOR CREATE REVIEW FORM: ', validationErrors);
     if (validationErrors.length) return setValidationErrors(validationErrors);
 
     const reviewData = {
@@ -33,6 +33,7 @@ const CreateReviewForm = ({spotId, spotInfo, userInfo}) => {
       stars: stars
     }
 
+    console.log('DISPATCHING CREATE REVIEW')
     dispatch(createReviewBySpotId(spotId, reviewData))
 
     setReview('')
@@ -40,8 +41,6 @@ const CreateReviewForm = ({spotId, spotInfo, userInfo}) => {
     setValidationErrors([])
 
     history.push(`/spots/${spotId}`)
-
-
   }
 
 
