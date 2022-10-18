@@ -3,12 +3,21 @@ import { useDispatch } from 'react-redux';
 import { Link, useHistory } from "react-router-dom";
 import * as sessionActions from '../../store/session';
 
+import LoginFormModal from "../LoginFormModal";
+import { Modal } from "../../context/Modal";
+import LoginForm from "../LoginFormModal/LoginForm";
+import SignupFormPage from "../SignUpFormPage";
+
 import './ProfileButton.css'
 
 function ProfileButton({ user }) {
   const history = useHistory();
   const dispatch = useDispatch();
   const [showMenu, setShowMenu] = useState(false);
+  const [showLoginModal, setShowLoginModal] = useState(false);
+  const [showSignUpModal, setShowSignUpModal] = useState(false);
+
+  console.log('show menu variable: ', showMenu)
 
   const openMenu = () => {
     if (showMenu) return;
@@ -30,11 +39,38 @@ function ProfileButton({ user }) {
   const logout = (e) => {
     e.preventDefault();
     dispatch(sessionActions.logOutUser());
+    setShowLoginModal(false);
+    setShowSignUpModal(false);
     history.push('/')
   };
 
-  return (
-    <>
+  if (user) {
+    return (
+      <>
+      <button onClick={() => setShowMenu(!showMenu)}>
+        <div>
+        <i className="fa-solid fa-user"></i>
+        </div>
+      </button>
+      {showMenu && (
+        <ul className="profile-dropdown">
+              <li>{user.username}</li>
+              <li>{user.email}</li>
+              <li>
+                <Link to="/create-a-spot">
+                  <button>Host Your Home</button>
+                </Link>
+              </li>
+              <li>
+                <button onClick={logout}>Log Out</button>
+              </li>
+        </ul>
+      )}
+    </>
+    )
+  } else {
+    return (
+      <>
       <button onClick={openMenu}>
         <div>
         <i className="fa-solid fa-user"></i>
@@ -42,20 +78,69 @@ function ProfileButton({ user }) {
       </button>
       {showMenu && (
         <ul className="profile-dropdown">
-          <li>{user.username}</li>
-          <li>{user.email}</li>
-          <li>
-            <Link to="/create-a-spot">
-              <button>Host Your Home</button>
-            </Link>
-          </li>
-          <li>
-            <button onClick={logout}>Log Out</button>
-          </li>
+              <li>
+                <button onClick={() => setShowSignUpModal(true)}>Sign Up</button>
+              </li>
+              <li>
+                <button onClick={() => setShowLoginModal(true)}>Log In</button>
+              </li>
         </ul>
       )}
+      {showLoginModal && (
+        <Modal onClose={() => setShowLoginModal(false)}>
+          <LoginForm />
+        </Modal>
+      )}
+      {showSignUpModal && (
+        <Modal onClose={() => setShowSignUpModal(false)}>
+          <SignupFormPage />
+        </Modal>
+      )}
     </>
-  );
+    )
+  }
+
+  // return (
+  //   <>
+  //     <button onClick={openMenu}>
+  //       <div>
+  //       <i className="fa-solid fa-user"></i>
+  //       </div>
+  //     </button>
+  //     {showMenu && (
+  //       <ul className="profile-dropdown">
+  //         {user && (
+  //           <>
+  //             <li>{user.username}</li>
+  //             <li>{user.email}</li>
+  //           </>
+  //         )}
+  //         {!user && (
+  //           <>
+  //             <li>
+  //               <Link to="/signup"><button>Sign Up</button></Link>
+  //             </li>
+  //             <li>
+  //               <LoginFormModal/>
+  //             </li>
+  //           </>
+  //         )}
+  //         {user && (
+  //           <>
+  //             <li>
+  //               <Link to="/create-a-spot">
+  //                 <button>Host Your Home</button>
+  //               </Link>
+  //             </li>
+  //             <li>
+  //               <button onClick={logout}>Log Out</button>
+  //             </li>
+  //           </>
+  //         )}
+  //       </ul>
+  //     )}
+  //   </>
+  // );
 }
 
 export default ProfileButton;

@@ -6,8 +6,10 @@ import './LoginForm.css'
 
 const LoginForm = () => {
 
+  console.log('LOGIN FORM IS TRYING TO RENDER')
+
   const dispatch = useDispatch();
-  const sessionUser = useSelector(state => state.session.user)
+  //const sessionUser = useSelector(state => state.session.user)
   const [credential, setCredential] = useState('');
   const [password, setPassword] = useState('')
   const [errors, setErrors] = useState([]);
