@@ -18,28 +18,41 @@ function SignupFormPage() {
 
   if (sessionUser) return <Redirect to="/" />;
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log(password, confirmPassword);
     if (password === confirmPassword) {
       setErrors([]);
-      return dispatch(sessionActions.signUpNewUser({ email, firstName, lastName, username, password }))
-        .catch(async (res) => {
-          const data = await res.json();
-          let errorMessages = [];
-          if (data && data.errors) {
-            for (let error in data.errors) {
-              errorMessages.push(data.errors[error])
-            }
-            setErrors(errorMessages);
-          }
-        });
+      let response = await dispatch(sessionActions.signUpNewUser({ email, firstName, lastName, username, password }))
+      console.log('response.errors: ', response.errors);
+      let errorMessages = [];
+      if (response && response.errors) {
+        for (let error in response.errors) {
+          errorMessages.push(response.errors[error])
+        }
+        setErrors(errorMessages);
+        console.log('errors: ', errors);
+        return;
+      }
+        // .catch(async (res) => {
+        //   const data = await res.json();
+        //   let errorMessages = [];
+        //   if (data && data.errors) {
+        //     for (let error in data.errors) {
+        //       errorMessages.push(data.errors[error])
+        //     }
+        //     setErrors(errorMessages);
+        //   }
+        // });
     }
     return setErrors(['Confirm Password field must be the same as the Password field']);
   };
 
   return (
     <div className='signup-form-card'>
+      <h4>Sign Up</h4>
       <form className='login-form' onSubmit={handleSubmit}>
+        <h4>Welcome to NateBnB</h4>
         <ul>
           {errors.map((error, idx) => <li key={idx}>{error}</li>)}
         </ul>
@@ -49,7 +62,6 @@ function SignupFormPage() {
             type="text"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            required
           />
         </label>
         <label>
@@ -58,7 +70,6 @@ function SignupFormPage() {
             type="text"
             value={firstName}
             onChange={(e) => setFirstName(e.target.value)}
-            required
           />
         </label>
         <label>
@@ -67,7 +78,6 @@ function SignupFormPage() {
             type="text"
             value={lastName}
             onChange={(e) => setLastName(e.target.value)}
-            required
           />
         </label>
         <label>
@@ -76,7 +86,6 @@ function SignupFormPage() {
             type="text"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
-            required
           />
         </label>
         <label>
@@ -85,7 +94,6 @@ function SignupFormPage() {
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            required
           />
         </label>
         <label>
@@ -94,7 +102,6 @@ function SignupFormPage() {
             type="password"
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
-            required
           />
         </label>
         <button type="submit">Sign Up</button>

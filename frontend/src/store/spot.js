@@ -93,7 +93,7 @@ export const getSpotById = (spotId) => async (dispatch) => {
     dispatch(loadSingleSpot(spotData));
     return spotData;
   } else {
-    return spotData;
+    throw spotData;
   }
 }
 
