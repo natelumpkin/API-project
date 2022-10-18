@@ -34,20 +34,17 @@ const UpdateSpotForm = () => {
     if (!address.length) locationErrors.push('Street address')
     if (!city.length) locationErrors.push('City')
     if (!country.length) locationErrors.push('Country')
-    if (lat === '' || isNaN(lat) || lat < -90 || lat > 90) locationErrors.push('Latitude')
-    if (lng === '' || isNaN(lng) || lng < -180 || lng > 180) locationErrors.push('Longitude')
-    // console.log(lat);
-    // console.log(!lng)
-    // console.log(isNaN(lng));
-    // console.log(lng < -180);
-    // console.log(lng > 180);
-    // console.log(locationErrors);
+    if (lat === '') locationErrors.push('Latitude')
+    if (lng === '') locationErrors.push('Longitude')
+    if (isNaN(lat) || lat < -90 || lat > 90) locationErrors.push('Please provide a valid latitude')
+    if (isNaN(lng) || lng < -180 || lng > 180) locationErrors.push('Please provide a valid longitude')
     return locationErrors;
   }
 
   const handleDescriptionErrors = () => {
     let errors = [];
     if (!name.length) errors.push('Name')
+    if (name.length > 50) errors.push('Please provide a name under 50 characters')
     if (!description.length) errors.push('Description')
     return errors;
   }
@@ -55,6 +52,7 @@ const UpdateSpotForm = () => {
   const handlePriceErrors = () => {
     let errors = [];
     if (price < 1) errors.push('Please give your spot a price per night')
+    if (isNaN(price)) errors.push('Please enter a number')
     return errors;
   }
 

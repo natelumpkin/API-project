@@ -8,6 +8,8 @@ import { Modal } from "../../context/Modal";
 import LoginForm from "../LoginFormModal/LoginForm";
 import SignupFormPage from "../SignUpFormPage";
 
+import { logInUser } from "../../store/session";
+
 import './ProfileButton.css'
 
 function ProfileButton({ user }) {
@@ -18,6 +20,14 @@ function ProfileButton({ user }) {
   const [showSignUpModal, setShowSignUpModal] = useState(false);
 
   console.log('show menu variable: ', showMenu)
+
+  const logInDemoUser = () => {
+    const demoData = {
+      credential: "demouser1",
+      password: "password"
+    }
+    dispatch(logInUser(demoData));
+  }
 
   const openMenu = () => {
     if (showMenu) return;
@@ -83,6 +93,9 @@ function ProfileButton({ user }) {
               </li>
               <li>
                 <button onClick={() => setShowLoginModal(true)}>Log In</button>
+              </li>
+              <li>
+                <button onClick={() => logInDemoUser()}>Login as Demo User</button>
               </li>
         </ul>
       )}

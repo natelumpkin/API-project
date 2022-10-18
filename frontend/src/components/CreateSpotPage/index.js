@@ -21,11 +21,7 @@ const CreateSpotPage = () => {
   const [description, setDescription] = useState('')
   const [price, setPrice] = useState(100)
 
-  const [url1, seturl1] = useState('')
-  const [url2, seturl2] = useState('')
-  const [url3, seturl3] = useState('')
-  const [url4, seturl4] = useState('')
-  const [url5, seturl5] = useState('')
+  const [url1, seturl1] = useState('');
 
   const [locationErrors, setLocationErrors] = useState([])
   const [photoErrors, setPhotoErrors] = useState([])
@@ -62,6 +58,7 @@ const CreateSpotPage = () => {
   const handlePriceErrors = () => {
     let errors = [];
     if (price < 1) errors.push('Please give your spot a price per night')
+    if (isNaN(price)) errors.push('Please enter a number')
     return errors;
   }
 
@@ -75,11 +72,6 @@ const CreateSpotPage = () => {
     setName('')
     setDescription('')
     setPrice(100)
-    seturl1('')
-    seturl2('')
-    seturl3('')
-    seturl4('')
-    seturl5('')
     setLocationErrors([])
     setDescriptionErrors([])
     setPriceErrors([])

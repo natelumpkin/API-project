@@ -101,6 +101,7 @@ const SpotDetails = () => {
                 <Link onClick={() => setShowModal(true)}>{singleSpot.numReviews} {(singleSpot.numReviews > 1 || singleSpot.numReviews < 1) && `reviews`}{singleSpot.numReviews === 1 && 'review'}</Link>
               </span>
               <span>{singleSpot.city}, {singleSpot.state}, {singleSpot.country}</span>
+              <span> ${singleSpot.price} night</span>
             </h4>
           </div>
         </div>
