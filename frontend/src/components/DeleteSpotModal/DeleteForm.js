@@ -24,14 +24,14 @@ const DeleteForm = ({spotId, setShowModal}) => {
             </div>
             <h1>One last step</h1>
             <h4>Listing deactivation is permanent—so if you want to keep your info, you should not deactivate your listing.</h4>
-            <h4>You’ll lose your listing details</h4>
+            <h4><i className="fa-solid fa-circle-exclamation"></i>You’ll lose your listing details</h4>
             <input
               type="checkbox"
               value={checked}
               onChange={() => setChecked(!checked)}
               checked={checked ? true : false}
               />
-            <span>I understand that I’ll no longer have access to my listing and listing information.</span>
+            <span>I understand that I`ll no longer have access to my listing and listing information.</span>
             <div>
               <Link onClick={() => setShowModal(false)}>Back</Link>
               <button
