@@ -10,7 +10,7 @@ import DeleteSpotModal from "../../DeleteSpotModal";
 const UpdateSpotForm = () => {
   const dispatch = useDispatch();
   const { spotId } = useParams();
-  console.log('UPDATE SPOT FORM spotId is now: ', spotId)
+  //console.log('UPDATE SPOT FORM spotId is now: ', spotId)
   const history = useHistory();
 
   const spotInfo = useSelector(state => state.spots.singleSpot);
@@ -36,12 +36,12 @@ const UpdateSpotForm = () => {
     if (!country.length) locationErrors.push('Country')
     if (lat === '' || isNaN(lat) || lat < -90 || lat > 90) locationErrors.push('Latitude')
     if (lng === '' || isNaN(lng) || lng < -180 || lng > 180) locationErrors.push('Longitude')
-    console.log(lat);
-    console.log(!lng)
-    console.log(isNaN(lng));
-    console.log(lng < -180);
-    console.log(lng > 180);
-    console.log(locationErrors);
+    // console.log(lat);
+    // console.log(!lng)
+    // console.log(isNaN(lng));
+    // console.log(lng < -180);
+    // console.log(lng > 180);
+    // console.log(locationErrors);
     return locationErrors;
   }
 
@@ -78,7 +78,7 @@ const UpdateSpotForm = () => {
 
   const locationErrors = handleLocationErrors();
   setLocationErrors(locationErrors);
-  console.log('location errors: ', locationErrors);
+  //console.log('location errors: ', locationErrors);
 
 
   const descriptionErrors = handleDescriptionErrors();
@@ -88,10 +88,10 @@ const UpdateSpotForm = () => {
   setPriceErrors(priceErrors);
 
   if (locationErrors.length > 0 || descriptionErrors.length > 0 || priceErrors.length > 0) {
-    console.log('location errors:', locationErrors)
-    console.log('description errors: ', descriptionErrors)
-    console.log('price errors: ', priceErrors)
-    console.log('entering if statement')
+    // console.log('location errors:', locationErrors)
+    // console.log('description errors: ', descriptionErrors)
+    // console.log('price errors: ', priceErrors)
+    // console.log('entering if statement')
     return;
   } else {
 
@@ -116,12 +116,12 @@ const UpdateSpotForm = () => {
   }
 
   const incrementPrice = (e) => {
-    console.log('increment running')
+    //console.log('increment running')
     setPrice(price + 1);
   }
 
   const decrementPrice = (e) => {
-    console.log('decrement running')
+    //console.log('decrement running')
     setPrice(price - 1);
   }
 

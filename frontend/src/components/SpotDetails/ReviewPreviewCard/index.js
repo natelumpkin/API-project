@@ -15,7 +15,7 @@ const ReviewPreviewCard = ({review, spotId, setShowModal}) => {
 
   const currentUser = useSelector(state => state.session.user);
 
-  console.log('REVIEW CARD currentUser: ', currentUser);
+  //console.log('REVIEW CARD currentUser: ', currentUser);
 
   const [showDeleteReviewForm, setShowDeleteReviewForm] = useState(false);
 
@@ -24,7 +24,7 @@ const ReviewPreviewCard = ({review, spotId, setShowModal}) => {
   let enableShowMoreButton;
   if (formattedReview.length < review.review.length) enableShowMoreButton = true;
 
-  console.log('REVIEW CARD prop: ', review)
+  //console.log('REVIEW CARD prop: ', review)
 
   return (
     <>

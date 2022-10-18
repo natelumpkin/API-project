@@ -13,13 +13,13 @@ const ReviewCard = ({review, spotId}) => {
 
   const currentUser = useSelector(state => state.session.user);
 
-  console.log('REVIEW CARD currentUser: ', currentUser);
+  //console.log('REVIEW CARD currentUser: ', currentUser);
 
   const [showDeleteReviewForm, setShowDeleteReviewForm] = useState(false);
 
   let formattedDate = getMonthFromDate(review.createdAt)
 
-  console.log('REVIEW CARD prop: ', review)
+  //console.log('REVIEW CARD prop: ', review)
 
   return (
     <>

@@ -9,9 +9,7 @@ const DeleteReviewForm = ({setShowDeleteReviewForm, reviewId, spotId}) => {
 
   const deleteReview = () => {
     dispatch(deleteReviewById(reviewId))
-      .then(() => console.log('.then chaining is attempting to occur'))
       .then(() => {
-        console.log('second .then chain is attempting')
         dispatch(getSpotById(spotId))});
     setShowDeleteReviewForm(false);
   }

@@ -45,8 +45,8 @@ const SpotDetails = () => {
 
   let spotReviewsArr = Object.values(spotReviews);
   //console.log('SPOT REVIEWS ARR: ', spotReviewsArr)
-  if (userInfo) console.log('userInfo.id slice of state: ', userInfo.id)
-  console.log('SPOT DETAILS SINGLESPOT SLICE OF STATE: ', singleSpot)
+  //if (userInfo) console.log('userInfo.id slice of state: ', userInfo.id)
+  //console.log('SPOT DETAILS SINGLESPOT SLICE OF STATE: ', singleSpot)
   if (userInfo) {
     for (let review of spotReviewsArr) {
       if (userInfo.id === review.userId) currentUserHasReviewed = true;
@@ -80,7 +80,7 @@ const SpotDetails = () => {
       <p>...Loading spot details</p>
     )
   } else {
-    console.log('ATTEMPTING TO LOAD MAIN BODY', 'IS LOADING VARIABLE: ', isLoaded)
+    //console.log('ATTEMPTING TO LOAD MAIN BODY', 'IS LOADING VARIABLE: ', isLoaded)
   return (
     <div>
       <div className="details-main-holder">

@@ -19,7 +19,7 @@ const SpotReviews = ({spotId, avgRating, numReviews, setShowModal}) => {
 
 
   useEffect(() => {
-    console.log('Hello from Spot Reviews use effect')
+   // console.log('Hello from Spot Reviews use effect')
     dispatch(getReviewsBySpot(spotId))
   }, [])
 

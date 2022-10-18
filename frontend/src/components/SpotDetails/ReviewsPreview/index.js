@@ -8,7 +8,7 @@ import ReviewPreviewCard from "../ReviewPreviewCard";
 const ReviewsPreview = ({spotId, avgRating, numReviews, setShowModal}) => {
 
   const reviews = useSelector(state => state.reviews.spot);
-  console.log('REVIEWS SLICE OF STATE: ', reviews);
+  //console.log('REVIEWS SLICE OF STATE: ', reviews);
   const reviewsArr = [];
 
   for (let review in reviews) {
@@ -21,7 +21,7 @@ const ReviewsPreview = ({spotId, avgRating, numReviews, setShowModal}) => {
   if (avgRating) formattedAvgRating = formatAvgRating(avgRating);
   //console.log(formattedAvgRating);
 
-  console.log('REVIEWS ARRAY AFTER FLATTENING: ', reviewsArr)
+  //console.log('REVIEWS ARRAY AFTER FLATTENING: ', reviewsArr)
 
   if (!numReviews) {
     return null;
