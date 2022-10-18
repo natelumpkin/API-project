@@ -32,7 +32,7 @@ const ReviewsPreview = ({spotId, avgRating, numReviews}) => {
       <span>{numReviews} {numReviews > 1 && `reviews`}{numReviews === 1 && 'review'}</span>
       <div>
         {reviewsArr.length && reviewsArr.map(review => (
-          <ReviewCard key={review.id} review={review}/>
+          <ReviewCard key={review.id} spotId={spotId} review={review}/>
         ))}
       </div>
     </div>

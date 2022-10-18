@@ -6,7 +6,7 @@ import { createReviewBySpotId } from "../../store/review";
 import { getSpotById } from "../../store/spot";
 
 
-const CreateReviewForm = ({spotId, spotInfo, userInfo}) => {
+const CreateReviewForm = ({spotId, spotInfo, setShowReviewForm}) => {
 
   const dispatch = useDispatch();
   const history = useHistory();
@@ -41,13 +41,14 @@ const CreateReviewForm = ({spotId, spotInfo, userInfo}) => {
     setReview('')
     setStars(5)
     setValidationErrors([])
-
+    setShowReviewForm(false);
     history.push(`/spots/${spotId}`)
   }
 
 
   return (
     <div>
+      <div><i className="fa-solid fa-xmark" onClick={() => setShowReviewForm(false)}></i></div>
       <h4>Review {spotInfo.Owner.firstName}'s Spot {spotInfo.name}</h4>
       <form onSubmit={handleSubmit}>
         <label htmlFor="review">Review</label>

@@ -19,7 +19,7 @@ import CreateReviewForm from "../CreateReviewForm";
 
 
 const SpotDetails = () => {
-  // console.log('Spot details is trying to render!')
+  console.log('SPOT DETAILS IS TRYING TO RENDER')
 
   const { spotId } = useParams();
 
@@ -44,15 +44,15 @@ const SpotDetails = () => {
   let currentUserHasReviewed;
 
   let spotReviewsArr = Object.values(spotReviews);
-  console.log('SPOT REVIEWS ARR: ', spotReviewsArr)
+  //console.log('SPOT REVIEWS ARR: ', spotReviewsArr)
   if (userInfo) console.log('userInfo.id slice of state: ', userInfo.id)
-  console.log('singleSpot slice of state!: ', singleSpot)
+  console.log('SPOT DETAILS SINGLESPOT SLICE OF STATE: ', singleSpot)
   if (userInfo) {
     for (let review of spotReviewsArr) {
       if (userInfo.id === review.userId) currentUserHasReviewed = true;
     }
   }
-  console.log('CURRENTUSERHASREVIEWED: ', currentUserHasReviewed)
+  //console.log('CURRENTUSERHASREVIEWED: ', currentUserHasReviewed)
 
   // FORMATTING STATE FOR RENDERING
 
@@ -130,12 +130,12 @@ const SpotDetails = () => {
       </div>
       {showModal && (
         <Modal onClose={() => setShowModal(false)}>
-          <SpotReviews spotId={spotId} avgRating={formattedAvgRating} numReviews={singleSpot.numReviews}/>
+          <SpotReviews setShowModal={setShowModal} spotId={spotId} avgRating={formattedAvgRating} numReviews={singleSpot.numReviews}/>
         </Modal>
       )}
       {showReviewForm && (
         <Modal onClose={() => setShowReviewForm(false)}>
-          <CreateReviewForm spotId={spotId} spotInfo={singleSpot} userInfo={userInfo}/>
+          <CreateReviewForm spotId={spotId} spotInfo={singleSpot} setShowReviewForm={setShowReviewForm}/>
         </Modal>
       )}
     </div>
