@@ -15,6 +15,7 @@ import { Modal } from "../../context/Modal";
 import ReviewsPreview from "./ReviewsPreview";
 import SpotImagesCard from "./SpotImagesCard";
 import SpotReviews from "../SpotReviewsModal/SpotReviews";
+import CreateReviewForm from "../CreateReviewForm";
 
 
 const SpotDetails = () => {
@@ -23,6 +24,7 @@ const SpotDetails = () => {
   const { spotId } = useParams();
 
   const [showModal, setShowModal] = useState(false);
+  const [showReviewForm, setShowReviewForm] = useState(false);
 
   // console.log('Spot Id from use params!: ', spotId)
 
@@ -94,6 +96,7 @@ const SpotDetails = () => {
         <div className="spot-reviews-card">
           <ReviewsPreview spotId={spotId} avgRating={singleSpot.avgStarRating} numReviews={singleSpot.numReviews}/>
           <button onClick={() => setShowModal(true)}>Show all {singleSpot.numReviews} reviews</button>
+          <button onClick={() => setShowReviewForm(true)}>Review this Spot</button>
         </div>
         <div className="location-card">
           <h2>Where you'll be</h2>
@@ -106,6 +109,11 @@ const SpotDetails = () => {
       {showModal && (
         <Modal onClose={() => setShowModal(false)}>
           <SpotReviews spotId={spotId} avgRating={formattedAvgRating} numReviews={singleSpot.numReviews}/>
+        </Modal>
+      )}
+      {showReviewForm && (
+        <Modal onClose={() => setShowReviewForm(false)}>
+          <CreateReviewForm spotId={spotId} spotInfo={singleSpot} userInfo={userInfo}/>
         </Modal>
       )}
     </div>

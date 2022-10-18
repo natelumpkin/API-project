@@ -9,6 +9,8 @@ const ReviewCard = ({review}) => {
 
   let formattedDate = getMonthFromDate(review.createdAt)
 
+  console.log('REVIEW CARD prop: ', review)
+
   return (
     <div>
       <div className="flex-column">
