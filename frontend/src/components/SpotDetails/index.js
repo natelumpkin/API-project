@@ -39,8 +39,20 @@ const SpotDetails = () => {
 
   const singleSpot = useSelector(state => state.spots.singleSpot);
   const userInfo = useSelector(state => state.session.user);
-  // console.log('userInfo slice of state: ', userInfo)
+  const spotReviews = useSelector(state => state.reviews.spot);
+
+  let currentUserHasReviewed;
+
+  let spotReviewsArr = Object.values(spotReviews);
+  console.log('SPOT REVIEWS ARR: ', spotReviewsArr)
+  if (userInfo) console.log('userInfo.id slice of state: ', userInfo.id)
   console.log('singleSpot slice of state!: ', singleSpot)
+  if (userInfo) {
+    for (let review of spotReviewsArr) {
+      if (userInfo.id === review.userId) currentUserHasReviewed = true;
+    }
+  }
+  console.log('CURRENTUSERHASREVIEWED: ', currentUserHasReviewed)
 
   // FORMATTING STATE FOR RENDERING
 
@@ -74,7 +86,7 @@ const SpotDetails = () => {
       <div className="details-main-holder">
         <div className="title-card">
           <h2>{singleSpot.name}</h2>
-          {userInfo.id === singleSpot.ownerId && (
+          {userInfo && userInfo.id === singleSpot.ownerId && (
             <div>
               <Link to={`/spots/${singleSpot.id}/edit`}>
                 Edit
@@ -104,7 +116,9 @@ const SpotDetails = () => {
         <div className="spot-reviews-card">
           <ReviewsPreview spotId={spotId} avgRating={singleSpot.avgStarRating} numReviews={singleSpot.numReviews}/>
           <button onClick={() => setShowModal(true)}>Show all {singleSpot.numReviews} reviews</button>
-          <button onClick={() => setShowReviewForm(true)}>Review this Spot</button>
+          {userInfo && userInfo.id !== singleSpot.ownerId && !currentUserHasReviewed &&
+            <button onClick={() => setShowReviewForm(true)}>Review this Spot</button>
+          }
         </div>
         <div className="location-card">
           <h2>Where you'll be</h2>

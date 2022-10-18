@@ -57,9 +57,11 @@ export const logOutUser = () => async dispatch => {
 export const getCurrentUser = () => async dispatch => {
 
   const response = await csrfFetch('/api/session');
-  const user = await response.json();
-  dispatch(setUser(user))
-  return user;
+  if (response.ok) {
+    const user = await response.json();
+    dispatch(setUser(user))
+    return user;
+  }
 }
 
 export const signUpNewUser = (userInfo) => async dispatch => {

@@ -50,11 +50,6 @@ function ProfileButton({ user }) {
             </Link>
           </li>
           <li>
-            <Link to="/profile/:userId">
-              <button>Profile</button>
-            </Link>
-          </li>
-          <li>
             <button onClick={logout}>Log Out</button>
           </li>
         </ul>
