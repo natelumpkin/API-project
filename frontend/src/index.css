@@ -23,3 +23,7 @@
   color: black;
   text-decoration: underline;
 }
+
+.full-width {
+  width: 100%;
+}

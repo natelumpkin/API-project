@@ -36,6 +36,7 @@
   width: 100%;
   padding-top: .8em;
   padding-bottom: .8em;
+  cursor: pointer;
 }
 
 .profile-dropdown button {
@@ -43,6 +44,7 @@
   background-color: rgba(255, 255, 255, 0);
   border: none;
   text-align: left;
+  cursor: pointer;
 }
 
 /* .profile-dropdown button:hover {
@@ -64,4 +66,5 @@
 
 #profile-button:hover {
   box-shadow: 0px 3px 3px #ebebeb;
+  cursor: pointer;
 }

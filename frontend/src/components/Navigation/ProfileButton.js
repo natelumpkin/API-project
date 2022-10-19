@@ -66,13 +66,15 @@ function ProfileButton({ user }) {
           <ul className="profile-dropdown">
             {/* <li>{user.username}</li>
             <li>{user.email}</li> */}
+            <Link to="/create-a-spot">
             <li id="host-button">
-              <Link to="/create-a-spot">
+
                 <button>Host Your Home</button>
-              </Link>
+
             </li>
-            <li>
-              <button onClick={logout}>Log Out</button>
+            </Link>
+            <li onClick={logout}>
+              <button >Log Out</button>
             </li>
           </ul>
           )}
@@ -91,14 +93,14 @@ function ProfileButton({ user }) {
 
         {showMenu && (
           <ul className="profile-dropdown">
-            <li>
-              <button onClick={() => setShowLoginModal(true)}>Log In</button>
+            <li onClick={() => setShowLoginModal(true)} >
+              <button >Log In</button>
             </li>
-            <li>
-              <button onClick={() => setShowSignUpModal(true)}>Sign Up</button>
+            <li onClick={() => setShowSignUpModal(true)}>
+              <button >Sign Up</button>
             </li>
-            <li>
-              <button onClick={() => logInDemoUser()}>Login as Demo User</button>
+            <li onClick={() => logInDemoUser()}>
+              <button >Login as Demo User</button>
             </li>
           </ul>
           )}
