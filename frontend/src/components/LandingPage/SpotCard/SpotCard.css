@@ -23,6 +23,16 @@
   padding-top: .7em;
 }
 
+.info-holder .fa-star {
+  font-size: .7em;
+  padding-right: .4em;
+  align-self: center;
+}
+
+.black.right.flex {
+  padding-right: .2em;
+}
+
 img {
   width: 18.5em;
   height: 17em;

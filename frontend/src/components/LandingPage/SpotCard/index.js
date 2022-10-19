@@ -21,7 +21,7 @@ const SpotCard = ({ spot }) => {
       <div className="spotcard-bottom-holder">
         <div className="flex info-holder">
           <div className="black left bold">{spot.city}, {spot.state}</div>
-          <div className="black right"><i className="fa-solid fa-star"></i> {formattedAvgRating}</div>
+          <div className="black right flex"><i className="fa-solid fa-star"></i> {formattedAvgRating}</div>
         </div>
         <div className="black bottom"><span className="bold">${spot.price}</span> <span className="light">night</span></div>
       </div>
