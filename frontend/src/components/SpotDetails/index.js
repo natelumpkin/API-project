@@ -95,17 +95,20 @@ const SpotDetails = () => {
 
           <div className="flex title-lower">
             <h4>
-              {formattedAvgRating} <i className="fa-solid fa-star"></i>
+            <i className="fa-solid fa-star"/> {formattedAvgRating}
               <span> • </span>
-              <span onClick={() => setShowModal(true)}>
+              <Link className="underline" to='' onClick={(e) => {
+                e.preventDefault();
+                setShowModal(true);
+                }}>
                 {singleSpot.numReviews} {(singleSpot.numReviews > 1 || singleSpot.numReviews < 1) && `reviews`}{singleSpot.numReviews === 1 && 'review'}
-              </span>
-              <span>{singleSpot.city}, {singleSpot.state}, {singleSpot.country}</span>
+              </Link>
+              <span> •{" "}{singleSpot.city}, {singleSpot.state}, {singleSpot.country} • </span>
               <span> ${singleSpot.price} night</span>
             </h4>
             {userInfo && userInfo.id === singleSpot.ownerId && (
             <div className="edit-button">
-              <Link to={`/spots/${singleSpot.id}/edit`}>
+              <Link className="underline" to={`/spots/${singleSpot.id}/edit`}>
                 Edit
               </Link>
             </div>
@@ -115,20 +118,20 @@ const SpotDetails = () => {
         <div className="picture-card">
           <SpotImagesCard previewImg={previewImg} nonPreviewImgs={nonPreviewImgs}/>
         </div>
-        <div className="user-info">
+        <div id="user-info" className="display-info">
           <h2>Spot hosted by {ownerInfo.firstName}</h2>
         </div>
-        <div className="description-card">
+        <div className="display-info">
           <p>{singleSpot.description}</p>
         </div>
-        <div className="spot-reviews-card">
+        <div className="display-info">
           <ReviewsPreview setShowModal={setShowModal} spotId={spotId} avgRating={singleSpot.avgStarRating} numReviews={singleSpot.numReviews}/>
           <button onClick={() => setShowModal(true)}>Show all {singleSpot.numReviews} reviews</button>
           {userInfo && userInfo.id !== singleSpot.ownerId && !currentUserHasReviewed &&
             <button onClick={() => setShowReviewForm(true)}>Review this Spot</button>
           }
         </div>
-        <div className="location-card">
+        <div className="display-info">
           <h2>Where you'll be</h2>
           {/* <LocationAPI/> */}
           <div>

@@ -18,3 +18,8 @@
 .center {
   justify-content: center;
 }
+
+.underline {
+  color: black;
+  text-decoration: underline;
+}

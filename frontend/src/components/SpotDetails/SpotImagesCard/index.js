@@ -9,7 +9,7 @@ const SpotImagesCard = ({previewImg, nonPreviewImgs}) => {
   else if (!nonPreviewImgs.length) {
     return (
       <div className="preview-image">
-        {previewImg && <img src={previewImg.url} alt='preview image'/>}
+        {previewImg && <img className='details-preview-image' src={previewImg.url} alt='preview image'/>}
       </div>
     )
   }
@@ -17,7 +17,7 @@ const SpotImagesCard = ({previewImg, nonPreviewImgs}) => {
     return (
       <>
         <div className="preview-image">
-          {previewImg && <img src={previewImg.url} alt='preview image'/>}
+          {previewImg && <img className='details-preview-image' src={previewImg.url} alt='preview image'/>}
         </div>
         <div className="other-images">
             {nonPreviewImgs.map(image => (
