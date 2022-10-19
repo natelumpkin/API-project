@@ -34,12 +34,14 @@ const LandingPage = () => {
   // console.log('LANDING PAGE spotsArray after pushing spots data: ', spotsArray)
 
   return (
-    <div className="flex landing-page">
+    <div className="flex outer-container">
+      <div id="landing-grid" className="grid landing-page">
       {
         spotsArray.map(spot => (
           <SpotCard key={spot.id} spot={spot}/>
         ))
       }
+      </div>
     </div>
   )
 };

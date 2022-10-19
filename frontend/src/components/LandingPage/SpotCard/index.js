@@ -17,11 +17,13 @@ const SpotCard = ({ spot }) => {
         <div className="spotcard-preview-image-holder">
           <img src={spot.previewImage} alt='preview image of spot'/>
         </div>
-      <div className="spotcard-bottom-holder">
-        <div className="black">{spot.city}, {spot.state}</div>
-        <div className="black">{formattedAvgRating} <i className="fa-solid fa-star"></i></div>
-        <div className="black">${spot.price} night</div>
       </div>
+      <div className="spotcard-bottom-holder">
+        <div className="flex info-holder">
+          <div className="black left">{spot.city}, {spot.state}</div>
+          <div className="black right"><i className="fa-solid fa-star"></i> {formattedAvgRating}</div>
+        </div>
+        <div className="black bottom">${spot.price} night</div>
       </div>
     </Link>
   )

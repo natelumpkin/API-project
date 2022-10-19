@@ -1,8 +1,8 @@
 
 .spotcard-top-holder {
   box-sizing: border-box;
-  width: 19.5em;
-  height: 24em;
+  width: fit-content;
+  height: fit-content;
   display: flex;
   flex-direction: column;
 }
@@ -12,14 +12,29 @@
   justify-content: center;
 }
 
+.spotcard-bottom-holder {
+  display: flex;
+  flex-direction: column;
+}
+
+.info-holder {
+  justify-content: space-between;
+  padding-bottom: 1em;
+  padding-top: .7em;
+}
+
 img {
-  width: 18em;
-  height: 18em;
-  border-radius: 3%;
+  width: 18.5em;
+  height: 17em;
+  border-radius: .8em;
 }
 
 a {
   text-decoration: none;
   height: fit-content;
   width: fit-content;
+  /* margin-left: .5em;
+  margin-right: .5em;
+  margin-top: 1.5em;
+  margin-bottom: 1.5em; */
 }

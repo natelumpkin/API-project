@@ -9,7 +9,7 @@ const SpotUsers =
       {
         address: '100 Small Ave',
         city: 'Smalltown',
-        state: 'CA',
+        state: 'California',
         country: 'USA',
         lat: 31.1194890,
         lng: -90.1295419,
@@ -20,7 +20,7 @@ const SpotUsers =
       {
         address: '400 Beautiful St',
         city: 'Beautifultown',
-        state: 'MD',
+        state: 'Maryland',
         country: 'France',
         lat: 76.1194890,
         lng: 78.1294319,
@@ -33,7 +33,7 @@ const SpotUsers =
       {
         address: '200 Big St',
         city: 'Bigville',
-        state: 'NY',
+        state: 'New York',
         country: 'United States of America',
         lat: -61.1194890,
         lng: 90.1295419,
@@ -44,7 +44,7 @@ const SpotUsers =
       {
         address: '500 Amazing Pl',
         city: 'Amazingville',
-        state: 'WY',
+        state: 'Wyoming',
         country: 'USA',
         lat: 56.1194890,
         lng: 32.1295419,
@@ -56,7 +56,7 @@ const SpotUsers =
     'demouser3': [{
       address: '600 Cloud St',
       city: 'Cloudville',
-      state: 'MR',
+      state: 'Monroe',
       country: 'Spain',
       lat: 35.1194890,
       lng: -10.1295419,
@@ -68,7 +68,7 @@ const SpotUsers =
       {
         address: '700 Flower St',
         city: 'Flowerville',
-        state: 'FL',
+        state: 'Florida',
         country: 'Denmark',
         lat: 50.1194890,
         lng: -55.1295419,
@@ -79,7 +79,7 @@ const SpotUsers =
       {
         address: '800 Imposing Ave',
         city: 'Imposingville',
-        state: 'IA',
+        state: 'Iowa',
         country: 'United States',
         lat: 45.1194890,
         lng: 90.1295419,
@@ -90,7 +90,7 @@ const SpotUsers =
       {
         address: '900 Library St',
         city: 'Booksville',
-        state: 'BV',
+        state: 'Nevada',
         country: 'Peru',
         lat: -30.1194890,
         lng: -19.1295419,
@@ -103,7 +103,7 @@ const SpotUsers =
       {
         address: '1000 Proper Rd',
         city: 'Properville',
-        state: 'PE',
+        state: 'Pennsylvania',
         country: 'Germany',
         lat: 43.1194890,
         lng: -170.1295419,
@@ -114,7 +114,7 @@ const SpotUsers =
       {
         address: '1100 Rooftop St',
         city: 'Roofville',
-        state: 'RF',
+        state: 'Rhode Island',
         country: 'United States',
         lat: 0.1194890,
         lng: -0.1295419,

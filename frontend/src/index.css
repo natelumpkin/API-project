@@ -2,3 +2,15 @@
 .black {
   color: black;
 }
+
+.flex {
+  display: flex;
+}
+
+.grid {
+  display: grid
+}
+
+* {
+  font-family: 'Mada';
+}

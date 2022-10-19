@@ -1,7 +1,28 @@
-.landing-page {
+#landing-grid {
   margin: 3% auto;
-  display: flex;
+  margin-left: 3.7em;
+  margin-right: 3.7em;
+  /* display: flex;
   flex-wrap: wrap;
+  justify-content: space-between; */
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-column-gap: 1.6em;
+  grid-row-gap: 3em;
   padding: 0;
   width: fit-content;
+}
+
+.outer-container {
+  justify-content: center;
+}
+
+@media screen and (max-width: 1300px) {
+  #landing-grid {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+
+  img {
+    height: 19em;
+    width: 20em;
+  }
 }
