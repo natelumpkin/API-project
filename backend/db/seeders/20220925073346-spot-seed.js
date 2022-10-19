@@ -94,7 +94,7 @@ const SpotUsers =
         country: 'Peru',
         lat: -30.1194890,
         lng: -19.1295419,
-        name: 'This cozy house\'s every cranny is filled with books',
+        name: 'This cozy house is filled with books',
         description: 'The perfect getaway for a bookworm, or just someone nostalgic for the smell of a friendly bookstore. Curl up in a corner and enjoy a long getaway!',
         price: 99.99
       }
@@ -107,7 +107,7 @@ const SpotUsers =
         country: 'Germany',
         lat: 43.1194890,
         lng: -170.1295419,
-        name: 'A well maintained, straight-cornered house awaits you!',
+        name: 'A well maintained, proper house',
         description: 'We keep this proper house perfectly maintained! You\'ll never see anything out of place here. Tired of the mess? Book a stay!',
         price: 99.99
       },

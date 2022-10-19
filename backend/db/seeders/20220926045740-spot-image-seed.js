@@ -50,13 +50,13 @@ const spotImages = {
       url: 'https://64.media.tumblr.com/3246b9a0202172250d2e71413abf8180/8be5a862f566a89f-3e/s1280x1920/d1d501f72409bcf63d5ed99fbb5f5877504315fc.jpg'
     }
   ],
-  'This cozy house\'s every cranny is filled with books': [
+  'This cozy house is filled with books': [
     {
       preview: true,
       url: 'https://64.media.tumblr.com/4b486da86f0dbfa647a2b405854ea6c8/9014fe13bc027a87-05/s1280x1920/78c4be144b50a665feb5c59be7031e787e509a6f.jpg'
     }
   ],
-  'A well maintained, straight-cornered house awaits you!': [
+  'A well maintained, proper house': [
     {
       preview: true,
       url: 'https://64.media.tumblr.com/cceaa2669b5d1261912ccd1319d4a288/7a3057dd3c89efc8-4f/s1280x1920/56632cb7e7ab01958ab4b6a062ddcf7723143065.jpg'

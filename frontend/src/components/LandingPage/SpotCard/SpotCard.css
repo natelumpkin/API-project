@@ -1,0 +1,25 @@
+
+.spotcard-top-holder {
+  box-sizing: border-box;
+  width: 19.5em;
+  height: 24em;
+  display: flex;
+  flex-direction: column;
+}
+
+.spotcard-preview-image-holder {
+  display: flex;
+  justify-content: center;
+}
+
+img {
+  width: 18em;
+  height: 18em;
+  border-radius: 3%;
+}
+
+a {
+  text-decoration: none;
+  height: fit-content;
+  width: fit-content;
+}
