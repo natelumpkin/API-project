@@ -1,0 +1,10 @@
+
+.profile-button {
+  background-color: white;
+  border: 1px solid #ebebeb;
+  border-radius: 3em;
+}
+
+.profile-button:hover {
+  box-shadow: 0px 2px 1px #ebebeb;
+}

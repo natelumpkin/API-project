@@ -1,0 +1,17 @@
+.navbar {
+  background-color: white;
+  width: 100%;
+  justify-content: center;
+  height: 3em;
+  border-bottom: 1px solid #ebebeb;
+}
+
+.mini-navbar {
+  width: 80%;
+  justify-content: space-between;
+}
+
+.logo {
+  height: 50px;
+  width: 50px;
+}

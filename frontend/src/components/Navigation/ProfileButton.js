@@ -19,7 +19,7 @@ function ProfileButton({ user }) {
   const [showLoginModal, setShowLoginModal] = useState(false);
   const [showSignUpModal, setShowSignUpModal] = useState(false);
 
-  console.log('show menu variable: ', showMenu)
+  //console.log('show menu variable: ', showMenu)
 
   const logInDemoUser = () => {
     const demoData = {
@@ -57,23 +57,24 @@ function ProfileButton({ user }) {
   if (user) {
     return (
       <>
-      <button onClick={() => setShowMenu(!showMenu)}>
+      <button className="profile-button" onClick={() => setShowMenu(!showMenu)}>
         <div>
-        <i className="fa-solid fa-user"></i>
+        <i className="fa-solid fa-bars"></i>
+        <i className="fa-solid fa-circle-user"></i>
         </div>
       </button>
       {showMenu && (
         <ul className="profile-dropdown">
-              <li>{user.username}</li>
-              <li>{user.email}</li>
-              <li>
-                <Link to="/create-a-spot">
-                  <button>Host Your Home</button>
-                </Link>
-              </li>
-              <li>
-                <button onClick={logout}>Log Out</button>
-              </li>
+          {/* <li>{user.username}</li>
+          <li>{user.email}</li> */}
+          <li>
+            <Link to="/create-a-spot">
+              <button>Host Your Home</button>
+            </Link>
+          </li>
+          <li>
+            <button onClick={logout}>Log Out</button>
+          </li>
         </ul>
       )}
     </>

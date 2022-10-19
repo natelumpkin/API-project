@@ -15,8 +15,8 @@ const CreateSpotPage = () => {
   const [city, setCity] = useState('')
   const [state, setState] = useState('')
   const [country, setCountry] = useState('')
-  const [lat, setLat] = useState('')
-  const [lng, setLng] = useState('')
+  // const [lat, setLat] = useState('')
+  // const [lng, setLng] = useState('')
   const [name, setName] = useState('')
   const [description, setDescription] = useState('')
   const [price, setPrice] = useState(100)
@@ -33,10 +33,10 @@ const CreateSpotPage = () => {
     if (!address.length) locationErrors.push('Street address')
     if (!city.length) locationErrors.push('City')
     if (!country.length) locationErrors.push('Country')
-    if (lat === '') locationErrors.push('Latitude')
-    if (lng === '') locationErrors.push('Longitude')
-    if (isNaN(lat) || lat < -90 || lat > 90) locationErrors.push('Please provide a valid latitude')
-    if (isNaN(lng) || lng < -180 || lng > 180) locationErrors.push('Please provide a valid longitude')
+    // if (lat === '') locationErrors.push('Latitude')
+    // if (lng === '') locationErrors.push('Longitude')
+    // if (isNaN(lat) || lat < -90 || lat > 90) locationErrors.push('Please provide a valid latitude')
+    // if (isNaN(lng) || lng < -180 || lng > 180) locationErrors.push('Please provide a valid longitude')
     return locationErrors;
   }
 
@@ -67,8 +67,8 @@ const CreateSpotPage = () => {
     setCity('')
     setState('')
     setCountry('')
-    setLat('')
-    setLng('')
+    // setLat('')
+    // setLng('')
     setName('')
     setDescription('')
     setPrice(100)
@@ -108,8 +108,8 @@ const CreateSpotPage = () => {
         city,
         state,
         country,
-        lat,
-        lng,
+        // lat,
+        // lng,
         name,
         description,
         price
@@ -157,10 +157,10 @@ const CreateSpotPage = () => {
           <input id='state' type='text' value={state} onChange={(e) => setState(e.target.value)}></input>
           <label htmlFor='country'>Country</label>
           <input id='country' type='text' value={country} onChange={(e) => setCountry(e.target.value)}></input>
-          <label htmlFor='lat'>Latitude</label>
+          {/* <label htmlFor='lat'>Latitude</label>
           <input id='lat' type='text' value={lat} onChange={(e) => setLat(e.target.value)}></input>
           <label htmlFor='lng'>Longitude</label>
-          <input id='lng' type='text' value={lng} onChange={(e) => setLng(e.target.value)}></input>
+          <input id='lng' type='text' value={lng} onChange={(e) => setLng(e.target.value)}></input> */}
             {locationErrors.length > 0 && (
               <div className='location-errors'>
                 To continue, please provide this required info:
@@ -171,7 +171,7 @@ const CreateSpotPage = () => {
             )}
         </div>
         <div>
-          <h4>Please add up to 5 photos</h4>
+          <h4>Please add a preview image</h4>
           <label htmlFor='previewPhoto'>Preview Photo</label>
           <input id="previewPhoto" placeholder='URL here...' type='text' value={url1} onChange={(e) => seturl1(e.target.value)}></input>
           {photoErrors.length > 0 && (
