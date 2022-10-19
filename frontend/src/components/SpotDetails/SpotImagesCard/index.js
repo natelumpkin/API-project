@@ -1,4 +1,6 @@
 
+import './SpotImagesCard.css';
+
 const SpotImagesCard = ({previewImg, nonPreviewImgs}) => {
 
   if (!previewImg) {

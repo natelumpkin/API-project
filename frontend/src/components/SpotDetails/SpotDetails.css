@@ -1,0 +1,23 @@
+
+.details-main-holder {
+  justify-content: center;
+  width: 80%;
+}
+
+.title-card {
+  font-size: 1.2em;
+}
+
+#title {
+  margin-bottom: .5em;
+}
+
+.title-lower {
+  justify-content: space-between;
+  font-size: .7em;
+}
+
+.edit-button {
+  display: flex;
+  align-items: center;
+}

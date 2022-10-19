@@ -17,6 +17,10 @@ import SpotImagesCard from "./SpotImagesCard";
 import SpotReviews from "../SpotReviewsModal/SpotReviews";
 import CreateReviewForm from "../CreateReviewForm";
 
+// CSS
+
+import './SpotDetails.css';
+
 
 const SpotDetails = () => {
   //console.log('SPOT DETAILS IS TRYING TO RENDER')
@@ -84,27 +88,28 @@ const SpotDetails = () => {
   } else {
     //console.log('ATTEMPTING TO LOAD MAIN BODY', 'IS LOADING VARIABLE: ', isLoaded)
   return (
-    <div>
+    <div className="flex center">
       <div className="details-main-holder">
         <div className="title-card">
-          <h2>{singleSpot.name}</h2>
-          {userInfo && userInfo.id === singleSpot.ownerId && (
-            <div>
+          <h2 id="title">{singleSpot.name}</h2>
+
+          <div className="flex title-lower">
+            <h4>
+              {formattedAvgRating} <i className="fa-solid fa-star"></i>
+              <span> • </span>
+              <span onClick={() => setShowModal(true)}>
+                {singleSpot.numReviews} {(singleSpot.numReviews > 1 || singleSpot.numReviews < 1) && `reviews`}{singleSpot.numReviews === 1 && 'review'}
+              </span>
+              <span>{singleSpot.city}, {singleSpot.state}, {singleSpot.country}</span>
+              <span> ${singleSpot.price} night</span>
+            </h4>
+            {userInfo && userInfo.id === singleSpot.ownerId && (
+            <div className="edit-button">
               <Link to={`/spots/${singleSpot.id}/edit`}>
                 Edit
               </Link>
             </div>
           )}
-          <div>
-            <h4>
-              {formattedAvgRating} <i className="fa-solid fa-star"></i>
-              <span> • </span>
-              <span>
-                <h4 onClick={() => setShowModal(true)}>{singleSpot.numReviews} {(singleSpot.numReviews > 1 || singleSpot.numReviews < 1) && `reviews`}{singleSpot.numReviews === 1 && 'review'}</h4>
-              </span>
-              <span>{singleSpot.city}, {singleSpot.state}, {singleSpot.country}</span>
-              <span> ${singleSpot.price} night</span>
-            </h4>
           </div>
         </div>
         <div className="picture-card">

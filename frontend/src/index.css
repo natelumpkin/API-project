@@ -14,3 +14,7 @@
 * {
   font-family: 'Open Sans';
 }
+
+.center {
+  justify-content: center;
+}

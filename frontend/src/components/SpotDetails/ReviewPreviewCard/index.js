@@ -7,6 +7,8 @@ import formatReviewPreview from "../../../utils/formatReviewPreview";
 import DeleteReviewForm from "../../DeleteReviewForm";
 import { Modal } from "../../../context/Modal";
 
+import './ReviewPreviewCard.css';
+
 // Review preview card only displays first 6 reviews
 // And only displays the first 180 characters, ending with a ...
 // Each review that is cut off has a show more link that brings up the modal

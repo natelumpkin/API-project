@@ -5,6 +5,8 @@ import { getReviewsBySpot } from "../../../store/review";
 import formatAvgRating from "../../../utils/formatAvgRating";
 import ReviewPreviewCard from "../ReviewPreviewCard";
 
+import './ReviewsPreview.css'
+
 const ReviewsPreview = ({spotId, avgRating, numReviews, setShowModal}) => {
 
   const reviews = useSelector(state => state.reviews.spot);
