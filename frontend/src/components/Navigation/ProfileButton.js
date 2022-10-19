@@ -57,49 +57,54 @@ function ProfileButton({ user }) {
   if (user) {
     return (
       <>
-      <button className="profile-button" onClick={() => setShowMenu(!showMenu)}>
-        <div>
-        <i className="fa-solid fa-bars"></i>
-        <i className="fa-solid fa-circle-user"></i>
+
+        <div id="profile-button" className={showMenu ? "flex menu-open" : "flex"} onClick={() => setShowMenu(!showMenu)}>
+
+          <i className="fa-solid fa-bars menu"></i>
+          <i className="fa-solid fa-circle-user profile"></i>
+          {showMenu && (
+          <ul className="profile-dropdown">
+            {/* <li>{user.username}</li>
+            <li>{user.email}</li> */}
+            <li id="host-button">
+              <Link to="/create-a-spot">
+                <button>Host Your Home</button>
+              </Link>
+            </li>
+            <li>
+              <button onClick={logout}>Log Out</button>
+            </li>
+          </ul>
+          )}
         </div>
-      </button>
-      {showMenu && (
-        <ul className="profile-dropdown">
-          {/* <li>{user.username}</li>
-          <li>{user.email}</li> */}
-          <li>
-            <Link to="/create-a-spot">
-              <button>Host Your Home</button>
-            </Link>
-          </li>
-          <li>
-            <button onClick={logout}>Log Out</button>
-          </li>
-        </ul>
-      )}
+
+
     </>
     )
   } else {
     return (
       <>
-      <button onClick={openMenu}>
-        <div>
-        <i className="fa-solid fa-user"></i>
-        </div>
-      </button>
-      {showMenu && (
-        <ul className="profile-dropdown">
-              <li>
-                <button onClick={() => setShowSignUpModal(true)}>Sign Up</button>
-              </li>
-              <li>
-                <button onClick={() => setShowLoginModal(true)}>Log In</button>
-              </li>
-              <li>
-                <button onClick={() => logInDemoUser()}>Login as Demo User</button>
-              </li>
-        </ul>
-      )}
+      <div id="profile-button" className={showMenu ? "flex menu-open" : "flex"} onClick={openMenu}>
+
+        <i className="fa-solid fa-bars menu"></i>
+        <i className="fa-solid fa-circle-user profile"></i>
+
+        {showMenu && (
+          <ul className="profile-dropdown">
+            <li>
+              <button onClick={() => setShowLoginModal(true)}>Log In</button>
+            </li>
+            <li>
+              <button onClick={() => setShowSignUpModal(true)}>Sign Up</button>
+            </li>
+            <li>
+              <button onClick={() => logInDemoUser()}>Login as Demo User</button>
+            </li>
+          </ul>
+          )}
+
+      </div>
+
       {showLoginModal && (
         <Modal onClose={() => setShowLoginModal(false)}>
           <LoginForm />
