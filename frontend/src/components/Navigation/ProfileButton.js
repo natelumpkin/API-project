@@ -26,6 +26,21 @@ function ProfileButton({ user }) {
 
   //console.log('show menu variable: ', showMenu)
 
+  // if (showLoginModal) {
+  //   document.body.style.overflow = 'hidden'
+  // } else {
+  //   document.body.style.overflow = 'unset'
+  // }
+
+  useEffect(() => {
+    if (showSignUpModal) {
+      document.body.style.overflow = 'hidden';
+    }
+    return () => {
+      document.body.style.overflow = 'unset';
+    }
+  },[showSignUpModal])
+
   const logInDemoUser = () => {
     const demoData = {
       credential: "demouser1",
