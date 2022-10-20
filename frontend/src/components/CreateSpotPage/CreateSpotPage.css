@@ -21,7 +21,7 @@ input::-webkit-inner-spin-button {
 }
 
 .form-holder {
-  border: 1px solid #981b1b;
+  /* border: 1px solid #981b1b; */
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -71,7 +71,7 @@ input::-webkit-inner-spin-button {
 }
 
 #country-input {
-  border: none;
+  border: 1px solid rgba(0, 0, 0, 0);
 }
 
 .input.single-input {
@@ -109,4 +109,67 @@ input::-webkit-inner-spin-button {
 
 .character-counter {
   font-size: .75em;
+}
+
+.price-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.price-input-holder {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.price-clicker {
+  border: 1px solid #b0b0b0;
+  border-radius: 100%;
+  height: 2em;
+  width: 2em;
+  align-self: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+.price-clicker:hover {
+  border: 1px solid black;
+}
+
+.price-input {
+  border: 1px solid #b0b0b0;
+  border-radius: .5em;
+  font-size: 2em;
+  height: 2em;
+}
+
+.price-input:focus {
+  outline: none;
+}
+
+.button-holder {
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  margin-top: 2em;
+}
+
+.publish-button {
+  border: 1px solid black;
+  background-color: white;
+  margin: 0;
+  width: 30%;
+  height: 3em;
+  border-radius: .5em;
+  margin-bottom: 2em;
+  margin-right: 2em;
+  font-size: 1em;
+  cursor: pointer;
+}
+
+.publish-button:hover {
+  background-color: #ebebeb6b;
 }

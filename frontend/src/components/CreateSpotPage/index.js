@@ -134,19 +134,19 @@ const CreateSpotPage = () => {
 
   const incrementPrice = (e) => {
     //console.log('increment running')
-    setPrice(price + 1);
+    setPrice(price + 5);
   }
 
   const decrementPrice = (e) => {
     //console.log('decrement running')
-    setPrice(price - 1);
+    setPrice(price - 5);
   }
 
   return (
     <div className='create-spot-exterior-flex'>
       <div className='create-spot-exterior-holder'>
     <h2>Host Your Home</h2>
-    <Link to='/'>Exit</Link>
+    <Link className='underline' to='/'>Exit</Link>
     <div className='form-holder'>
       <form className='create-spot-form' onSubmit={submitSpot}>
         <div className='location-exterior'>
@@ -207,7 +207,7 @@ const CreateSpotPage = () => {
           <label className='name-description-title' htmlFor='description'>Create your description</label>
           <textarea placeholder="You'll have a great time at this comfortable place to stay" className='create-text description' id='description' type='text' value={description} onChange={(e) => setDescription(e.target.value)}/>
           <div className='character-counter'>
-            <span>{description.length}/499</span>
+            <span>{description.length}/500</span>
           </div>
           </div>
           {descriptionErrors.length > 0 && (
@@ -222,10 +222,12 @@ const CreateSpotPage = () => {
         <div>
           <h4 className='form-directions'>Now for the fun part - set your price</h4>
           <div className='price-form'>
-            <label htmlFor='price'>Price</label>
-            <span onClick={() => incrementPrice()}> + </span>
-            <input id='price' type='number' value={price} onChange={(e) => setPrice(e.target.value)}></input>
-            <span onClick={() => decrementPrice()}> - </span>
+            <div className='price-input-holder'>
+            <div className='price-clicker minus' onClick={() => decrementPrice()}> – </div>
+            <input className='price-input' id='price' type='number' value={price} onChange={(e) => setPrice(e.target.value)}></input>
+            <div className='price-clicker' onClick={() => incrementPrice()}> + </div>
+            </div>
+            <label className='price-label' htmlFor='price'>per night</label>
           </div>
           {priceErrors.length > 0 && (
               <div className='price-errors'>
@@ -234,7 +236,9 @@ const CreateSpotPage = () => {
             )}
 
         </div>
+        <div className='button-holder'>
         <button className='publish-button'>Publish Your Listing</button>
+        </div>
       </form>
     </div>
     </div>
