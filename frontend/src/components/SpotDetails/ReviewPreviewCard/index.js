@@ -42,8 +42,8 @@ const ReviewPreviewCard = ({review, spotId, setShowModal}) => {
           <h5 id="review-date">{formattedDate}</h5>
         </div>
       </div>
-      <div className="review-holder flex">
-        <div id="review-text">{review.review}</div>
+      <div className="review-holder no-overflow flex">
+        <div id="review-text">{formattedReview}</div>
         <div className="showmore-button">
         {enableShowMoreButton && (
           <span>
@@ -54,7 +54,7 @@ const ReviewPreviewCard = ({review, spotId, setShowModal}) => {
           </span>
         )}
         {currentUser && review.User.id === currentUser.id && (
-          <div className="button-holder">
+          <div id="button-holder">
             <button className="delete-review-button" onClick={() => setShowDeleteReviewForm(true)}>Delete your review</button>
           </div>
           )}
