@@ -58,7 +58,7 @@ const CreateSpotPage = () => {
 
   const handlePriceErrors = () => {
     let errors = [];
-    if (price < 1) errors.push('Please give your spot a price per night')
+    if (price < 1) errors.push('Please give your spot a price above zero')
     if (isNaN(price)) errors.push('Please enter a number')
     return errors;
   }
@@ -134,12 +134,18 @@ const CreateSpotPage = () => {
 
   const incrementPrice = (e) => {
     //console.log('increment running')
-    setPrice(price + 5);
+    setPrice(Number(price) + 5);
   }
 
   const decrementPrice = (e) => {
     //console.log('decrement running')
-    setPrice(price - 5);
+    if (!price) return;
+    if (price > 5) {
+      setPrice(Number(price) - 5);
+    }
+    if (price <= 5) {
+      return;
+    }
   }
 
   return (
@@ -174,8 +180,8 @@ const CreateSpotPage = () => {
             <input id='lng' type='text' value={lng} onChange={(e) => setLng(e.target.value)}></input> */}
           </div>
             {locationErrors.length > 0 && (
-              <div className='location-errors'>
-                To continue, please provide this required info:
+              <div className='errors'>
+                <i className="fa-solid fa-circle-exclamation"></i> To continue, please provide this required info:
                 <ul>
                 {locationErrors.map(error => <li key={error}>{error}</li>)}
                 </ul>
@@ -189,8 +195,8 @@ const CreateSpotPage = () => {
           <input className='location-input photo-input' id="previewPhoto" placeholder='URL here...' type='text' value={url1} onChange={(e) => seturl1(e.target.value)}></input>
           </div>
           {photoErrors.length > 0 && (
-              <div className='photo-errors'>
-                A preview photo is required
+              <div className='errors'>
+                <i className="fa-solid fa-circle-exclamation"></i> A preview photo is required
               </div>
             )}
         </div>
@@ -211,8 +217,8 @@ const CreateSpotPage = () => {
           </div>
           </div>
           {descriptionErrors.length > 0 && (
-              <div className='location-errors'>
-                To continue, please provide this required info:
+              <div className='errors'>
+                <i className="fa-solid fa-circle-exclamation"></i> To continue, please provide this required info:
                 <ul>
                 {descriptionErrors.map(error => <li key={error}>{error}</li>)}
                 </ul>
@@ -230,8 +236,11 @@ const CreateSpotPage = () => {
             <label className='price-label' htmlFor='price'>per night</label>
           </div>
           {priceErrors.length > 0 && (
-              <div className='price-errors'>
-                Please enter a valid price per night
+              <div className='errors'>
+
+
+                {priceErrors.map(error => <div key={error}><i className="fa-solid fa-circle-exclamation"></i> {error}</div>)}
+
               </div>
             )}
 

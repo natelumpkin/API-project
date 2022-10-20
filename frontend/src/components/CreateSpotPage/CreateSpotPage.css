@@ -137,6 +137,7 @@ input::-webkit-inner-spin-button {
 
 .price-clicker:hover {
   border: 1px solid black;
+  cursor: pointer;
 }
 
 .price-input {
@@ -172,4 +173,13 @@ input::-webkit-inner-spin-button {
 
 .publish-button:hover {
   background-color: #ebebeb6b;
+}
+
+.errors {
+  margin-top: 1em;
+}
+
+.errors,
+.errors ul {
+  color: #c43f21;
 }
