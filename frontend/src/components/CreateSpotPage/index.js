@@ -142,25 +142,36 @@ const CreateSpotPage = () => {
   }
 
   return (
-    <div>
+    <div className='create-spot-exterior-flex'>
+      <div className='create-spot-exterior-holder'>
     <h2>Host Your Home</h2>
     <Link to='/'>Exit</Link>
-    <div>
-      <form onSubmit={submitSpot}>
-        <div>
+    <div className='form-holder'>
+      <form className='create-spot-form' onSubmit={submitSpot}>
+        <div className='location-exterior'>
           <h4>Where's your place located?</h4>
-          <label htmlFor='address'>Street Address</label>
-          <input id='address' type='text' value={address} onChange={(e) => setAddress(e.target.value)}></input>
-          <label htmlFor='city'>City</label>
-          <input id='city' type='text' value={city} onChange={(e) => setCity(e.target.value)}></input>
-          <label htmlFor='state'>State</label>
-          <input id='state' type='text' value={state} onChange={(e) => setState(e.target.value)}></input>
-          <label htmlFor='country'>Country</label>
-          <input id='country' type='text' value={country} onChange={(e) => setCountry(e.target.value)}></input>
-          {/* <label htmlFor='lat'>Latitude</label>
-          <input id='lat' type='text' value={lat} onChange={(e) => setLat(e.target.value)}></input>
-          <label htmlFor='lng'>Longitude</label>
-          <input id='lng' type='text' value={lng} onChange={(e) => setLng(e.target.value)}></input> */}
+          <div className='location-form'>
+            <div className='input'>
+            <label className='location-label' htmlFor='address'>Street</label>
+            <input className='location-input' placeholder='Street address here...' id='address' type='text' value={address} onChange={(e) => setAddress(e.target.value)}></input>
+            </div>
+            <div className='input'>
+            <label className='location-label' htmlFor='city'>City</label>
+            <input className='location-input' placeholder='City name here...' id='city' type='text' value={city} onChange={(e) => setCity(e.target.value)}></input>
+            </div>
+            <div className='input'>
+            <label className='location-label' htmlFor='state'>State</label>
+            <input className='location-input' placeholder='State name here...' id='state' type='text' value={state} onChange={(e) => setState(e.target.value)}></input>
+            </div>
+            <div id="country-input" className='input'>
+            <label className='location-label' htmlFor='country'>Country</label>
+            <input className='location-input' placeholder='Country name here...' id='country' type='text' value={country} onChange={(e) => setCountry(e.target.value)}></input>
+            </div>
+            {/* <label htmlFor='lat'>Latitude</label>
+            <input id='lat' type='text' value={lat} onChange={(e) => setLat(e.target.value)}></input>
+            <label htmlFor='lng'>Longitude</label>
+            <input id='lng' type='text' value={lng} onChange={(e) => setLng(e.target.value)}></input> */}
+          </div>
             {locationErrors.length > 0 && (
               <div className='location-errors'>
                 To continue, please provide this required info:
@@ -172,8 +183,10 @@ const CreateSpotPage = () => {
         </div>
         <div>
           <h4>Please add a preview image</h4>
-          <label htmlFor='previewPhoto'>Preview Photo</label>
-          <input id="previewPhoto" placeholder='URL here...' type='text' value={url1} onChange={(e) => seturl1(e.target.value)}></input>
+          <div className='input single-input'>
+          <label className='location-label photo-label' htmlFor='previewPhoto'>Preview Photo</label>
+          <input className='location-input photo-input' id="previewPhoto" placeholder='URL here...' type='text' value={url1} onChange={(e) => seturl1(e.target.value)}></input>
+          </div>
           {photoErrors.length > 0 && (
               <div className='photo-errors'>
                 A preview photo is required
@@ -182,10 +195,14 @@ const CreateSpotPage = () => {
         </div>
         <div>
           <h4>Let's give your place a name and description</h4>
+          <div className='input single-input'>
           <label htmlFor='name'>Name</label>
           <textarea id='name' type='text' value={name} onChange={(e) => setName(e.target.value)}/>
+          </div>
+          <div className='input single-input'>
           <label htmlFor='description'>Description</label>
           <textarea id='description' type='text' value={description} onChange={(e) => setDescription(e.target.value)}/>
+          </div>
           {descriptionErrors.length > 0 && (
               <div className='location-errors'>
                 To continue, please provide this required info:
@@ -197,18 +214,22 @@ const CreateSpotPage = () => {
         </div>
         <div>
           <h4>Now for the fun part - set your price</h4>
-          <label htmlFor='price'>Price</label>
-          <span onClick={() => incrementPrice()}> + </span>
-          <input id='price' type='number' value={price} onChange={(e) => setPrice(e.target.value)}></input>
-          <span onClick={() => decrementPrice()}> - </span>
+          <div className='price-form'>
+            <label htmlFor='price'>Price</label>
+            <span onClick={() => incrementPrice()}> + </span>
+            <input id='price' type='number' value={price} onChange={(e) => setPrice(e.target.value)}></input>
+            <span onClick={() => decrementPrice()}> - </span>
+          </div>
           {priceErrors.length > 0 && (
               <div className='price-errors'>
                 Please enter a valid price per night
               </div>
             )}
+
         </div>
-        <button>Publish Your Listing</button>
+        <button className='publish-button'>Publish Your Listing</button>
       </form>
+    </div>
     </div>
     </div>
   )

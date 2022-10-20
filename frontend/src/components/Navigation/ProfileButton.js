@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link, useHistory } from "react-router-dom";
 import * as sessionActions from '../../store/session';
 
-import LoginFormModal from "../LoginFormModal";
+//import LoginFormModal from "../LoginFormModal";
 import { Modal } from "../../context/Modal";
 import LoginForm from "../LoginFormModal/LoginForm";
 import SignupFormPage from "../SignUpFormPage";
@@ -15,6 +15,11 @@ import './ProfileButton.css'
 function ProfileButton({ user }) {
   const history = useHistory();
   const dispatch = useDispatch();
+
+  const userInfo = useSelector(state => state.session.user)
+
+  console.log('userInfo', userInfo)
+
   const [showMenu, setShowMenu] = useState(false);
   const [showLoginModal, setShowLoginModal] = useState(false);
   const [showSignUpModal, setShowSignUpModal] = useState(false);
@@ -66,6 +71,9 @@ function ProfileButton({ user }) {
           <ul className="profile-dropdown">
             {/* <li>{user.username}</li>
             <li>{user.email}</li> */}
+            <li id="username-splash">
+              <button>Welcome, {userInfo.firstName}!</button>
+            </li>
             <Link to="/create-a-spot">
             <li id="host-button">
 
