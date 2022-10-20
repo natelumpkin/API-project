@@ -137,7 +137,7 @@ function ProfileButton({ user }) {
       )}
       {showSignUpModal && (
         <Modal onClose={() => setShowSignUpModal(false)}>
-          <SignupFormPage />
+          <SignupFormPage setShowSignUpModal={setShowSignUpModal}/>
         </Modal>
       )}
     </>

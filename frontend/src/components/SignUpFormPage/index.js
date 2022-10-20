@@ -5,7 +5,7 @@ import * as sessionActions from "../../store/session";
 
 import './SignUpForm.css'
 
-function SignupFormPage() {
+function SignupFormPage({setShowSignUpModal}) {
   const dispatch = useDispatch();
   const sessionUser = useSelector((state) => state.session.user);
   const [email, setEmail] = useState("");
@@ -50,10 +50,17 @@ function SignupFormPage() {
 
   return (
     <div className='signup-form-card'>
-      <h4>Sign Up</h4>
+      <div className="signup-exit-holder">
+        <div className="halfwidth flex">
+        <div className="circle signup">
+        <i id="exit-reviews" className="fa-solid fa-xmark" onClick={() => setShowSignUpModal(false)}></i>
+        </div>
+        <h4>Sign Up</h4>
+        </div>
+      </div>
       <div className="signup-form-holder">
       <form className='signup-form' onSubmit={handleSubmit}>
-        <h4>Welcome to NateBnB</h4>
+        <h4 className="signup-title">Welcome to NateBnB</h4>
         <div className="signup-exterior">
           <div className="input">
         <label className='location-label' htmlFor="email">

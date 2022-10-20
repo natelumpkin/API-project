@@ -7,9 +7,40 @@
   flex-direction: column;
   align-items: center;
   width: 35em;
-  margin-top: 10%;
   height: 35em;
   overflow: scroll;
+}
+
+.halfwidth {
+  width: 55%;
+  justify-content: space-between;
+}
+
+.signup-exit-holder {
+  height: 12%;
+  width: 100%;
+  padding-left: 1.5em;
+  padding-top: 1em;
+  border-bottom: 1px solid #ebebeb;
+  display: flex;
+}
+
+.circle.signup {
+  border-radius: 100%;
+  width: 2em;
+  height: 2em;
+  cursor: pointer;
+  display: flex;
+  /* justify-content: center; */
+  /* justify-self: flex-start; */
+  /* align-items: center; */
+  margin-bottom: 0.5em;
+}
+
+.signup-exit-holder h4 {
+  justify-self: center;
+  margin-bottom: 0;
+  margin-top: .3em;
 }
 
 .signup-form {
@@ -26,8 +57,15 @@
   /* border: 1px solid #981b1b; */
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: center;
   width: 90%;
+}
+
+.signup-title {
+  font-size: 1.5em;
+  margin: 0;
+  margin-bottom: .5em;
+  margin-top: .8em;
 }
 
 .signup-input {
@@ -59,7 +97,7 @@
   width: 100%;
   display: flex;
   justify-content: flex-start;
-  margin-top: 2em;
+  margin-bottom: 2em;
 }
 
 .signup-button {
