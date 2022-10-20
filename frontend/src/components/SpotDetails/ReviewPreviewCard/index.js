@@ -43,7 +43,7 @@ const ReviewPreviewCard = ({review, spotId, setShowModal}) => {
         </div>
       </div>
       <div className="review-holder flex">
-        <p id="review-text">{formattedReview}</p>
+        <div id="review-text">{review.review}</div>
         <div className="showmore-button">
         {enableShowMoreButton && (
           <span>
