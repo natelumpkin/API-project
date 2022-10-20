@@ -1,5 +1,5 @@
 import { useSelector } from "react-redux";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from 'react-router-dom';
 
 import getMonthFromDate from "../../../utils/getMonthFromDate";
@@ -21,6 +21,15 @@ const ReviewPreviewCard = ({review, spotId, setShowModal}) => {
   //console.log('REVIEW CARD currentUser: ', currentUser);
 
   const [showDeleteReviewForm, setShowDeleteReviewForm] = useState(false);
+
+  useEffect(() => {
+    if (showDeleteReviewForm) {
+      document.body.style.overflow = 'hidden';
+    }
+    return () => {
+      document.body.style.overflow = 'unset';
+    }
+  },[showDeleteReviewForm])
 
   let formattedDate = getMonthFromDate(review.createdAt)
   let formattedReview = formatReviewPreview(review.review);
