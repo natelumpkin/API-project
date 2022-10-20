@@ -126,9 +126,9 @@ const SpotDetails = () => {
         </div>
         <div className="display-info">
           <ReviewsPreview setShowModal={setShowModal} spotId={spotId} avgRating={singleSpot.avgStarRating} numReviews={singleSpot.numReviews}/>
-          <button onClick={() => setShowModal(true)}>Show all {singleSpot.numReviews} reviews</button>
+          <button className="show-all-reviews-button" onClick={() => setShowModal(true)}>Show all {singleSpot.numReviews > 1 && singleSpot.numReviews} reviews</button>
           {userInfo && userInfo.id !== singleSpot.ownerId && !currentUserHasReviewed &&
-            <button onClick={() => setShowReviewForm(true)}>Review this Spot</button>
+            <button className="review-this-spot-button" onClick={() => setShowReviewForm(true)}>Review this Spot</button>
           }
         </div>
         <div className="display-info">

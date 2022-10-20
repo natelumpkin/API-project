@@ -48,3 +48,14 @@
   padding-bottom: .8em;
   font-size: .9em;
 }
+
+.show-all-reviews-button,
+.review-this-spot-button {
+  border: 1px solid black;
+  background-color: white;
+}
+
+.show-all-reviews-button:hover,
+.review-this-spot-button:hover {
+  background-color: #ebebeb6b;
+}
