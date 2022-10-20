@@ -36,6 +36,12 @@ const SpotDetails = () => {
 
   const dispatch = useDispatch();
 
+  if (showModal) {
+    document.body.style.overflow = 'hidden'
+  } else {
+    document.body.style.overflow = 'unset'
+  }
+
   useEffect(() => {
     const variable = dispatch(getSpotById(spotId))
       .then(() => dispatch(getReviewsBySpot(spotId)))
