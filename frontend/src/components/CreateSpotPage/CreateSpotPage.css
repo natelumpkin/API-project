@@ -12,6 +12,7 @@ input::-webkit-inner-spin-button {
   display: flex;
   justify-content: center;
   width: 100%;
+  margin-bottom: 10em;
 }
 
 .create-spot-exterior-holder {
@@ -35,6 +36,10 @@ input::-webkit-inner-spin-button {
   display: flex;
   flex-direction: column;
   border-radius: 1em;
+}
+
+.form-directions {
+  font-size: 1.5em;
 }
 
 .input {
@@ -72,4 +77,36 @@ input::-webkit-inner-spin-button {
 .input.single-input {
   border: 1px solid #b0b0b0;
   border-radius: 1em;
+}
+
+.input.description-input {
+  border: none;
+}
+
+.name-description-title {
+  font-size: 1em;
+  padding-left: .6em;
+  padding-bottom: .6em;
+}
+
+.create-text {
+  border: 1px solid #b0b0b0;
+  border-radius: .5em;
+  height: 5em;
+  font-size: 2em;
+  padding-top: .6em;
+  padding-left: .75em;
+}
+
+.create-text.description {
+  font-size: 1em;
+  height: 10em;
+}
+
+.create-text:focus {
+  outline: none;
+}
+
+.character-counter {
+  font-size: .75em;
 }

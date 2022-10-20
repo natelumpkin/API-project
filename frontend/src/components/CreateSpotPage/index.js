@@ -51,6 +51,7 @@ const CreateSpotPage = () => {
     let errors = [];
     if (!name.length) errors.push('Name')
     if (name.length > 50) errors.push('Please provide a name under 50 characters')
+    if (description.length > 500) errors.push('Please provide a description of 500 characters or less')
     if (!description.length) errors.push('Description')
     return errors;
   }
@@ -149,7 +150,7 @@ const CreateSpotPage = () => {
     <div className='form-holder'>
       <form className='create-spot-form' onSubmit={submitSpot}>
         <div className='location-exterior'>
-          <h4>Where's your place located?</h4>
+          <h4 className='form-directions'>Where's your place located?</h4>
           <div className='location-form'>
             <div className='input'>
             <label className='location-label' htmlFor='address'>Street</label>
@@ -182,7 +183,7 @@ const CreateSpotPage = () => {
             )}
         </div>
         <div>
-          <h4>Please add a preview image</h4>
+          <h4 className='form-directions'>Please add a preview image</h4>
           <div className='input single-input'>
           <label className='location-label photo-label' htmlFor='previewPhoto'>Preview Photo</label>
           <input className='location-input photo-input' id="previewPhoto" placeholder='URL here...' type='text' value={url1} onChange={(e) => seturl1(e.target.value)}></input>
@@ -194,14 +195,20 @@ const CreateSpotPage = () => {
             )}
         </div>
         <div>
-          <h4>Let's give your place a name and description</h4>
-          <div className='input single-input'>
-          <label htmlFor='name'>Name</label>
-          <textarea id='name' type='text' value={name} onChange={(e) => setName(e.target.value)}/>
+          <h4 className='form-directions'>Let's give your place a name and description</h4>
+          <div className='input description-input'>
+          <label className='name-description-title' htmlFor='name'>Create your title</label>
+          <textarea placeholder='Adorable home near you' className='create-text' id='name' type='text' value={name} onChange={(e) => setName(e.target.value)}/>
+          <div className='character-counter'>
+            <span>{name.length}/49</span>
           </div>
-          <div className='input single-input'>
-          <label htmlFor='description'>Description</label>
-          <textarea id='description' type='text' value={description} onChange={(e) => setDescription(e.target.value)}/>
+          </div>
+          <div className='input description-input'>
+          <label className='name-description-title' htmlFor='description'>Create your description</label>
+          <textarea placeholder="You'll have a great time at this comfortable place to stay" className='create-text description' id='description' type='text' value={description} onChange={(e) => setDescription(e.target.value)}/>
+          <div className='character-counter'>
+            <span>{description.length}/499</span>
+          </div>
           </div>
           {descriptionErrors.length > 0 && (
               <div className='location-errors'>
@@ -213,7 +220,7 @@ const CreateSpotPage = () => {
             )}
         </div>
         <div>
-          <h4>Now for the fun part - set your price</h4>
+          <h4 className='form-directions'>Now for the fun part - set your price</h4>
           <div className='price-form'>
             <label htmlFor='price'>Price</label>
             <span onClick={() => incrementPrice()}> + </span>
