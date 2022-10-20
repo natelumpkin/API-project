@@ -27,6 +27,16 @@ const SpotUsers =
         name: 'Beautiful House',
         description: 'The most beautiful house in the whole world',
         price: 49.99
+      }, {
+        address: '1200 Luckbury Ave',
+        city: 'Lucky',
+        state: 'Pennsylvania',
+        country: 'United States',
+        lat: 76.1194890,
+        lng: 78.1294319,
+        name: 'Lucky House',
+        description: 'The luckiest house in the whole workd',
+        price: 49.99
       }
     ],
     'demouser2': [
@@ -50,6 +60,17 @@ const SpotUsers =
         lng: 32.1295419,
         name: 'Amazing House',
         description: 'The most amazing house in the whole world',
+        price: 12.99
+      },
+      {
+        address: '1300 Pool Pl',
+        city: 'Poolville',
+        state: 'California',
+        country: 'USA',
+        lat: 56.1194890,
+        lng: 32.1295419,
+        name: 'Pool House',
+        description: 'Join us at our fantastic pool, where your cares will be washed away by rest and relaxation!',
         price: 12.99
       }
     ],
@@ -154,7 +175,7 @@ module.exports = {
      */
 
     await queryInterface.bulkDelete('Spots', {
-        name: ['Biggest House', 'Smallest House','Average House','Amazing House','Beautiful House']
+        name: ['Biggest House', 'Smallest House','Average House','Amazing House','Beautiful House','Lucky House','Biggest House','Pool House','An inviting house in the clouds','Flower House: nights full of flowers!','An imposing house belies its comfortable interior','This cozy house is filled with books','A well maintained, proper house','A rooftop house resembles a perfect treehouse!']
     }, {});
   }
 };
