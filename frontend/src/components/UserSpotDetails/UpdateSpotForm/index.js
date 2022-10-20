@@ -1,8 +1,8 @@
 import { useHistory, useParams, Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
-import { updateSpotById, addSpotImageById } from "../../../store/spot";
+import { updateSpotById, getSpotById } from "../../../store/spot";
 
 import DeleteSpotModal from "../../DeleteSpotModal";
 
@@ -15,19 +15,43 @@ const UpdateSpotForm = () => {
 
   const spotInfo = useSelector(state => state.spots.singleSpot);
 
-  const [address, setAddress] = useState(spotInfo.address);
-  const [city, setCity] = useState(spotInfo.city)
-  const [state, setState] = useState(spotInfo.state)
-  const [country, setCountry] = useState(spotInfo.country)
+  const [address, setAddress] = useState("loading" || spotInfo.address);
+  const [city, setCity] = useState("loading" || spotInfo.city)
+  const [state, setState] = useState("loading" || spotInfo.state)
+  const [country, setCountry] = useState("loading" || spotInfo.country)
   // const [lat, setLat] = useState(spotInfo.lat)
   // const [lng, setLng] = useState(spotInfo.lng)
-  const [name, setName] = useState(spotInfo.name)
-  const [description, setDescription] = useState(spotInfo.description)
-  const [price, setPrice] = useState(spotInfo.price)
+  const [name, setName] = useState("loading" || spotInfo.name)
+  const [description, setDescription] = useState("loading" || spotInfo.description)
+  const [price, setPrice] = useState("loading" || spotInfo.price)
+
+  console.log('address: ', address)
 
   const [locationErrors, setLocationErrors] = useState([])
   const [descriptionErrors, setDescriptionErrors] = useState([])
   const [priceErrors, setPriceErrors] = useState([])
+
+  const [isLoaded, setIsLoaded] = useState(false)
+
+  useEffect(() => {
+    console.log('entering use effect 1!')
+    dispatch(getSpotById(spotId))
+      .then(() => setIsLoaded(true));
+
+    setName(spotInfo.name || "loading")
+    setAddress(spotInfo.address || "loading")
+    setCity(spotInfo.city || "loading")
+    setCountry(spotInfo.country || "loading")
+    setPrice(spotInfo.price || "loading")
+    setDescription(spotInfo.description || "loading")
+    setState(spotInfo.state || "loading")
+
+  }, [dispatch, isLoaded])
+
+  // useEffect( async () => {
+  //   await dispatch(getSpotById(spotId))
+  //   setIsLoaded(true))
+  // }, [dispatch, isLoaded]
 
   const handleLocationErrors = () => {
     const locationErrors = []
@@ -129,6 +153,12 @@ const UpdateSpotForm = () => {
     }
   }
 
+  if (!isLoaded) {
+    return (
+      <p>...Loading spot details</p>
+    )
+  } else {
+
   return (
     <div className='create-spot-exterior-flex'>
       <div className='create-spot-exterior-holder'>
@@ -175,14 +205,14 @@ const UpdateSpotForm = () => {
           <label className='name-description-title' htmlFor='name'>Create your title</label>
           <textarea placeholder='Adorable home near you' className='create-text' id='name' type='text' value={name} onChange={(e) => setName(e.target.value)}/>
           <div className='character-counter'>
-            <span>{name.length}/49</span>
+            {name && <span>{name.length}/49</span>}
           </div>
           </div>
           <div className='input description-input'>
           <label className='name-description-title' htmlFor='description'>Create your description</label>
           <textarea placeholder="You'll have a great time at this comfortable place to stay" className='create-text description' id='description' type='text' value={description} onChange={(e) => setDescription(e.target.value)}/>
           <div className='character-counter'>
-            <span>{description.length}/500</span>
+            {description && <span>{description.length}/500</span>}
           </div>
           </div>
           {descriptionErrors.length > 0 && (
@@ -220,5 +250,7 @@ const UpdateSpotForm = () => {
     </div>
   )
 }
+}
+
 
 export default UpdateSpotForm;
