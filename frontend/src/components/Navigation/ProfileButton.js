@@ -33,13 +33,13 @@ function ProfileButton({ user }) {
   // }
 
   useEffect(() => {
-    if (showSignUpModal) {
+    if (showSignUpModal || showLoginModal) {
       document.body.style.overflow = 'hidden';
     }
     return () => {
       document.body.style.overflow = 'unset';
     }
-  },[showSignUpModal])
+  },[showSignUpModal, showLoginModal])
 
   const logInDemoUser = () => {
     const demoData = {
@@ -132,7 +132,7 @@ function ProfileButton({ user }) {
 
       {showLoginModal && (
         <Modal onClose={() => setShowLoginModal(false)}>
-          <LoginForm />
+          <LoginForm setShowLoginModal={setShowLoginModal} />
         </Modal>
       )}
       {showSignUpModal && (
