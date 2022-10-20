@@ -36,7 +36,8 @@ const UpdateSpotForm = () => {
   useEffect(() => {
     console.log('entering use effect 1!')
     dispatch(getSpotById(spotId))
-      .then(() => setIsLoaded(true));
+      .then(() => setIsLoaded(true))
+      .catch(() => history.push('/not-found'))
 
     setName(spotInfo.name || "loading")
     setAddress(spotInfo.address || "loading")
