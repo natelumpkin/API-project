@@ -156,7 +156,7 @@ const UpdateSpotForm = () => {
 
   if (!isLoaded) {
     return (
-      <p>...Loading spot details</p>
+      <></>
     )
   } else {
 
