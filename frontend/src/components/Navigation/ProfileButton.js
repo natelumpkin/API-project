@@ -18,7 +18,7 @@ function ProfileButton({ user }) {
 
   const userInfo = useSelector(state => state.session.user)
 
-  console.log('userInfo', userInfo)
+  //console.log('userInfo', userInfo)
 
   const [showMenu, setShowMenu] = useState(false);
   const [showLoginModal, setShowLoginModal] = useState(false);
@@ -34,11 +34,11 @@ function ProfileButton({ user }) {
 
   useEffect(() => {
     if (showSignUpModal || showLoginModal) {
-      console.log('setting no scroll on body in profile button')
+      //console.log('setting no scroll on body in profile button')
       document.body.style.overflow = 'hidden';
     }
     return () => {
-      console.log('running clean up of useeffect in profile button')
+      //console.log('running clean up of useeffect in profile button')
       document.body.style.overflow = 'unset';
     }
   },[showSignUpModal, showLoginModal])

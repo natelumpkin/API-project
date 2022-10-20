@@ -20,18 +20,18 @@ function SignupFormPage({setShowSignUpModal}) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(password, confirmPassword);
+    //console.log(password, confirmPassword);
     if (password === confirmPassword) {
       setErrors([]);
       let response = await dispatch(sessionActions.signUpNewUser({ email, firstName, lastName, username, password }))
-      console.log('response.errors: ', response.errors);
+      //console.log('response.errors: ', response.errors);
       let errorMessages = [];
       if (response && response.errors) {
         for (let error in response.errors) {
           errorMessages.push(response.errors[error])
         }
         setErrors(errorMessages);
-        console.log('errors: ', errors);
+        //console.log('errors: ', errors);
         return;
       }
         // .catch(async (res) => {

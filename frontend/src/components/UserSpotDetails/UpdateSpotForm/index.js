@@ -25,7 +25,7 @@ const UpdateSpotForm = () => {
   const [description, setDescription] = useState("loading" || spotInfo.description)
   const [price, setPrice] = useState("loading" || spotInfo.price)
 
-  console.log('address: ', address)
+  //console.log('address: ', address)
 
   const [locationErrors, setLocationErrors] = useState([])
   const [descriptionErrors, setDescriptionErrors] = useState([])
@@ -34,9 +34,10 @@ const UpdateSpotForm = () => {
   const [isLoaded, setIsLoaded] = useState(false)
 
   useEffect(() => {
-    console.log('entering use effect 1!')
+    //console.log('entering use effect 1!')
     dispatch(getSpotById(spotId))
-      .then(() => setIsLoaded(true));
+      .then(() => setIsLoaded(true))
+      .catch(() => history.push('/not-found'))
 
     setName(spotInfo.name || "loading")
     setAddress(spotInfo.address || "loading")
@@ -155,7 +156,7 @@ const UpdateSpotForm = () => {
 
   if (!isLoaded) {
     return (
-      <p>...Loading spot details</p>
+      <></>
     )
   } else {
 

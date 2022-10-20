@@ -98,7 +98,7 @@ const SpotDetails = () => {
 
   if (!isLoaded) {
     return (
-      <p>...Loading spot details</p>
+      <></>
     )
   } else {
     //console.log('ATTEMPTING TO LOAD MAIN BODY', 'IS LOADING VARIABLE: ', isLoaded)

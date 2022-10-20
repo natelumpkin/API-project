@@ -5,7 +5,7 @@ import LoginForm from './LoginForm';
 const LoginFormModal = () => {
   const [showLoginModal, setShowLoginModal] = useState(false);
 
-  console.log('LOGIN FORM MODAL: showModal: ', showLoginModal)
+  //console.log('LOGIN FORM MODAL: showModal: ', showLoginModal)
 
   return (
     <>
