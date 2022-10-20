@@ -23,7 +23,7 @@ const CreateReviewForm = ({spotId, spotInfo, setShowReviewForm}) => {
     return errors;
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     const validationErrors = handleValidationErrors();
@@ -36,8 +36,19 @@ const CreateReviewForm = ({spotId, spotInfo, setShowReviewForm}) => {
     }
 
     //console.log('DISPATCHING CREATE REVIEW')
-    dispatch(createReviewBySpotId(spotId, reviewData))
-      .then(() => dispatch(getSpotById(spotId)));
+    let res = await dispatch(createReviewBySpotId(spotId, reviewData))
+     await dispatch(getSpotById(spotId))
+     if (res.errors) {
+        let errors = [];
+        for (let error in res.errors) {
+          errors.push(res.errors[error])
+        }
+        setValidationErrors(errors);
+        return;
+      }
+
+
+
 
     setReview('')
     setStars(5)
@@ -61,7 +72,7 @@ const CreateReviewForm = ({spotId, spotInfo, setShowReviewForm}) => {
           <div>
             <ul>
               {validationErrors.map(error => (
-                <li>{error}</li>
+                <li key={error}>{error}</li>
               ))}
             </ul>
           </div>
