@@ -28,8 +28,8 @@ const SpotReviews = ({spotId, avgRating, numReviews, setShowModal}) => {
   return (
     <div className="spot-reviews-holder">
       <div className="exit-holder">
-        <div className="circle">
-        <i id="exit-reviews" className="fa-solid fa-xmark" onClick={() => setShowModal(false)}></i>
+        <div onClick={() => setShowModal(false)} className="spotreviews-circle">
+        <i id="exit-reviews" className="fa-solid fa-xmark" ></i>
         </div>
       </div>
       <div className="spot-reviews-content">

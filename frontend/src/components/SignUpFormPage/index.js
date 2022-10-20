@@ -52,8 +52,8 @@ function SignupFormPage({setShowSignUpModal}) {
     <div className='signup-form-card'>
       <div className="signup-exit-holder">
         <div className="halfwidth flex">
-        <div className="circle signup">
-        <i id="exit-reviews" className="fa-solid fa-xmark" onClick={() => setShowSignUpModal(false)}></i>
+        <div onClick={() => setShowSignUpModal(false)} className="circle signup">
+        <i id="exit-reviews" className="fa-solid fa-xmark" ></i>
         </div>
         <h4>Sign Up</h4>
         </div>

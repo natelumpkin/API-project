@@ -25,10 +25,17 @@ const LoginForm = ({setShowLoginModal}) => {
       for (let error in response.errors) {
         errorMessages.push(response.errors[error])
       }
-    }
-    setErrors(errorMessages);
-      //console.log('errors: ', errors);
+      setErrors(errorMessages);
       return;
+    }
+    else {
+      setCredential('')
+      setPassword('')
+      setErrors('')
+      setShowLoginModal(false);
+    }
+      //console.log('errors: ', errors);
+
     }
 
   return (
@@ -58,6 +65,7 @@ const LoginForm = ({setShowLoginModal}) => {
           <label className='location-label' id='password-label'>Password</label>
           <input
           className='login-input'
+          type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             >

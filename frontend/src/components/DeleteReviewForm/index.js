@@ -22,8 +22,8 @@ const DeleteReviewForm = ({setShowDeleteReviewForm, reviewId, spotId}) => {
     <div className="delete-review-holder">
       <div className="delete-review signup-exit-holder">
 
-        <div className="circle delete-review">
-        <i id="exit-reviews" className="fa-solid fa-xmark" onClick={() => setShowDeleteReviewForm(false)}></i>
+        <div onClick={() => setShowDeleteReviewForm(false)} className="circle delete-review">
+        <i id="exit-reviews" className="fa-solid fa-xmark"></i>
         </div>
 
       </div>

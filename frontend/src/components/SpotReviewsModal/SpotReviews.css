@@ -17,11 +17,11 @@ body.modal-open {
   padding-top: 1em;
 }
 
-.circle:hover {
+.spotreviews-circle:hover {
   background-color: #ebebeb89;
 }
 
-.circle {
+.spotreviews-circle {
   border-radius: 100%;
   width: 2em;
   height: 2em;

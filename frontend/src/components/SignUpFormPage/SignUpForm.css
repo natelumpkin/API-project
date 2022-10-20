@@ -31,9 +31,9 @@
   height: 2em;
   cursor: pointer;
   display: flex;
-  /* justify-content: center; */
+  justify-content: flex-start;
   /* justify-self: flex-start; */
-  /* align-items: center; */
+  align-items: flex-start;
   margin-bottom: 0.5em;
 }
 
@@ -74,6 +74,10 @@
   padding-left: .5em;
   font-size: 1.2em;
   overflow-x: auto;
+}
+
+.signup-input:focus {
+  outline: none;
 }
 
 .input.confirm {
