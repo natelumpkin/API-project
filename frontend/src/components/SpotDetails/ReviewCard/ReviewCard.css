@@ -40,6 +40,7 @@ h5#review-date {
   margin: 0;
   padding: 0;
   justify-self: flex-end;
+  cursor: pointer;
 }
 
 .button-holder-modal {
