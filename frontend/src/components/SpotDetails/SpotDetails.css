@@ -1,0 +1,69 @@
+
+.details-main-holder {
+  justify-content: center;
+  width: 80%;
+}
+
+.title-card {
+  font-size: 1.2em;
+}
+
+#title {
+  margin-bottom: .5em;
+}
+
+.title-lower {
+  justify-content: space-between;
+  font-size: .7em;
+  width: 50%;
+}
+
+.title-lower h4 {
+  margin: 0;
+}
+
+.edit-button {
+  display: flex;
+  align-items: center;
+}
+
+.picture-card {
+  width: 100%;
+  height: 20em;
+  padding-top: 2em;
+}
+
+.preview-image {
+  height: 100%;
+}
+
+.display-info {
+  padding-top: 1.2em;
+  padding-bottom: 1.2em;
+  margin: 0;
+  border-bottom: 1px solid #ebebeb;
+}
+
+#user-info {
+  padding-bottom: .8em;
+  font-size: .9em;
+}
+
+.show-all-reviews-button,
+.review-this-spot-button {
+  border: 1px solid black;
+  background-color: white;
+  margin: 0;
+  width: 20%;
+  height: 3em;
+  border-radius: .5em;
+  margin-bottom: 2em;
+  margin-right: 2em;
+  font-size: 1em;
+  cursor: pointer;
+}
+
+.show-all-reviews-button:hover,
+.review-this-spot-button:hover {
+  background-color: #ebebeb6b;
+}

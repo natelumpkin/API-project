@@ -5,6 +5,8 @@ import { getReviewsBySpot } from "../../../store/review";
 import formatAvgRating from "../../../utils/formatAvgRating";
 import ReviewPreviewCard from "../ReviewPreviewCard";
 
+import './ReviewsPreview.css'
+
 const ReviewsPreview = ({spotId, avgRating, numReviews, setShowModal}) => {
 
   const reviews = useSelector(state => state.reviews.spot);
@@ -29,15 +31,20 @@ const ReviewsPreview = ({spotId, avgRating, numReviews, setShowModal}) => {
 
   return (
     <div>
-      <span><i className="fa-solid fa-star"/>{formattedAvgRating}</span>
-      <span> • </span>
-      <span>{numReviews} {numReviews > 1 && `reviews`}{numReviews === 1 && 'review'}</span>
-      <div>
+      <div className="display-title">
+        <h2>
+        <span><i className="fa-solid fa-star"/> {formattedAvgRating}</span>
+        <span> • </span>
+        <span>{numReviews} {numReviews > 1 && `reviews`}{numReviews === 1 && 'review'}</span>
+        </h2>
+      </div>
+      <div className="reviews-preview-holder">
         {previewReviewsArr.length && previewReviewsArr.map(review => (
           <ReviewPreviewCard setShowModal={setShowModal} key={review.id} spotId={spotId} review={review}/>
         ))}
       </div>
     </div>
+
   )
 };
 

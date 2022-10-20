@@ -8,9 +8,9 @@ const UserSpotBookings = {
       startDate: "2022-04-30",
       endDate: "2022-05-30"
     }},
-    {"Smallest House": {
-      startDate: "2022-05-31",
-      endDate: "2022-06-30"
+    {"An inviting house in the clouds": {
+      startDate: "2023-05-31",
+      endDate: "2023-06-30"
     }}
   ],
   "demouser2": [
@@ -24,7 +24,7 @@ const UserSpotBookings = {
     }}
   ],
   "demouser3": [
-    {"Average House": {
+    {"An inviting house in the clouds": {
       startDate: "2022-11-30",
       endDate: "2022-12-30"
     }}

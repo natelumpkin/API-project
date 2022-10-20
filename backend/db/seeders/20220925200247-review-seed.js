@@ -24,8 +24,8 @@ const UserSpotReviews = {
     }
   },
   'demouser5': {
-    'Average House': {
-      review: "This is the most average house I've ever seen",
+    'An inviting house in the clouds': {
+      review: "I was chilly in the clouds",
       stars: 1
     }
   }

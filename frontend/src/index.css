@@ -1,1 +1,29 @@
 /* TODO Add site wide styles */
+.black {
+  color: black;
+}
+
+.flex {
+  display: flex;
+}
+
+.grid {
+  display: grid
+}
+
+* {
+  font-family: 'Open Sans';
+}
+
+.center {
+  justify-content: center;
+}
+
+.underline {
+  color: black;
+  text-decoration: underline;
+}
+
+.full-width {
+  width: 100%;
+}

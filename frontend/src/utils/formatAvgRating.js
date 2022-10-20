@@ -7,9 +7,9 @@ const formatAvgRating = (rating) => {
   let ratingArr = stringRating.split('.');
 
   if (ratingArr.length === 1) {
-    return ratingArr[0];
+    return ratingArr[0] + '.0'
   } else if (ratingArr[1][0] === '0') {
-    return ratingArr[0]
+    return ratingArr[0] + '.0'
   } else {
     let decimals = ratingArr[1].slice(0,2);
     return ratingArr[0] + '.' + decimals;

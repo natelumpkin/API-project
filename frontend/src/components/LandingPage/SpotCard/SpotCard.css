@@ -1,0 +1,60 @@
+
+.spotcard-top-holder {
+  box-sizing: border-box;
+  width: fit-content;
+  height: fit-content;
+  display: flex;
+  flex-direction: column;
+}
+
+.spotcard-preview-image-holder {
+  display: flex;
+  justify-content: center;
+}
+
+.spotcard-bottom-holder {
+  display: flex;
+  flex-direction: column;
+}
+
+.info-holder {
+  justify-content: space-between;
+  padding-bottom: 1em;
+  padding-top: .7em;
+}
+
+.info-holder .fa-star {
+  font-size: .7em;
+  padding-right: .4em;
+  align-self: center;
+}
+
+.black.right.flex {
+  padding-right: .2em;
+}
+
+img {
+  width: 18.5em;
+  height: 17em;
+  border-radius: .8em;
+}
+
+a {
+  text-decoration: none;
+  height: fit-content;
+  width: fit-content;
+  /* margin-left: .5em;
+  margin-right: .5em;
+  margin-top: 1.5em;
+  margin-bottom: 1.5em; */
+}
+
+.bold {
+  font-weight: 800;
+  color: #2e2e2e;
+}
+
+.light {
+  font-weight: 100;
+  color: #222222;
+}

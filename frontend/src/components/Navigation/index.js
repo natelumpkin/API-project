@@ -6,6 +6,8 @@ import ProfileButton from './ProfileButton';
 //import LoginFormModal from '../LoginFormModal';
 import './Navigation.css';
 
+import fancyLogo from '../../images/fancy-n-logo.png';
+
 function Navigation({ isLoaded }){
   const sessionUser = useSelector(state => state.session.user);
 
@@ -24,13 +26,17 @@ function Navigation({ isLoaded }){
   // }
 
   return (
-    <ul>
-      <li>
-        <NavLink exact to="/">Home</NavLink>
-        <ProfileButton user={sessionUser}/>
-        {/* {isLoaded && sessionLinks} */}
-      </li>
-    </ul>
+    <div className='flex navbar'>
+      <div className='flex center mini-navbar'>
+        <div>
+          <NavLink exact to="/"><img className='logo' src={fancyLogo}/></NavLink>
+        </div>
+        <div>
+          <ProfileButton user={sessionUser}/>
+        </div>
+            {/* {isLoaded && sessionLinks} */}
+      </div>
+    </div>
   );
 }
 

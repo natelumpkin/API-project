@@ -5,7 +5,7 @@ import * as sessionActions from "../../store/session";
 
 import './SignUpForm.css'
 
-function SignupFormPage() {
+function SignupFormPage({setShowSignUpModal}) {
   const dispatch = useDispatch();
   const sessionUser = useSelector((state) => state.session.user);
   const [email, setEmail] = useState("");
@@ -50,62 +50,105 @@ function SignupFormPage() {
 
   return (
     <div className='signup-form-card'>
-      <h4>Sign Up</h4>
-      <form className='login-form' onSubmit={handleSubmit}>
-        <h4>Welcome to NateBnB</h4>
-        <ul>
-          {errors.map((error, idx) => <li key={idx}>{error}</li>)}
-        </ul>
-        <label>
+      <div className="signup-exit-holder">
+        <div className="halfwidth flex">
+        <div onClick={() => setShowSignUpModal(false)} className="circle signup">
+        <i id="exit-reviews" className="fa-solid fa-xmark" ></i>
+        </div>
+        <h4>Sign Up</h4>
+        </div>
+      </div>
+      <div className="signup-form-holder">
+      <form className='signup-form' onSubmit={handleSubmit}>
+        <h4 className="signup-title">Welcome to NateBnB</h4>
+        <div className="signup-exterior">
+          <div className="input">
+        <label className='location-label' htmlFor="email">
           Email
+        </label>
           <input
+          className='signup-input'
+          id="email"
             type="text"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
-        </label>
-        <label>
+
+        </div>
+        <div className="input">
+        <label className='location-label' htmlFor="firstName">
           First Name
+          </label>
           <input
+          className='signup-input'
+            id="firstName"
             type="text"
             value={firstName}
             onChange={(e) => setFirstName(e.target.value)}
           />
-        </label>
-        <label>
+
+        </div>
+        <div className="input">
+        <label className='location-label' htmlFor="lastName">
           Last Name
+          </label>
           <input
+          className='signup-input'
+            id="lastName"
             type="text"
             value={lastName}
             onChange={(e) => setLastName(e.target.value)}
           />
-        </label>
-        <label>
+
+        </div>
+        <div className="input">
+        <label className='location-label' htmlFor="username">
           Username
+          </label>
           <input
+          className='signup-input'
+            id="username"
             type="text"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
           />
-        </label>
-        <label>
+
+        </div>
+        <div className="input">
+        <label className='location-label' htmlFor="password">
           Password
+          </label>
           <input
+          className='signup-input'
+            id="password"
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
-        </label>
-        <label>
+
+        </div>
+        <div className="input confirm">
+        <label className='location-label' htmlFor="confirmPassword">
           Confirm Password
+          </label>
           <input
+          className='signup-input'
+          id="confirmPassword"
             type="password"
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
           />
-        </label>
-        <button type="submit">Sign Up</button>
+
+        </div>
+        </div>
+        <ul>
+          {errors.map((error, idx) => <li key={idx}>{error}</li>)}
+        </ul>
+        <div className="signup-button-holder">
+        <button className="signup-button" type="submit">Sign Up</button>
+        </div>
       </form>
+      </div>
     </div>
   );
 }

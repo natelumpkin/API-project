@@ -17,6 +17,10 @@ import SpotImagesCard from "./SpotImagesCard";
 import SpotReviews from "../SpotReviewsModal/SpotReviews";
 import CreateReviewForm from "../CreateReviewForm";
 
+// CSS
+
+import './SpotDetails.css';
+
 
 const SpotDetails = () => {
   //console.log('SPOT DETAILS IS TRYING TO RENDER')
@@ -31,6 +35,21 @@ const SpotDetails = () => {
   // console.log('Spot Id from use params!: ', spotId)
 
   const dispatch = useDispatch();
+
+  if (showModal) {
+    document.body.style.overflow = 'hidden'
+  } else {
+    document.body.style.overflow = 'unset'
+  }
+
+  useEffect(() => {
+    if (showModal || showReviewForm) {
+      document.body.style.overflow = 'hidden';
+    }
+    return () => {
+      document.body.style.overflow = 'unset';
+    }
+  },[showModal, showReviewForm])
 
   useEffect(() => {
     const variable = dispatch(getSpotById(spotId))
@@ -84,46 +103,50 @@ const SpotDetails = () => {
   } else {
     //console.log('ATTEMPTING TO LOAD MAIN BODY', 'IS LOADING VARIABLE: ', isLoaded)
   return (
-    <div>
+    <div className="flex center">
       <div className="details-main-holder">
         <div className="title-card">
-          <h2>{singleSpot.name}</h2>
-          {userInfo && userInfo.id === singleSpot.ownerId && (
-            <div>
-              <Link to={`/spots/${singleSpot.id}/edit`}>
+          <h2 id="title">{singleSpot.name}</h2>
+
+          <div className="flex title-lower">
+            <h4>
+            <i className="fa-solid fa-star"/> {formattedAvgRating}
+              <span> • </span>
+              <Link className="underline" to='' onClick={(e) => {
+                e.preventDefault();
+                setShowModal(true);
+                }}>
+                {singleSpot.numReviews} {(singleSpot.numReviews > 1 || singleSpot.numReviews < 1) && `reviews`}{singleSpot.numReviews === 1 && 'review'}
+              </Link>
+              <span> •{" "}{singleSpot.city}, {singleSpot.state}, {singleSpot.country} • </span>
+              <span> ${singleSpot.price} night</span>
+            </h4>
+            {userInfo && userInfo.id === singleSpot.ownerId && (
+            <div className="edit-button">
+              <Link className="underline" to={`/spots/${singleSpot.id}/edit`}>
                 Edit
               </Link>
             </div>
           )}
-          <div>
-            <h4>
-              {formattedAvgRating} <i className="fa-solid fa-star"></i>
-              <span> • </span>
-              <span>
-                <Link onClick={() => setShowModal(true)}>{singleSpot.numReviews} {(singleSpot.numReviews > 1 || singleSpot.numReviews < 1) && `reviews`}{singleSpot.numReviews === 1 && 'review'}</Link>
-              </span>
-              <span>{singleSpot.city}, {singleSpot.state}, {singleSpot.country}</span>
-              <span> ${singleSpot.price} night</span>
-            </h4>
           </div>
         </div>
         <div className="picture-card">
           <SpotImagesCard previewImg={previewImg} nonPreviewImgs={nonPreviewImgs}/>
         </div>
-        <div className="user-info">
+        <div id="user-info" className="display-info">
           <h2>Spot hosted by {ownerInfo.firstName}</h2>
         </div>
-        <div className="description-card">
+        <div className="display-info">
           <p>{singleSpot.description}</p>
         </div>
-        <div className="spot-reviews-card">
+        <div className="display-info">
           <ReviewsPreview setShowModal={setShowModal} spotId={spotId} avgRating={singleSpot.avgStarRating} numReviews={singleSpot.numReviews}/>
-          <button onClick={() => setShowModal(true)}>Show all {singleSpot.numReviews} reviews</button>
+          <button className="show-all-reviews-button" onClick={() => setShowModal(true)}>Show all {singleSpot.numReviews > 1 && singleSpot.numReviews} reviews</button>
           {userInfo && userInfo.id !== singleSpot.ownerId && !currentUserHasReviewed &&
-            <button onClick={() => setShowReviewForm(true)}>Review this Spot</button>
+            <button className="review-this-spot-button" onClick={() => setShowReviewForm(true)}>Review this Spot</button>
           }
         </div>
-        <div className="location-card">
+        <div className="display-info">
           <h2>Where you'll be</h2>
           {/* <LocationAPI/> */}
           <div>

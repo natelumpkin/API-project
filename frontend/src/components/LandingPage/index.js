@@ -7,6 +7,9 @@ import { getAllSpots } from "../../store/spot";
 // Components
 import SpotCard from "./SpotCard";
 
+// CSS
+import './LandingPage.css';
+
 const LandingPage = () => {
   // landing page will display on map at exact route '/'
   // display a div with a map of spotcards
@@ -31,12 +34,14 @@ const LandingPage = () => {
   // console.log('LANDING PAGE spotsArray after pushing spots data: ', spotsArray)
 
   return (
-    <div>
+    <div className="flex outer-container">
+      <div id="landing-grid" className="grid landing-page">
       {
         spotsArray.map(spot => (
           <SpotCard key={spot.id} spot={spot}/>
         ))
       }
+      </div>
     </div>
   )
 };

@@ -5,6 +5,7 @@ import { useHistory } from "react-router-dom";
 import { createReviewBySpotId } from "../../store/review";
 import { getSpotById } from "../../store/spot";
 
+import './CreateReviewForm.css'
 
 const CreateReviewForm = ({spotId, spotInfo, setShowReviewForm}) => {
 
@@ -18,12 +19,13 @@ const CreateReviewForm = ({spotId, spotInfo, setShowReviewForm}) => {
   const handleValidationErrors = () => {
     const errors = [];
     if (!review.length) errors.push('Please enter a review')
+
     if (stars <= 0 || stars > 5) errors.push('Stars: Please enter a number from 1 to 5')
     if (isNaN(stars)) errors.push('Stars: Please enter a number between 1 and 5')
     return errors;
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     const validationErrors = handleValidationErrors();
@@ -36,8 +38,16 @@ const CreateReviewForm = ({spotId, spotInfo, setShowReviewForm}) => {
     }
 
     //console.log('DISPATCHING CREATE REVIEW')
-    dispatch(createReviewBySpotId(spotId, reviewData))
-      .then(() => dispatch(getSpotById(spotId)));
+    let res = await dispatch(createReviewBySpotId(spotId, reviewData))
+     await dispatch(getSpotById(spotId))
+     if (res.errors) {
+        let errors = [];
+        for (let error in res.errors) {
+          errors.push(res.errors[error])
+        }
+        setValidationErrors(errors);
+        return;
+      }
 
     setReview('')
     setStars(5)
@@ -48,25 +58,40 @@ const CreateReviewForm = ({spotId, spotInfo, setShowReviewForm}) => {
 
 
   return (
-    <div>
-      <div><i className="fa-solid fa-xmark" onClick={() => setShowReviewForm(false)}></i></div>
-      <h4>Review {spotInfo.Owner.firstName}'s Spot {spotInfo.name}</h4>
-      <form onSubmit={handleSubmit}>
-        <label htmlFor="review">Review</label>
-        <textarea id="review" value={review} onChange={(e) => setReview(e.target.value)}/>
-        <label htmlFor="stars">Stars</label>
-        <input id="stars" type="numeric" min={1} max={5} value={stars} onChange={(e) => setStars(e.target.value)}></input>
-        <button>Submit Review</button>
+    <div className="create-review-form-card">
+      <div className="create-review-exit-holder">
+        <div onClick={() => setShowReviewForm(false)} className="review-circle">
+          <i className="fa-solid fa-xmark"></i>
+        </div>
+      </div>
+      <div className="create-review-form-holder">
+
+      <form className="create-review-form" onSubmit={handleSubmit}>
+      <h4 className="create-review-title">Review {spotInfo.Owner.firstName}'s {spotInfo.name}</h4>
+      <div className="create-review-exterior">
+        <div className="review-input">
+        <label className="name-description-title" htmlFor="review">Review</label>
+        <textarea className='create-text description' id="review" value={review} onChange={(e) => setReview(e.target.value)}/>
+        </div>
+        <label className="stars-name-description-title" htmlFor="stars">Stars (1 to 5)</label>
+        <div className="stars-input">
+        <input className="stars-location-input" id="stars" type="number" value={stars} onChange={(e) => setStars(e.target.value)}></input>
+        </div>
+      </div>
+      <div className="create-review-button-holder">
+        <button className="create-review-button">Submit Review</button>
+        </div>
         {validationErrors.length > 0 && (
-          <div>
+
             <ul>
               {validationErrors.map(error => (
-                <li>{error}</li>
+                <li key={error}>{error}</li>
               ))}
             </ul>
-          </div>
+
         )}
       </form>
+      </div>
     </div>
   )
 }
