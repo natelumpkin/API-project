@@ -237,10 +237,7 @@ const CreateSpotPage = () => {
           </div>
           {priceErrors.length > 0 && (
               <div className='errors'>
-
-
                 {priceErrors.map(error => <div key={error}><i className="fa-solid fa-circle-exclamation"></i> {error}</div>)}
-
               </div>
             )}
 

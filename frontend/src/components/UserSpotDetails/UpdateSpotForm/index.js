@@ -51,7 +51,7 @@ const UpdateSpotForm = () => {
 
   const handlePriceErrors = () => {
     let errors = [];
-    if (price < 1) errors.push('Please give your spot a price per night')
+    if (price < 1) errors.push('Please give your spot a price above zero')
     if (isNaN(price)) errors.push('Please enter a number')
     return errors;
   }
@@ -115,37 +115,54 @@ const UpdateSpotForm = () => {
 
   const incrementPrice = (e) => {
     //console.log('increment running')
-    setPrice(price + 1);
+    setPrice(Number(price) + 5);
   }
 
   const decrementPrice = (e) => {
     //console.log('decrement running')
-    setPrice(price - 1);
+    if (!price) return;
+    if (price > 5) {
+      setPrice(Number(price) - 5);
+    }
+    if (price <= 5) {
+      return;
+    }
   }
 
   return (
-    <div>
-    <h2>Host Your Home</h2>
-    <Link to={`/spots/${spotId}`}>Cancel</Link>
-    <div>
-      <form onSubmit={submitSpot}>
-        <div>
-          <h4>Where's your place located?</h4>
-          <label htmlFor='address'>Street Address</label>
-          <input id='address' type='text' value={address} onChange={(e) => setAddress(e.target.value)}></input>
-          <label htmlFor='city'>City</label>
-          <input id='city' type='text' value={city} onChange={(e) => setCity(e.target.value)}></input>
-          <label htmlFor='state'>State</label>
-          <input id='state' type='text' value={state} onChange={(e) => setState(e.target.value)}></input>
-          <label htmlFor='country'>Country</label>
-          <input id='country' type='text' value={country} onChange={(e) => setCountry(e.target.value)}></input>
+    <div className='create-spot-exterior-flex'>
+      <div className='create-spot-exterior-holder'>
+    <h2>Edit listing information</h2>
+    <Link className="underline" to={`/spots/${spotId}`}>Cancel</Link>
+    <div className='form-holder'>
+      <form  className="create-spot-form" onSubmit={submitSpot}>
+        <div className='location-exterior'>
+        <h4 className='form-directions'>Spot Location</h4>
+        <div className="location-form">
+            <div className='input'>
+            <label className='location-label' htmlFor='address'>Street</label>
+            <input className='location-input' placeholder='Street address here...' id='address' type='text' value={address} onChange={(e) => setAddress(e.target.value)}></input>
+            </div>
+            <div className='input'>
+            <label className='location-label' htmlFor='city'>City</label>
+            <input className='location-input' placeholder='City name here...' id='city' type='text' value={city} onChange={(e) => setCity(e.target.value)}></input>
+            </div>
+            <div className='input'>
+            <label className='location-label' htmlFor='state'>State</label>
+            <input className='location-input' placeholder='State name here...' id='state' type='text' value={state} onChange={(e) => setState(e.target.value)}></input>
+            </div>
+            <div id="country-input" className='input'>
+            <label className='location-label' htmlFor='country'>Country</label>
+            <input className='location-input' placeholder='Country name here...' id='country' type='text' value={country} onChange={(e) => setCountry(e.target.value)}></input>
+            </div>
+        </div>
           {/* <label htmlFor='lat'>Latitude</label>
           <input id='lat' type='text' value={lat} onChange={(e) => setLat(e.target.value)}></input>
           <label htmlFor='lng'>Longitude</label> */}
           {/* <input id='lng' type='text' value={lng} onChange={(e) => setLng(e.target.value)}></input> */}
-            {locationErrors.length > 0 && (
-              <div className='location-errors'>
-                To continue, please provide this required info:
+          {locationErrors.length > 0 && (
+              <div className='errors'>
+                <i className="fa-solid fa-circle-exclamation"></i> To continue, please provide this required info:
                 <ul>
                 {locationErrors.map(error => <li key={error}>{error}</li>)}
                 </ul>
@@ -153,14 +170,24 @@ const UpdateSpotForm = () => {
             )}
         </div>
         <div>
-          <h4>Let's give your place a name and description</h4>
-          <label htmlFor='name'>Name</label>
-          <textarea id='name' type='text' value={name} onChange={(e) => setName(e.target.value)}/>
-          <label htmlFor='description'>Description</label>
-          <textarea id='description' type='text' value={description} onChange={(e) => setDescription(e.target.value)}/>
+        <h4 className='form-directions'>Spot Title and Description</h4>
+          <div className='input description-input'>
+          <label className='name-description-title' htmlFor='name'>Create your title</label>
+          <textarea placeholder='Adorable home near you' className='create-text' id='name' type='text' value={name} onChange={(e) => setName(e.target.value)}/>
+          <div className='character-counter'>
+            <span>{name.length}/49</span>
+          </div>
+          </div>
+          <div className='input description-input'>
+          <label className='name-description-title' htmlFor='description'>Create your description</label>
+          <textarea placeholder="You'll have a great time at this comfortable place to stay" className='create-text description' id='description' type='text' value={description} onChange={(e) => setDescription(e.target.value)}/>
+          <div className='character-counter'>
+            <span>{description.length}/500</span>
+          </div>
+          </div>
           {descriptionErrors.length > 0 && (
-              <div className='location-errors'>
-                To continue, please provide this required info:
+              <div className='errors'>
+                <i className="fa-solid fa-circle-exclamation"></i> To continue, please provide this required info:
                 <ul>
                 {descriptionErrors.map(error => <li key={error}>{error}</li>)}
                 </ul>
@@ -168,20 +195,27 @@ const UpdateSpotForm = () => {
             )}
         </div>
         <div>
-          <h4>Now for the fun part - set your price</h4>
-          <label htmlFor='price'>Price</label>
-          <span onClick={() => incrementPrice()}> + </span>
-          <input id='price' type='number' value={price} onChange={(e) => setPrice(e.target.value)}></input>
-          <span onClick={() => decrementPrice()}> - </span>
+        <h4 className='form-directions'>Price per night</h4>
+          <div className='price-form'>
+            <div className='price-input-holder'>
+            <div className='price-clicker minus' onClick={() => decrementPrice()}> – </div>
+            <input className='price-input' id='price' type='number' value={price} onChange={(e) => setPrice(e.target.value)}></input>
+            <div className='price-clicker' onClick={() => incrementPrice()}> + </div>
+            </div>
+            <label className='price-label' htmlFor='price'>per night</label>
+          </div>
           {priceErrors.length > 0 && (
-              <div className='price-errors'>
-                Please enter a valid price per night
+              <div className='errors'>
+                {priceErrors.map(error => <div key={error}><i className="fa-solid fa-circle-exclamation"></i> {error}</div>)}
               </div>
             )}
         </div>
-        <button>Publish Your Listing</button>
+        <div className="button-holder">
+        <button className="publish-button">Publish Your Listing</button>
         <DeleteSpotModal spotId={spotId}/>
+        </div>
       </form>
+    </div>
     </div>
     </div>
   )
