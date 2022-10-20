@@ -8,7 +8,8 @@
   align-items: center;
   width: 35em;
   height: fit-content;
-  overflow: scroll;
+  overflow-y: scroll;
+  overflow-x: hidden;
 }
 
 .halfwidth {

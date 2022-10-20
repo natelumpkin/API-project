@@ -21,7 +21,10 @@ const DeleteSpotModal = ({spotId}) => {
 
   return (
     <>
-      <div className='publish-button delete' onClick={() => setShowModal(true)}>Deactivate Listing</div>
+      <button className='publish-button delete' onClick={(e) => {
+        e.preventDefault();
+        setShowModal(true)
+      }}>Deactivate Listing</button>
       {showModal && (
         <Modal onClose={() => setShowModal(false)}>
           <DeleteForm spotId={spotId} setShowModal={setShowModal}/>
