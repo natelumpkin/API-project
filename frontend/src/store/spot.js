@@ -299,9 +299,8 @@ const spotReducer = (state = initialState, action) => {
       const newState = {
         allSpots: { ...state.allSpots },
         singleSpot: {
-          ...state.singleSpot,
-          SpotImages: [ ...state.singleSpot.SpotImages ],
-          Owner: { ...state.singleSpot.Owner }
+          SpotImages: [],
+          Owner: {}
         },
         userSpots: { ...state.userSpots }
       };

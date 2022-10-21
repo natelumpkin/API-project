@@ -2,7 +2,7 @@ import { useDispatch } from "react-redux";
 import { useState } from "react";
 import { useHistory, Link } from "react-router-dom";
 
-import { deleteSpotById } from "../../store/spot";
+import { deleteSpotById, getAllSpots } from "../../store/spot";
 import './DeleteForm.css';
 
 const DeleteForm = ({spotId, setShowModal}) => {
@@ -15,6 +15,7 @@ const DeleteForm = ({spotId, setShowModal}) => {
   const handleSubmit = (e) => {
 
     dispatch(deleteSpotById(spotId))
+      .then(() => getAllSpots())
       .then(() => history.push('/'))
   }
 
