@@ -15,7 +15,7 @@ const DeleteForm = ({spotId, setShowModal}) => {
   const handleSubmit = (e) => {
 
     dispatch(deleteSpotById(spotId))
-    history.push('/')
+      .then(() => history.push('/'))
   }
 
   return (
