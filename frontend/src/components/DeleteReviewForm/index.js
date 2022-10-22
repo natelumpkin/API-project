@@ -14,8 +14,8 @@ const DeleteReviewForm = ({setShowDeleteReviewForm, reviewId, spotId}) => {
   const deleteReview = () => {
     dispatch(deleteReviewById(reviewId))
       .then(() => {
-        dispatch(getSpotById(spotId))});
-    setShowDeleteReviewForm(false);
+        dispatch(getSpotById(spotId))})
+      .then(setShowDeleteReviewForm(false));
   }
 
   return (
