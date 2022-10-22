@@ -22,7 +22,7 @@ const LoginForm = ({setShowLoginModal}) => {
     let errorMessages = [];
     if (response.message === "Invalid credentials") errorMessages.push('Invalid credentials')
     //console.log(response)
-    if (response && response.errors || response && response.message) {
+    if ((response && response.errors) || (response && response.message)) {
       for (let error in response.errors) {
         errorMessages.push(response.errors[error])
       }
@@ -43,8 +43,8 @@ const LoginForm = ({setShowLoginModal}) => {
     <div className='login-form-card'>
       <div className="signup-exit-holder">
         <div className="halfwidth flex">
-        <div className="circle signup">
-        <i id="exit-reviews" className="fa-solid fa-xmark" onClick={() => setShowLoginModal(false)}></i>
+        <div className="circle signup" onClick={() => setShowLoginModal(false)}>
+        <i id="exit-reviews" className="fa-solid fa-xmark"></i>
         </div>
         <h4>Log In</h4>
         </div>
