@@ -21,7 +21,8 @@ const LoginForm = ({setShowLoginModal}) => {
     //console.log(response);
     let errorMessages = [];
     if (response.message === "Invalid credentials") errorMessages.push('Invalid credentials')
-    if (response && response.errors) {
+    //console.log(response)
+    if (response && response.errors || response && response.message) {
       for (let error in response.errors) {
         errorMessages.push(response.errors[error])
       }
@@ -73,7 +74,7 @@ const LoginForm = ({setShowLoginModal}) => {
         </div>
         </div>
         <ul>
-          {errors.map((error, idx) => <li key={idx}>{error}</li>)}
+          {errors && (errors.map((error, idx) => <li key={idx}>{error}</li>))}
         </ul>
         <div className='login-button-holder'>
           <button className='login-button'>Log In</button>
