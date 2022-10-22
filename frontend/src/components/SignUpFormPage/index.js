@@ -24,6 +24,21 @@ function SignupFormPage({setShowSignUpModal}) {
 
   if (sessionUser) return <Redirect to="/" />;
 
+  const signupErrors = () => {
+    const signupErrors = []
+    if (!email.length) signupErrors.push('Email is required')
+    if (email.length > 256) signupErrors.push('Email must be under 256 characters')
+    if (!firstName.length) signupErrors.push('First name is required')
+    if (!lastName.length) signupErrors.push('Last name is required')
+    if (!username.length) signupErrors.push('Username is required')
+    if (username.length && username.length < 4) signupErrors.push('Username must be 4 or more characters')
+    if (username.length && username.length > 30) signupErrors.push('Username must be 30 characters or less')
+    if (!password.length) signupErrors.push('Password is required')
+    if (password.length && password.length < 6) signupErrors.push('Password must be 6 or more characters')
+    if (!confirmPassword.length) signupErrors.push('Please confirm your password')
+    if (password !== confirmPassword) signupErrors.push('Password and confirmation do not match')
+    return signupErrors;
+  }
 
 
   const reset = () => {
@@ -39,21 +54,33 @@ function SignupFormPage({setShowSignUpModal}) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const errArr = signupErrors();
+
+    //console.log(errArr);
+    //setErrors(errArr);
+    //console.log(errors);
+    // setErrors(signupErrors);
     //console.log(password, confirmPassword);
     if (password !== confirmPassword) {
-      setErrors(['Confirm Password field must be the same as the Password field']);
+      setErrors(['Password and password confirmation must match']);
       return;
     }
     if (password === confirmPassword) {
       setErrors([]);
+      //setErrors(errArr);
       let response = await dispatch(sessionActions.signUpNewUser({ email, firstName, lastName, username, password }))
-      console.log('response.errors: ', response);
+      console.log('response: ', response);
       let errorMessages = [];
       if (response && response.errors) {
         for (let error in response.errors) {
-          errorMessages.push(response.errors[error])
+          console.log(response.errors[error])
+          if ((response.errors[error]) === 'Invalid email.') {
+            //errors.push('Invalid email')
+            //setErrors(errors.concat(['Invalid email']))
+            errArr.unshift('Invalid email')
+          }
         }
-        setErrors(errorMessages);
+        setErrors(errArr);
         //console.log('errors: ', errors);
         return;
       }
