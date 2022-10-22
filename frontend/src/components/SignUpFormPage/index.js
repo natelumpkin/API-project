@@ -40,10 +40,14 @@ function SignupFormPage({setShowSignUpModal}) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     //console.log(password, confirmPassword);
+    if (password !== confirmPassword) {
+      setErrors(['Confirm Password field must be the same as the Password field']);
+      return;
+    }
     if (password === confirmPassword) {
       setErrors([]);
       let response = await dispatch(sessionActions.signUpNewUser({ email, firstName, lastName, username, password }))
-      //console.log('response.errors: ', response.errors);
+      console.log('response.errors: ', response);
       let errorMessages = [];
       if (response && response.errors) {
         for (let error in response.errors) {
@@ -66,7 +70,6 @@ function SignupFormPage({setShowSignUpModal}) {
         return setErrors(['Confirm Password field must be the same as the Password field']);
     }
     return reset();
-
   };
 
   return (

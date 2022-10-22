@@ -74,7 +74,7 @@ app.use((err, req, res, next) => {
     err.title = "Validation Error";
     err.status = 400;
   };
-
+  //console.log(err.errors)
   if (!err.errors) {
     err.errors = [];
   }
