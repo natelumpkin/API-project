@@ -73,8 +73,8 @@ const UpdateSpotForm = () => {
 
   const handleDescriptionErrors = () => {
     let errors = [];
-    if (!name.length) errors.push('Name')
-    if (name.length > 50) errors.push('Please provide a name under 50 characters')
+    if (!name.length) errors.push('Title')
+    if (name.length > 50) errors.push('Please provide a title under 50 characters')
     if (description.length > 255) errors.push('Please provide a description of 255 characters or less')
     if (!description.length) errors.push('Description')
     return errors;
@@ -83,7 +83,7 @@ const UpdateSpotForm = () => {
   const handlePriceErrors = () => {
     let errors = [];
     if (price < 1) errors.push('Please give your spot a price above zero')
-    if (price > 1000000000000000) errors.push('Please give your spot a price under 1000000000000000')
+    if (price > 10000) errors.push('Please give your spot a price under 10000')
     if (isNaN(price)) errors.push('Please enter a number')
     return errors;
   }
