@@ -51,8 +51,9 @@ const CreateSpotPage = () => {
     //console.log('url1: ', url1);
     if (!url1.length) errors.push('At least one photo is required')
     //console.log(url1.length)
-    if (url1.length > 255) errors.push('Please provide a url of under 255 characters')
+    //if (url1.length > 255) errors.push('Please provide a url of under 255 characters')
     //console.log(errors);
+    setPhotoErrors(errors);
     return errors;
   }
 
@@ -204,7 +205,7 @@ const CreateSpotPage = () => {
           <h4 className='form-directions'>Please add a preview image</h4>
           <div className='input single-input'>
           <label className='location-label photo-label' htmlFor='previewPhoto'>Preview Photo</label>
-          <input className='location-input photo-input' id="previewPhoto" placeholder='URL here...' type='text' value={url1} onChange={(e) => seturl1(e.target.value)}></input>
+          <input className='location-input photo-input' id="previewPhoto" placeholder='URL here...' type='text' value={url1} onBlur={handlePhotoErrors} onChange={(e) => seturl1(e.target.value)}></input>
           </div>
           {photoErrors.length > 0 && (
               <div className='errors'>
