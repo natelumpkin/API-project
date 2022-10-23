@@ -71,9 +71,11 @@ If you'd like to run this application locally, here are the steps to complete:
 
 3. Create a .env file in the backend folder with the following values:
   PORT - port number for the backend server
-  DB - location of the database in the backend folder
+  DB_FILE - location of the database in the backend folder
   JWT_SECRET - secret code for checking JWT tokens
   JWT_EXPIRES_IN - number that indicates length of time until token expires
+
+  An example .env is included.
 
 4. Run database migrations with npx dotenv sequelize db:migrate
 
