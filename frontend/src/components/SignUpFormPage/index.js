@@ -57,12 +57,12 @@ function SignupFormPage({setShowSignUpModal}) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(password)
-    console.log(confirmPassword)
+    // console.log(password)
+    // console.log(confirmPassword)
     if (password === confirmPassword) {
       setErrors([]);
       let response = await dispatch(sessionActions.signUpNewUser({ email, firstName, lastName, username, password }));
-      console.log(response);
+      //console.log(response);
       let errArr = [];
       for (let error in response.errors) {
         errArr.push(response.errors[error])
