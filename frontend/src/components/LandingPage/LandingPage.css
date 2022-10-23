@@ -23,7 +23,7 @@
     grid-template-columns: 1fr 1fr 1fr;
   }
 
-  img {
+  img.landing-page-image {
     height: 19em;
     width: 20em;
   }

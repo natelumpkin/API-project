@@ -70,14 +70,22 @@ function SignupFormPage({setShowSignUpModal}) {
       //setErrors(errArr);
       let response = await dispatch(sessionActions.signUpNewUser({ email, firstName, lastName, username, password }))
       console.log('response: ', response);
-      let errorMessages = [];
+      //let errorMessages = [];
       if (response && response.errors) {
         for (let error in response.errors) {
-          console.log(response.errors[error])
+
           if ((response.errors[error]) === 'Invalid email.') {
             //errors.push('Invalid email')
             //setErrors(errors.concat(['Invalid email']))
             errArr.unshift('Invalid email')
+          }
+          if ((response.errors[error]) === 'User with that username already exists') {
+            errArr.unshift('User with that username already exists')
+          }
+
+          if ((response.errors[error]) === 'User with that email already exists') {
+
+            errArr.unshift('User with that email already exists')
           }
         }
         setErrors(errArr);
