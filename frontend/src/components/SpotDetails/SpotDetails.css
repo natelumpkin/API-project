@@ -15,7 +15,7 @@
 .title-lower {
   justify-content: space-between;
   font-size: .7em;
-  width: fit-content;
+  width: 50%;
 }
 
 .title-lower h4 {

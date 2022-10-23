@@ -3,7 +3,7 @@ import './SpotImagesCard.css';
 
 const SpotImagesCard = ({previewImg, nonPreviewImgs}) => {
 
-  console.log(nonPreviewImgs);
+  //console.log(nonPreviewImgs);
 
   if (!previewImg) {
     return null;
