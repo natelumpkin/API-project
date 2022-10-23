@@ -57,8 +57,13 @@ const UpdateSpotForm = () => {
   const handleLocationErrors = () => {
     const locationErrors = []
     if (!address.length) locationErrors.push('Street address')
+    if (address.length > 255) locationErrors.push('Please enter a street address under 255 characters')
     if (!city.length) locationErrors.push('City')
+    if (city.length > 255) locationErrors.push('Please enter a city name under 255 characters')
     if (!country.length) locationErrors.push('Country')
+    if (country.length > 255) locationErrors.push('Please enter a country under 255 characters')
+    if (!state.length) locationErrors.push('State')
+    if (state.length > 255) locationErrors.push('Please enter a state under 255 characters')
     // if (lat === '') locationErrors.push('Latitude')
     // if (lng === '') locationErrors.push('Longitude')
     // if (isNaN(lat) || lat < -90 || lat > 90) locationErrors.push('Please provide a valid latitude')
@@ -70,6 +75,7 @@ const UpdateSpotForm = () => {
     let errors = [];
     if (!name.length) errors.push('Name')
     if (name.length > 50) errors.push('Please provide a name under 50 characters')
+    if (description.length > 255) errors.push('Please provide a description of 255 characters or less')
     if (!description.length) errors.push('Description')
     return errors;
   }
@@ -77,6 +83,7 @@ const UpdateSpotForm = () => {
   const handlePriceErrors = () => {
     let errors = [];
     if (price < 1) errors.push('Please give your spot a price above zero')
+    if (price > 1000000000000000) errors.push('Please give your spot a price under 1000000000000000')
     if (isNaN(price)) errors.push('Please enter a number')
     return errors;
   }
@@ -213,7 +220,7 @@ const UpdateSpotForm = () => {
           <label className='name-description-title' htmlFor='description'>Create your description</label>
           <textarea placeholder="You'll have a great time at this comfortable place to stay" className='create-text description' id='description' type='text' value={description} onChange={(e) => setDescription(e.target.value)}/>
           <div className='character-counter'>
-            {description && <span>{description.length}/500</span>}
+            {description && <span>{description.length}/255</span>}
           </div>
           </div>
           {descriptionErrors.length > 0 && (

@@ -24,88 +24,60 @@ function SignupFormPage({setShowSignUpModal}) {
 
   if (sessionUser) return <Redirect to="/" />;
 
-  const signupErrors = () => {
-    const signupErrors = []
-    if (!email.length) signupErrors.push('Email is required')
-    if (email.length > 256) signupErrors.push('Email must be under 256 characters')
-    if (!firstName.length) signupErrors.push('First name is required')
-    if (!lastName.length) signupErrors.push('Last name is required')
-    if (!username.length) signupErrors.push('Username is required')
-    if (username.length && username.length < 4) signupErrors.push('Username must be 4 or more characters')
-    if (username.length && username.length > 30) signupErrors.push('Username must be 30 characters or less')
-    if (!password.length) signupErrors.push('Password is required')
-    if (password.length && password.length < 6) signupErrors.push('Password must be 6 or more characters')
-    if (!confirmPassword.length) signupErrors.push('Please confirm your password')
-    if (password !== confirmPassword) signupErrors.push('Password and confirmation do not match')
-    return signupErrors;
-  }
+  // const signupErrors = () => {
+  //   const signupErrors = []
+  //   if (!email.length) signupErrors.push('Email is required')
+  //   if (email.length > 256) signupErrors.push('Email must be under 256 characters')
+  //   if (!firstName.length) signupErrors.push('First name is required')
+  //   if (firstName.length > 50) signupErrors.push('First name must be under 50 characters')
+  //   if (!lastName.length) signupErrors.push('Last name is required')
+  //   if (lastName.length > 50) signupErrors.push('Last name must be uder 50 characters')
+  //   if (!username.length) signupErrors.push('Username is required')
+  //   if (username.length && username.length < 4) signupErrors.push('Username must be 4 or more characters')
+  //   if (username.length && username.length > 30) signupErrors.push('Username must be 30 characters or less')
+  //   if (!password.length) signupErrors.push('Password is required')
+  //   if (password.length && password.length < 6) signupErrors.push('Password must be 6 or more characters')
+  //   if (password.length > 255) signupErrors.push('Password must be 255 characters or less')
+  //   if (!confirmPassword.length) signupErrors.push('Please confirm your password')
+  //   if (password !== confirmPassword) signupErrors.push('Password and confirmation do not match')
+  //   return signupErrors;
+  // }
 
 
-  const reset = () => {
-    setEmail("")
-    setUsername("")
-    setFirstName("")
-    setLastName("")
-    setPassword("")
-    setConfirmPassword("")
-    setErrors([])
-    setShowSignUpModal(false)
-  }
+  // const reset = () => {
+  //   setEmail("")
+  //   setUsername("")
+  //   setFirstName("")
+  //   setLastName("")
+  //   setPassword("")
+  //   setConfirmPassword("")
+  //   setErrors([])
+  //   setShowSignUpModal(false)
+  // }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const errArr = signupErrors();
-
-    //console.log(errArr);
-    //setErrors(errArr);
-    //console.log(errors);
-    // setErrors(signupErrors);
-    //console.log(password, confirmPassword);
-    if (password !== confirmPassword) {
-      setErrors(['Password and password confirmation must match']);
-      return;
-    }
+    console.log(password)
+    console.log(confirmPassword)
     if (password === confirmPassword) {
       setErrors([]);
-      //setErrors(errArr);
-      let response = await dispatch(sessionActions.signUpNewUser({ email, firstName, lastName, username, password }))
-      console.log('response: ', response);
-      //let errorMessages = [];
-      if (response && response.errors) {
-        for (let error in response.errors) {
-
-          if ((response.errors[error]) === 'Invalid email.') {
-            //errors.push('Invalid email')
-            //setErrors(errors.concat(['Invalid email']))
-            errArr.unshift('Invalid email')
-          }
-          if ((response.errors[error]) === 'User with that username already exists') {
-            errArr.unshift('User with that username already exists')
-          }
-
-          if ((response.errors[error]) === 'User with that email already exists') {
-
-            errArr.unshift('User with that email already exists')
-          }
-        }
-        setErrors(errArr);
-        //console.log('errors: ', errors);
-        return;
+      let response = await dispatch(sessionActions.signUpNewUser({ email, firstName, lastName, username, password }));
+      console.log(response);
+      let errArr = [];
+      for (let error in response.errors) {
+        errArr.push(response.errors[error])
       }
+      setErrors(errArr);
+      return;
         // .catch(async (res) => {
         //   const data = await res.json();
-        //   let errorMessages = [];
-        //   if (data && data.errors) {
-        //     for (let error in data.errors) {
-        //       errorMessages.push(data.errors[error])
-        //     }
-        //     setErrors(errorMessages);
-        //   }
+        //   if (data && data.errors) setErrors(data.errors);
         // });
-        return setErrors(['Confirm Password field must be the same as the Password field']);
     }
-    return reset();
+    return setErrors(['Confirm Password field must be the same as the Password field']);
   };
+
+  //console.log('errors outside submit: ', errors)
 
   return (
     <div className='signup-form-card'>
