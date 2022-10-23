@@ -75,6 +75,8 @@ If you'd like to run this application locally, here are the steps to complete:
   JWT_SECRET - secret code for checking JWT tokens
   JWT_EXPIRES_IN - number that indicates length of time until token expires
 
+  An example .env is included.
+
 4. Run database migrations with npx dotenv sequelize db:migrate
 
 5. To add seeder data (necessary to log in with demo user), run npx dotenv sequelize db:seed:all
