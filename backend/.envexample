@@ -1,0 +1,4 @@
+PORT=<<port number>>
+DB_FILE=<<database location>>
+JWT_SECRET=<<secret code>>
+JWT_EXPIRES_IN=<<expiration time>>
