@@ -15,7 +15,7 @@ const SpotCard = ({ spot }) => {
     <Link to={`/spots/${spot.id}`}>
       <div className="spotcard-top-holder">
         <div className="spotcard-preview-image-holder">
-          <img src={spot.previewImage} alt='preview image of spot'/>
+          <img className="landing-page-image" src={spot.previewImage} alt='preview image of spot'/>
         </div>
       </div>
       <div className="spotcard-bottom-holder">
