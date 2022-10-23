@@ -38,7 +38,7 @@ const CreateSpotPage = () => {
     if (country.length > 255) locationErrors.push('Please enter a country under 255 characters')
     if (!state.length) locationErrors.push('State')
     if (state.length > 255) locationErrors.push('Please enter a state under 255 characters')
-    console.log(locationErrors);
+    //console.log(locationErrors);
     // if (lat === '') locationErrors.push('Latitude')
     // if (lng === '') locationErrors.push('Longitude')
     // if (isNaN(lat) || lat < -90 || lat > 90) locationErrors.push('Please provide a valid latitude')
@@ -50,9 +50,9 @@ const CreateSpotPage = () => {
     let errors = [];
     //console.log('url1: ', url1);
     if (!url1.length) errors.push('At least one photo is required')
-    console.log(url1.length)
+    //console.log(url1.length)
     if (url1.length > 255) errors.push('Please provide a url of under 255 characters')
-    console.log(errors);
+    //console.log(errors);
     return errors;
   }
 
@@ -97,9 +97,9 @@ const CreateSpotPage = () => {
   //console.log('location errors: ', locationErrors);
 
   const photoErrorss = handlePhotoErrors();
-  console.log('photo errors: ', photoErrorss);
+  //console.log('photo errors: ', photoErrorss);
   setPhotoErrors(photoErrorss);
-  console.log('photo errors: ', photoErrors)
+  //console.log('photo errors: ', photoErrors)
 
   const descriptionErrors = handleDescriptionErrors();
   setDescriptionErrors(descriptionErrors);
