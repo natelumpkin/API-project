@@ -78,7 +78,7 @@ app.use((err, req, res, next) => {
   if (!err.errors) {
     err.errors = [];
   }
-
+  console.log('err.errors: ', err.errors);
   //console.log(err);
 
   if (err.title === 'Login failed') {
@@ -88,7 +88,7 @@ app.use((err, req, res, next) => {
       statusCode: 401
     })
   }
-  if (err.errors.includes("Invalid email.") || err.errors.includes("Username is required.") || err.errors.includes("First Name is required.") || err.errors.includes("Last Name is required.")) {
+  if (err.errors.includes('Password is required and must be 6 characters or more.') || err.errors.includes('Username is required and must be 4 characters or more.') || err.errors.includes('Validation len on lastName failed') || err.errors.includes('Validation len on firstName failed') || err.errors.includes('Validation len on username failed') || err.errors.includes("Invalid email.") || err.errors.includes("Username is required.") || err.errors.includes("First Name is required.") || err.errors.includes("Last Name is required.")) {
     res.status(400);
     let validations = {};
     for (let message of err.errors) {
@@ -100,6 +100,16 @@ app.use((err, req, res, next) => {
         validations.firstName = message;
       } else if (message === "Last Name is required.") {
         validations.lastName = message;
+      } else if (message === "Validation len on username failed") {
+        validations.username = 'Please provide a username under 30 characters';
+      } else if (message === "Validation len on firstName failed") {
+        validations.firstName = 'Please provide a first name under 50 characters'
+      } else if (message === "Validation len on lastName failed") {
+        validations.lastName = 'Please provide a last name under 50 characters'
+      } else if (message === "Username is required and must be 4 characters or more.") {
+        validations.userNameReq = message;
+      } else if (message === "Password is required and must be 6 characters or more.") {
+        validations.password = message
       }
     }
     result = {

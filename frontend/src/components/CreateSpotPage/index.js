@@ -31,8 +31,14 @@ const CreateSpotPage = () => {
   const handleLocationErrors = () => {
     const locationErrors = []
     if (!address.length) locationErrors.push('Street address')
+    if (address.length > 255) locationErrors.push('Please enter a street address under 255 characters')
     if (!city.length) locationErrors.push('City')
+    if (city.length > 255) locationErrors.push('Please enter a city name under 255 characters')
     if (!country.length) locationErrors.push('Country')
+    if (country.length > 255) locationErrors.push('Please enter a country under 255 characters')
+    if (!state.length) locationErrors.push('State')
+    if (state.length > 255) locationErrors.push('Please enter a state under 255 characters')
+    console.log(locationErrors);
     // if (lat === '') locationErrors.push('Latitude')
     // if (lng === '') locationErrors.push('Longitude')
     // if (isNaN(lat) || lat < -90 || lat > 90) locationErrors.push('Please provide a valid latitude')
@@ -44,6 +50,9 @@ const CreateSpotPage = () => {
     let errors = [];
     //console.log('url1: ', url1);
     if (!url1.length) errors.push('At least one photo is required')
+    console.log(url1.length)
+    if (url1.length > 255) errors.push('Please provide a url of under 255 characters')
+    console.log(errors);
     return errors;
   }
 
@@ -51,7 +60,7 @@ const CreateSpotPage = () => {
     let errors = [];
     if (!name.length) errors.push('Name')
     if (name.length > 50) errors.push('Please provide a name under 50 characters')
-    if (description.length > 500) errors.push('Please provide a description of 500 characters or less')
+    if (description.length > 255) errors.push('Please provide a description of 255 characters or less')
     if (!description.length) errors.push('Description')
     return errors;
   }
@@ -59,6 +68,7 @@ const CreateSpotPage = () => {
   const handlePriceErrors = () => {
     let errors = [];
     if (price < 1) errors.push('Please give your spot a price above zero')
+    if (price > 1000000000000000) errors.push('Please give your spot a price under 1000000000000000')
     if (isNaN(price)) errors.push('Please enter a number')
     return errors;
   }
@@ -86,8 +96,10 @@ const CreateSpotPage = () => {
   setLocationErrors(locationErrors);
   //console.log('location errors: ', locationErrors);
 
-  const photoErrors = handlePhotoErrors();
-  setPhotoErrors(photoErrors);
+  const photoErrorss = handlePhotoErrors();
+  console.log('photo errors: ', photoErrorss);
+  setPhotoErrors(photoErrorss);
+  console.log('photo errors: ', photoErrors)
 
   const descriptionErrors = handleDescriptionErrors();
   setDescriptionErrors(descriptionErrors);
@@ -196,7 +208,7 @@ const CreateSpotPage = () => {
           </div>
           {photoErrors.length > 0 && (
               <div className='errors'>
-                <i className="fa-solid fa-circle-exclamation"></i> A preview photo is required
+                {photoErrors.map(error => <div key={error}><i className="fa-solid fa-circle-exclamation"></i>{error}</div>)}
               </div>
             )}
         </div>
@@ -213,7 +225,7 @@ const CreateSpotPage = () => {
           <label className='name-description-title' htmlFor='description'>Create your description</label>
           <textarea placeholder="You'll have a great time at this comfortable place to stay" className='create-text description' id='description' type='text' value={description} onChange={(e) => setDescription(e.target.value)}/>
           <div className='character-counter'>
-            <span>{description.length}/500</span>
+            <span>{description.length}/255</span>
           </div>
           </div>
           {descriptionErrors.length > 0 && (

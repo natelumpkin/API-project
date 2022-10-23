@@ -19,6 +19,7 @@ const CreateReviewForm = ({spotId, spotInfo, setShowReviewForm}) => {
   const handleValidationErrors = () => {
     const errors = [];
     if (!review.length) errors.push('Please enter a review')
+    if (review.length > 255) errors.push('Please enter a review under 255 characters')
     if (stars <= 0 || stars > 5) errors.push('Stars: Please enter a number from 1 to 5')
     if (isNaN(stars)) errors.push('Stars: Please enter a number between 1 and 5')
     return errors;
