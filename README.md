@@ -8,13 +8,23 @@ This is a simple clone of AirBnB! This is my first full-stack application design
 
 Technologies Used
 
-The frontend and backend servers were coded entirely in Javascript. Styling was added with CSS.
+The frontend and backend servers were coded in Javascript. Styling was added with CSS.
 
 The backend API server was created with Express and uses a SQL database. The API server communicates with the database using Sequelize.
 
-The frontend server was created with React. Redux provided global state management.
+The frontend was created with React. Redux provided global state management.
 
 The servers and database are hosted on Heroku.
+
+![JavaScript](https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E)
+![HTML5](https://img.shields.io/badge/html5-%23E34F26.svg?style=for-the-badge&logo=html5&logoColor=white)
+![CSS3](https://img.shields.io/badge/css3-%231572B6.svg?style=for-the-badge&logo=css3&logoColor=white)
+![NodeJS](https://img.shields.io/badge/node.js-6DA55F?style=for-the-badge&logo=node.js&logoColor=white)
+![Express.js](https://img.shields.io/badge/express.js-%23404d59.svg?style=for-the-badge&logo=express&logoColor=%2361DAFB)
+![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)
+![Redux](https://img.shields.io/badge/redux-%23593d88.svg?style=for-the-badge&logo=redux&logoColor=white)
+![Postgres](https://img.shields.io/badge/postgres-%23316192.svg?style=for-the-badge&logo=postgresql&logoColor=white)
+![Heroku](https://img.shields.io/badge/heroku-%23430098.svg?style=for-the-badge&logo=heroku&logoColor=white)
 
 LIVE FEATURES
 
