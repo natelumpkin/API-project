@@ -49,7 +49,7 @@ const CreateSpotPage = () => {
   const handlePhotoErrors = () => {
     let errors = [];
     //console.log('url1: ', url1);
-    if (!url1.length) errors.push('At least one photo is required')
+    //if (!url1.length) errors.push('At least one photo is required')
     //console.log(url1.length)
     if (url1.length > 255) errors.push('Please provide a url of under 255 characters')
     //console.log(errors);
