@@ -2,18 +2,17 @@ NATEBNB
 
 https://natebnb-api-clone.herokuapp.com/
 
-This is a simple clone of AirBnB! This is my first full-stack application designed to showcase a few basic features and provide a smooth and intuitive user experience.
+![](demo-images/Screen%20Shot%202022-10-22%20at%209.26.23%20PM.png)
+
+This is a simple clone of AirBnB! This is my first full-stack application designed to showcase a few basic features and provide a smooth and intuitive user experience, in order to show off my skills as a developer in training.
 
 Technologies Used
 
-The frontend and backend servers were coded entirely in Javascript, using Node. Styling was added with CSS.
+The frontend and backend servers were coded entirely in Javascript. Styling was added with CSS.
 
-The backend API server was created with Express and uses a SQL database. The API server communicated with the database using Sequelize. In the local environment, SQLite is as the DBMS, while in production, Postgres is used.
+The backend API server was created with Express and uses a SQL database. The API server communicates with the database using Sequelize.
 
-The frontend server was created with React. Redux provided global state management. Additional packages included:
-
-- React Router DOM
-- Redux Thunk
+The frontend server was created with React. Redux provided global state management.
 
 The servers and database are hosted on Heroku.
 
@@ -23,17 +22,25 @@ Login, User Creation, and Authorization
 
 This app allows the user to create an account and saves basic information for future use. Users that aren't logged in are able to view the site but not create or edit features. A demo user button is included in the drop-down menu that allows a user to log in as a demo user with a number of pre-created spots and reviews.
 
+![](demo-images/Screen%20Shot%202022-10-22%20at%209.33.38%20PM.png)
+
 Spot CRUD
 
 The user is able to create a basic listing, with information on location, a name and title, and pricing. This information is saved and displayed for other users to look at. If the current user owns the spot, an edit button is displayed that takes the user to an edit page. The spot can be editted from that page, or they can delete the spot from the database with a deactivate listing button.
+
+![](demo-images/Screen%20Shot%202022-10-22%20at%209.35.58%20PM.png)
+
+![](demo-images/Screen%20Shot%202022-10-22%20at%209.34.35%20PM.png)
 
 Review CRUD
 
 All users are able to view reviews for any displayed spot. The user is able to create reviews for listings that aren't their own. After the review is created, they are able to delete it on that spot's page.
 
+![](demo-images/Screen%20Shot%202022-10-22%20at%209.35.22%20PM.png)
+
 Road Map for Future Features
 
-Currently the spot details page feels a little empty, as users are unable to load more images, and the images past the first are not displayed. As a result, I would like to implement the ability to load more photos, change which one is the preview image, change the order, and look at full versions of the images when they are clicked.
+Currently the spot details page feels a little empty, as users are unable to load images past the first. As a result, I would like to implement the ability to load more photos, change which one is the preview image, change the order, and look at full versions of the images when they are clicked.
 
 I'd like to implement a basic user profile which displays all of a user's current listings and reviews. These routes are already complete in the backend.
 
@@ -68,5 +75,7 @@ If you'd like to run this application locally, here are the steps to complete:
 8. Open http://localhost:3000 to view it in the browser
 
 CONTACT INFORMATION
+
+My name is Nate Lumpkin. I live in Oakland, California.
 
 Email me at: nate.lumpkin@gmail.com
