@@ -4,6 +4,8 @@
   height: fit-content;
   width: 48em;
   border-radius: 3em;
+  overflow-y: scroll;
+  overflow-x: hidden;
 }
 
 .delete-alerts-holder {

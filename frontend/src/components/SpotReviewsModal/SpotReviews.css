@@ -4,6 +4,7 @@
   height: 36em;
   width: 60em;
   border-radius: 3em;
+  overflow-x: hidden;
 }
 
 body.modal-open {
@@ -68,5 +69,6 @@ body.modal-open {
 .reviews-container {
   width: 60%;
   margin-left: 5em;
-  overflow: scroll;
+  overflow-y: scroll;
+  overflow-x: hidden;
 }
