@@ -64,7 +64,7 @@ const CreateSpotPage = () => {
   const handleDescriptionErrors = () => {
     let errors = [];
     if (!name.length) errors.push('Title')
-    if (name.length > 50) errors.push('Please provide a title under 50 characters')
+    if (name.length > 49) errors.push('Please provide a title under 50 characters')
     if (description.length > 255) errors.push('Please provide a description of 255 characters or less')
     if (!description.length) errors.push('Description')
     return errors;
