@@ -83,7 +83,7 @@ const UpdateSpotForm = () => {
   const handlePriceErrors = () => {
     let errors = [];
     if (price < 1) errors.push('Please give your spot a price above zero')
-    if (price > 10000) errors.push('Please give your spot a price under 10000')
+    if (price > 10000) errors.push('Please give your spot a price of $10000 or less')
     if (isNaN(price)) errors.push('Please enter a number')
     return errors;
   }
