@@ -77,7 +77,7 @@ If you'd like to run this application locally, here are the steps to complete:
 
   An example .env is included.
 
-4. Run database migrations with npx dotenv sequelize db:migrate
+4. Navigate into the backend folder and run database migrations with npx dotenv sequelize db:migrate
 
 5. To add seeder data (necessary to log in with demo user), run npx dotenv sequelize db:seed:all
 
