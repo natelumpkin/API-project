@@ -69,7 +69,10 @@ h5#review-date {
   color: #3f3f3f;
   margin-bottom: .5em;
   overflow: hidden;
+  word-break: break-all;
 }
+
+
 
 #review-date {
   color: #979797;

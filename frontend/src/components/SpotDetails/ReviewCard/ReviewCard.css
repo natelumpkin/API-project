@@ -11,6 +11,7 @@
 
 .review-text {
   width: 100%;
+  word-break: break-word;
 }
 
 .user-information {

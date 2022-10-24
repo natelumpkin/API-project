@@ -2,6 +2,7 @@
 .delete-review-holder {
   width: auto;
   height: auto;
+  overflow: hidden;
 }
 
 .back-button {
