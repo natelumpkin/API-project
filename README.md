@@ -37,7 +37,7 @@ This app allows the user to create an account and saves basic information for fu
 
 Spot CRUD
 
-The user is able to create a basic listing, with information on location, a name and title, and pricing. This information is saved and displayed for other users to look at. If the current user owns the spot, an edit button is displayed that takes the user to an edit page. The spot can be editted from that page, or they can delete the spot from the database with a deactivate listing button.
+The user is able to create a basic listing, with information on location, a preview image, a title and description, and pricing per night. This information is saved and displayed for other users to look at. If the current user owns the spot, an edit button is displayed that takes the user to an edit page. The spot can be editted from that page, or they can delete the spot from the database with a deactivate listing button.
 
 ![](demo-images/Screen%20Shot%202022-10-22%20at%209.35.58%20PM.png)
 
