@@ -70,6 +70,19 @@ export const changeBooking = (bookingId, booking) => async dispatch => {
   }
 }
 
+export const removeBooking = (bookingId) => async dispatch => {
+  const response = await csrfFetch(`/api/bookings/${bookingId}`, {
+    method: 'DELETE'
+  })
+  if (response.ok) {
+    // const data = await response.json()
+    dispatch(deleteBooking(bookingId))
+  } else {
+    const errors = await response.json()
+    return errors
+  }
+}
+
 const initialState = {}
 
 const bookingReducer = (state = initialState, action) => {
@@ -88,6 +101,11 @@ const bookingReducer = (state = initialState, action) => {
       const newState = { ...state };
       newState[action.booking.id] = action.booking;
       return newState;
+    }
+    case DELETE_BOOKING: {
+      const newState = {...state}
+      delete newState[action.bookingId]
+      return newState
     }
   }
 }
