@@ -13,6 +13,7 @@ import { restoreCSRF, csrfFetch } from './store/csrf';
 import * as sessionActions from './store/session';
 import * as spotActions from './store/spot';
 import * as reviewActions from './store/review';
+import * as bookingActions from './store/booking';
 
 const store = configureStore();
 
@@ -23,6 +24,7 @@ if (process.env !== 'production') {
   window.sessionActions = sessionActions;
   window.spotActions = spotActions;
   window.reviewActions = reviewActions;
+  window.bookingActions = bookingActions;
 }
 
 function Root () {
