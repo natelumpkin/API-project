@@ -38,19 +38,56 @@ export const getAllBookings = (spotId) => async dispatch => {
   }
 }
 
+export const postNewBooking = (spotId, booking) => async dispatch => {
+  const response = await csrfFetch(`/api/spots/${spotId}/bookings`, {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify(booking)
+  })
+  if (response.ok) {
+    const data = await response.json()
+    dispatch(addBooking(data))
+    return data
+  } else {
+    const errors = await response.json()
+    return errors;
+  }
+}
+
+export const changeBooking = (bookingId, booking) => async dispatch => {
+  const response = await csrfFetch(`/api/bookings/${bookingId}`, {
+    method: 'PUT',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify(booking)
+  })
+  if (response.ok) {
+    const data = await response.json()
+    dispatch(addBooking(data))
+    return data
+  } else {
+    const errors = await response.json()
+    return errors;
+  }
+}
+
 const initialState = {}
 
 const bookingReducer = (state = initialState, action) => {
   switch (action.type) {
     case LOAD_BOOKINGS: {
       // console.log(action.bookings)
-      const data = normalizeData(action.bookings.Bookings)
+      const data = normalizeData(action.bookings.Bookings);
       console.log(data)
       const newState = data;
       return newState;
     }
     default: {
       return state;
+    }
+    case ADD_BOOKING: {
+      const newState = { ...state };
+      newState[action.booking.id] = action.booking;
+      return newState;
     }
   }
 }

@@ -1,16 +1,24 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-
 import Calendar from 'react-calendar'
+
+import * as bookingActions from '../../../store/booking'
+
 import './BookingsCard.css'
 
 const BookingsCard = ({spot}) => {
 
+  const dispatch = useDispatch()
 
+  const bookings = useSelector(state => state.bookings)
 
   const [date, setDate] = useState(new Date())
 
-  // console.log(date)
+  useEffect(() => {
+    dispatch(bookingActions.getAllBookings(spot.id))
+  },[dispatch])
+
+
 
 
   return (

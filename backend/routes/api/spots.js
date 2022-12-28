@@ -424,13 +424,13 @@ router.get('/:spotId/bookings', requireAuth, async (req, res) => {
         attributes: ['id','firstName','lastName']
       }
     });
-    return res.json(bookings);
+    return res.json({Bookings: bookings});
   } else {
     const bookings = await Booking.findAll({
       where: {
         spotId: req.params.spotId
       },
-      attributes:  ['id','spotId','startDate','endDate']
+      attributes:  ['id','spotId','userId','startDate','endDate']
     });
     return res.json({Bookings: bookings});
   }
