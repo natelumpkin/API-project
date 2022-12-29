@@ -18,9 +18,9 @@ const BookingsCard = ({spot}) => {
   const [dateErrors, setDateErrors] = useState([])
   const [disableBooking, setDisableBooking] = useState(true)
 
-  console.log('currently selected date: ', selectedDate)
-  console.log(selectedDate[0])
-  console.log(selectedDate[1])
+  // console.log('currently selected date: ', selectedDate)
+  // console.log(selectedDate[0])
+  // console.log(selectedDate[1])
 
   useEffect(() => {
     dispatch(bookingActions.getAllBookings(spot.id))
@@ -50,12 +50,42 @@ const BookingsCard = ({spot}) => {
     for (let bookingId in bookings) {
       const startDate = bookings[bookingId].startDate
       const endDate = bookings[bookingId].endDate
-      return isBetweenDates(date, startDate, endDate)
+      if (isBetweenDates(date, startDate, endDate)) return true
     }
+    return false
   }
 
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    const booking = {
+      "startDate": selectedDate[0],
+      "endDate": selectedDate[1]
+    }
+    dispatch(bookingActions.postNewBooking(spot.id, booking))
+    dispatch(bookingActions.getAllBookings(spot.id))
+    setDate('')
+  }
 
+  const clearDates = () => {
+    setDate('')
+    setDateErrors([])
+  }
 
+  const checkDate = (value, event) => {
+    // when i click on it, i wanna know if it's booked
+    console.log(value)
+    for (let bookingId in bookings) {
+      const startDate = bookings[bookingId].startDate
+      const endDate = bookings[bookingId].endDate
+      if (isBetweenDates(value, startDate, endDate)) {
+        console.log(true)
+        return true
+      }
+    }
+    console.log(false)
+    return false
+    console.log(isBetweenDates())
+  }
 
 
 
@@ -65,7 +95,8 @@ const BookingsCard = ({spot}) => {
         <Calendar
           value={selectedDate}
           onChange={setDate}
-          showDoubleView={true}
+          onClickDay={checkDate}
+          showDoubleView={false}
           showFixedNumberOfWeeks={false}
           minDate={new Date()}
           selectRange={true}
@@ -73,11 +104,11 @@ const BookingsCard = ({spot}) => {
           tileDisabled={alreadyBooked}
           returnValue={'range'}/>
       </div>
-      <form>
+      <form onSubmit={handleSubmit}>
         <input className='date-display' value={selectedDate ? selectedDate[0] : ''}></input>
         <input className='date-display' value={selectedDate ? selectedDate[1] : ''}></input>
-        <button disabled={disableBooking}>Book Dates</button>
-        <button type="button" onClick={() => setDate('')}>Clear Dates</button>
+        <button type="submit" disabled={disableBooking}>Book Dates</button>
+        <button type="button" onClick={clearDates}>Clear Dates</button>
         {dateErrors &&
           dateErrors.map(error => (
             <div>{error}</div>
