@@ -90,7 +90,7 @@ const bookingReducer = (state = initialState, action) => {
     case LOAD_BOOKINGS: {
       // console.log(action.bookings)
       const data = normalizeData(action.bookings.Bookings);
-      console.log(data)
+      // console.log(data)
       const newState = data;
       return newState;
     }
