@@ -24,7 +24,7 @@ const BookingsCard = ({spot}) => {
     // function to determine if a date is booked
     // if the date falls in or on one of the bookings
     // then return true
-
+    console.log(date)
 
     // iterate through bookings
     for (let bookingId in bookings) {
@@ -47,15 +47,7 @@ const BookingsCard = ({spot}) => {
     // return false
   }
 
-  const isSameDate = (date1, date2) => {
-    if (date1.getDate() === date2.getDate() &&
-        date1.getMonth() === date2.getMonth() &&
-        date1.getYear() === date2.getYear()) {
-          console.log(date1)
-          console.log(date2)
-          return true
-        }
-  }
+
 
   return (
     <div className='calendar-container'>
