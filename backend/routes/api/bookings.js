@@ -129,7 +129,7 @@ router.delete('/:bookingId', requireAuth, async (req, res) => {
   // console.log(Validator.isAfter(now,booking.endDate));
   // console.log(booking.endDate);
 
-  if (Validator.isAfter(now,booking.startDate)) {
+  if (Validator.isAfter(now,booking.startDate.toString())) {
     res.status(403);
     return res.json({
       message: "Bookings that have been started can't be deleted",
