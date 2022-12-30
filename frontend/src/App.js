@@ -13,6 +13,7 @@ import LandingPage from './components/LandingPage';
 import SpotDetails from './components/SpotDetails';
 import CreateSpotPage from './components/CreateSpotPage';
 import UpdateSpotForm from './components/UserSpotDetails/UpdateSpotForm';
+import CurrentBookings from './components/CurrentBookings';
 
 function App() {
   const dispatch = useDispatch();
@@ -42,6 +43,9 @@ function App() {
         </Route>
         <Route path='/create-a-spot'>
           <CreateSpotPage/>
+        </Route>
+        <Route path='/trips'>
+          <CurrentBookings/>
         </Route>
         <Route>
           404 Page Not Found

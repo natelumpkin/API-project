@@ -6,7 +6,7 @@ const ADD_BOOKING = 'bookings/new'
 const UPDATE_BOOKING = 'bookings/update'
 const DELETE_BOOKING = 'bookings/delete'
 
-const getBookings = (bookings) => ({
+export const getBookings = (bookings) => ({
   type: LOAD_BOOKINGS,
   bookings
 })
@@ -28,6 +28,18 @@ const deleteBooking = (bookingId) => ({
 
 export const getAllBookings = (spotId) => async dispatch => {
   const response = await csrfFetch(`/api/spots/${spotId}/bookings`);
+  if (response.ok) {
+    const data = await response.json()
+    dispatch(getBookings(data))
+    return data
+  } else {
+    const errors = await response.json()
+    return errors;
+  }
+}
+
+export const getCurrentBookings = () => async dispatch => {
+  const response = await csrfFetch(`/api/bookings/current`)
   if (response.ok) {
     const data = await response.json()
     dispatch(getBookings(data))
