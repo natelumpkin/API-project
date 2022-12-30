@@ -15,10 +15,12 @@ const BookingsCard = ({spot}) => {
   const bookings = useSelector(state => state.bookings)
 
   const [selectedDate, setDate] = useState('')
+  const [startDate, setStartDate] = useState('')
+  const [endDate, setEndDate] = useState('')
   const [dateErrors, setDateErrors] = useState([])
   const [disableBooking, setDisableBooking] = useState(true)
 
-  // console.log('currently selected date: ', selectedDate)
+  console.log('currently selected date: ', selectedDate)
   // console.log(selectedDate[0])
   // console.log(selectedDate[1])
 
@@ -68,46 +70,85 @@ const BookingsCard = ({spot}) => {
 
   const clearDates = () => {
     setDate('')
+    setStartDate('')
+    setEndDate('')
     setDateErrors([])
   }
 
-  const checkDate = (value, event) => {
-    // when i click on it, i wanna know if it's booked
-    console.log(value)
-    for (let bookingId in bookings) {
-      const startDate = bookings[bookingId].startDate
-      const endDate = bookings[bookingId].endDate
-      if (isBetweenDates(value, startDate, endDate)) {
-        console.log(true)
-        return true
-      }
+  const selectDates = (value, event) => {
+    if (!startDate) setStartDate(new Date(value))
+    if (startDate) setEndDate(new Date(value))
+    if (endDate) {
+      setStartDate(new Date(value))
+      setEndDate('')
     }
-    console.log(false)
-    return false
-    console.log(isBetweenDates())
+  }
+
+  const DisplayBookingInstructions = ({selectedDate, spot}) => {
+
+    let formattedStartDate
+    let formattedEndDate
+    let numNights
+
+    const calculateNumberNights = (date1, date2) => {
+      const millisecondsBetween = date2 - date1
+      const daysBetween = millisecondsBetween / 86400000
+      return Math.floor(daysBetween)
+    }
+
+    if (selectedDate) {
+      formattedStartDate = new Intl.DateTimeFormat('en-US',{day:"numeric",month:"short",year:"numeric"}).format(selectedDate[0])
+      formattedEndDate = new Intl.DateTimeFormat('en-US',{day:"numeric",month:"short",year:"numeric"}).format(selectedDate[1])
+    }
+
+
+    return (
+      <div>
+        {!selectedDate && !startDate && (
+          <>
+          <h1>Select check-in date</h1>
+          <h4>Select booking dates to reserve this spot</h4>
+          </>
+        )}
+        {startDate && !endDate && (
+          <>
+          <h1>Select checkout date</h1>
+          <h4>Select booking dates to reserve this spot</h4>
+          </>
+        )}
+        {selectedDate && (
+          <>
+          <h1>{calculateNumberNights(selectedDate[0], selectedDate[1])} nights in {spot.city}</h1>
+          <h4>{formattedStartDate} - {formattedEndDate}</h4>
+          </>
+        )}
+      </div>
+    )
   }
 
 
 
   return (
     <div>
+      <DisplayBookingInstructions selectedDate={selectedDate} spot={spot}/>
       <div className='calendar-container'>
         <Calendar
           value={selectedDate}
           onChange={setDate}
-          onClickDay={checkDate}
+          onClickDay={selectDates}
           showDoubleView={false}
           showFixedNumberOfWeeks={false}
           minDate={new Date()}
           selectRange={true}
-          goToRangeStartOnSelect={false}
+          goToRangeStartOnSelect={true}
           tileDisabled={alreadyBooked}
-          returnValue={'range'}/>
+          returnValue={'range'}
+          />
       </div>
       <form onSubmit={handleSubmit}>
         <input className='date-display' value={selectedDate ? selectedDate[0] : ''}></input>
         <input className='date-display' value={selectedDate ? selectedDate[1] : ''}></input>
-        <button type="submit" disabled={disableBooking}>Book Dates</button>
+        <button type="submit" disabled={disableBooking}>Reserve</button>
         <button type="button" onClick={clearDates}>Clear Dates</button>
         {dateErrors &&
           dateErrors.map(error => (
