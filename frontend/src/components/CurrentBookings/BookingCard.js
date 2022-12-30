@@ -1,4 +1,5 @@
 import { useDispatch } from "react-redux"
+import { useHistory } from "react-router-dom"
 
 import * as bookingActions from '../../store/booking'
 
@@ -11,6 +12,7 @@ const BookingCard = ({booking}) => {
   // button to edit that maybe, brings to another page
 
   const dispatch = useDispatch()
+  const history = useHistory()
 
   const formatDateShort = (date) => {
     return new Intl.DateTimeFormat('en-US').format(date)
@@ -27,7 +29,7 @@ const BookingCard = ({booking}) => {
       <div>{booking.Spot.city}, {booking.Spot.state}, {booking.Spot.country}</div>
       <div>Check in: {formatDateShort(new Date(booking.startDate))}</div>
       <div>Check out: {formatDateShort(new Date(booking.endDate))}</div>
-      <button>Change Reservation</button>
+      <button onClick={() => history.push(`/trips/${booking.id}/edit`)}>Change Reservation</button>
       <button onClick={() => deleteBooking(booking.id)}>Cancel Reservation</button>
     </div>
   )

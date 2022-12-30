@@ -74,7 +74,7 @@ router.put('/:bookingId', requireAuth, async (req, res) => {
   const now = new Date().toString();
 
   // Import Validator object to check if current date is after end date of booking
-  if (Validator.isAfter(now,booking.endDate)) {
+  if (Validator.isAfter(now,booking.endDate.toString())) {
     res.status(403);
     return res.json({
       message: "Past bookings can't be modified",

@@ -24,10 +24,6 @@ const BookingsCard = ({spot}) => {
   const [dateErrors, setDateErrors] = useState([])
   const [disableBooking, setDisableBooking] = useState(true)
 
-  console.log('currently selected date: ', selectedDate)
-  // console.log(selectedDate[0])
-  // console.log(selectedDate[1])
-
   useEffect(() => {
     dispatch(bookingActions.getAllBookings(spot.id))
   },[dispatch])
