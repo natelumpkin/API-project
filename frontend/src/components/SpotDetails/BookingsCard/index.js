@@ -126,7 +126,11 @@ const BookingsCard = ({spot}) => {
     )
   }
 
+  const formatDateShort = (date) => {
+    return new Intl.DateTimeFormat('en-US').format(date)
+  }
 
+  console.log('start date: ', startDate)
 
   return (
     <div>
@@ -146,8 +150,8 @@ const BookingsCard = ({spot}) => {
           />
       </div>
       <form onSubmit={handleSubmit}>
-        <input className='date-display' value={selectedDate ? selectedDate[0] : ''}></input>
-        <input className='date-display' value={selectedDate ? selectedDate[1] : ''}></input>
+        <input className='date-display' value={startDate ? formatDateShort(startDate) : 'Select check in date'}></input>
+        <input className='date-display' value={selectedDate ? formatDateShort(selectedDate[1]) : 'Select check out date'}></input>
         <button type="submit" disabled={disableBooking}>Reserve</button>
         <button type="button" onClick={clearDates}>Clear Dates</button>
         {dateErrors &&
