@@ -9,6 +9,7 @@ import * as spotActions from '../../store/spot'
 import BookingInstructions from "../SpotDetails/BookingInstructions";
 
 import isBetweenDates from "../../utils/isBetweenDates";
+import { initial } from "lodash";
 
 
 
@@ -23,6 +24,7 @@ const EditBooking = () => {
   const currentUser = useSelector(state => state.session.user)
 
   const [loaded, setLoaded] = useState(false)
+  const [initialLoad, setInitialLoad] = useState(false)
   const [spotId, setSpotId] = useState()
   const [selectedDate, setDate] = useState('')
   const [startDate, setStartDate] = useState('')
@@ -30,24 +32,30 @@ const EditBooking = () => {
   const [dateErrors, setDateErrors] = useState([])
   const [disableBooking, setDisableBooking] = useState(true)
 
+  // console.log(initialLoad)
+
   useEffect(() => {
     let currentBooking
+    console.log('fetching current bookings')
     dispatch(bookingActions.getCurrentBookings())
+      .then(() => setInitialLoad(true))
 
     currentBooking = Object.values(bookings).find(booking => String(booking.id) === bookingId)
-    console.log(Object.values(bookings))
+    console.log('current bookings: ', Object.values(bookings))
     console.log('currentBooking: ', currentBooking)
+    console.log(initialLoad)
     if (currentBooking) {
       setSpotId(currentBooking.spotId)
       setDate([new Date(currentBooking.startDate), new Date(currentBooking.endDate)])
       setStartDate(new Date(currentBooking.startDate))
     }
     if (spotId) {
+      console.log('fetching spot details')
       dispatch(bookingActions.getAllBookings(spotId))
       dispatch(spotActions.getSpotById(spotId))
         .then(setLoaded(true))
     }
-  },[dispatch, spotId])
+  },[dispatch, spotId, initialLoad])
 
   // i need to:
   // display basic info for the spot
@@ -63,7 +71,7 @@ const EditBooking = () => {
   // fetch bookings for that spot
   // display the calendar
 
-  console.log('selected date: ', selectedDate)
+  // console.log('selected date: ', selectedDate)
 
   useEffect(() => {
     // if startDate or endDate is between the selectedDates,
@@ -132,7 +140,9 @@ const EditBooking = () => {
   }
 
   if (!loaded) {
-    return null
+    return (
+      <h1>Not loaded, sorry!</h1>
+    )
   }
 
   return (
