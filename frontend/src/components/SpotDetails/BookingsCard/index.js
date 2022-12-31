@@ -91,7 +91,7 @@ const BookingsCard = ({spot}) => {
   console.log('start date: ', startDate)
 
   return (
-    <div>
+    <div id="booking-card-holder">
 
       <BookingInstructions currentUser={currentUser} startDate={startDate} endDate={endDate} selectedDate={selectedDate} spot={spot}/>
 
@@ -107,6 +107,9 @@ const BookingsCard = ({spot}) => {
           goToRangeStartOnSelect={true}
           tileDisabled={alreadyBooked}
           returnValue={'range'}
+          next2Label={null}
+          prev2Label={null}
+          showNeighboringMonth={false}
           />
       </div>
       {!currentUser || currentUser.id !== spot.ownerId && (

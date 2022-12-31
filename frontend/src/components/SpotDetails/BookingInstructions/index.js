@@ -1,3 +1,5 @@
+import './BookingInstructions.css'
+
 const BookingInstructions = ({currentUser, startDate, endDate, selectedDate, spot}) => {
 
   let formattedStartDate
@@ -18,8 +20,8 @@ const BookingInstructions = ({currentUser, startDate, endDate, selectedDate, spo
   if (!currentUser) {
     return (
       <div>
-        <h1>Log in to reserve this spot</h1>
-        <h4>View its reservations on the calendar below!</h4>
+        <h2>Log in to reserve this spot</h2>
+        <p>View its reservations on the calendar below!</p>
       </div>
     )
   }
@@ -27,8 +29,8 @@ const BookingInstructions = ({currentUser, startDate, endDate, selectedDate, spo
   if (currentUser.id === spot.ownerId) {
     return (
       <div>
-        <h1>This is your spot</h1>
-        <h4>View reservations on the calendar below!</h4>
+        <h2>This is your spot</h2>
+        <p>View your reservations here</p>
       </div>
     )
   }
@@ -37,20 +39,20 @@ const BookingInstructions = ({currentUser, startDate, endDate, selectedDate, spo
     <div>
       {!selectedDate && !startDate && (
         <>
-        <h1>Select check-in date</h1>
-        <h4>Select booking dates to reserve this spot</h4>
+        <h2>Select check-in date</h2>
+        <p>Select booking dates to reserve this spot</p>
         </>
       )}
       {startDate && !endDate && (
         <>
-        <h1>Select checkout date</h1>
-        <h4>Select booking dates to reserve this spot</h4>
+        <h2>Select checkout date</h2>
+        <p>Select booking dates to reserve this spot</p>
         </>
       )}
       {selectedDate && (
         <>
-        <h1>{calculateNumberNights(selectedDate[0], selectedDate[1])} nights in {spot.city}</h1>
-        <h4>{formattedStartDate} - {formattedEndDate}</h4>
+        <h2>{calculateNumberNights(selectedDate[0], selectedDate[1])} nights in {spot.city}</h2>
+        <p>{formattedStartDate} - {formattedEndDate}</p>
         </>
       )}
     </div>
