@@ -77,7 +77,13 @@ const BookingsCard = ({spot}) => {
 
   const selectDates = (value, event) => {
     if (!startDate) setStartDate(new Date(value))
-    if (startDate) setEndDate(new Date(value))
+    if (startDate && startDate < new Date(value)) {
+      setEndDate(new Date(value))
+    }
+    if (startDate && startDate > new Date(value)) {
+      setEndDate(startDate)
+      setStartDate(new Date(value))
+    }
     if (endDate) {
       setStartDate(new Date(value))
       setEndDate('')
@@ -104,6 +110,7 @@ const BookingsCard = ({spot}) => {
           showDoubleView={false}
           showFixedNumberOfWeeks={false}
           minDate={new Date()}
+          minDetail={'month'}
           selectRange={true}
           goToRangeStartOnSelect={true}
           tileDisabled={alreadyBooked}
