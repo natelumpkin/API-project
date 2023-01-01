@@ -43,38 +43,105 @@
   border-radius: 100%;
 }
 
-.react-calendar__tile--active {
-  background: black;
-  color: white;
-}
-.react-calendar__tile--active:enabled:hover,
-.react-calendar__tile--active:enabled:focus {
-  background: #1087ff;
-}
-.react-calendar__tile:enabled:hover {
-  background-color: white;
+/* when unclicked, calendar is white
+mouse over tiles: white background, black border */
+
+/* when selected, start date and end date is black circle with
+black border, with no mouse-over effects */
+
+/* when in the range, tiles that aren't start date
+and end date have a grey rectangle background
+but still have the white mouseover effect */
+
+.react-calendar__tile:hover {
   border: 1px solid black;
+}
+
+.react-calendar__tile--range:not(.react-calendar__tile--rangeStart),
+.react-calendar__tile--range:not(.react-calendar__tile--rangeEnd) {
+  background-color: #f7f7f7;
+  border-radius: 0;
+  color: black;
+}
+
+.react-calendar__tile--range:hover {
+  background-color: #f7f7f7;
+  border: 1px solid black;
+  border-radius: 100%;
   color: black;
 }
 
 
-.react-calendar__tile:enabled:focus {
-  background-color: black;
+.react-calendar__tile--range.react-calendar__tile--rangeEnd
+/* .react-calendar__tile--range.react-calendar__tile--rangeEnd:hover */ {
+  background-color: #f7f7f7;
+  border: none;
   color: white;
+  border-top-right-radius: 100%;
+  border-bottom-right-radius: 100%;
+  position: relative;
 }
 
+.react-calendar__tile.react-calendar__tile--rangeEnd:hover {
+  background-color: #f7f7f7 !important;
+  border-top-right-radius: 100%;
+  border-bottom-right-radius: 100%;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
 
+.react-calendar__tile.react-calendar__tile--rangeStart:hover {
+  background-color: #f7f7f7 !important;
+  border: none;
+  border-top-left-radius: 100%;
+  border-bottom-left-radius: 100%;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
 
+.react-calendar__tile--range.react-calendar__tile--rangeStart
+/* .react-calendar__tile--range.react-calendar__tile--rangeStart:hover */ {
+  background-color: #f7f7f7;
+  color: white;
+  border-top-left-radius: 100%;
+  border-bottom-left-radius: 100%;
+  position: relative;
+}
 
+.react-calendar__tile--rangeStart:after {
+  position: absolute;
+  content: '';
+  width: 100%;
+  bottom: 0;
+  right: 0;
+  height: 100%;
+  background-color: #000000;
+  border-radius: 100% !important;
+  z-index: 0;
+}
 
+.react-calendar__tile--rangeEnd:before {
+  position: absolute;
+  content: '';
+  width: 100%;
+  bottom: 0;
+  right: 0;
+  height: 100%;
+  background-color: #000000;
+  border-radius: 100% !important;
+  z-index: 0;
+}
 
+.react-calendar__tile--rangeEnd abbr,
+.react-calendar__tile--rangeStart abbr {
+  z-index: 1000 !important;
+  position: relative;
+}
 
-
-
-
-
-
-
+/* .react-calendar__tile:enabled:focus {
+  background-color: black;
+  color: white;
+} */
 
 /* Default styling for react calendar below */
 

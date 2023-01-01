@@ -81,6 +81,7 @@ const BookingsCard = ({spot}) => {
     if (endDate) {
       setStartDate(new Date(value))
       setEndDate('')
+      setDate('')
     }
   }
 
