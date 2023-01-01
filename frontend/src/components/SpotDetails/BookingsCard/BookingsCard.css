@@ -53,7 +53,25 @@ black border, with no mouse-over effects */
 and end date have a grey rectangle background
 but still have the white mouseover effect */
 
-.react-calendar__tile:hover {
+.react-calendar__tile--range::before {
+  background-color: #f7f7f7;
+  z-index: 0;
+  border-radius: 100%;
+  border: 1px solid black;
+  content: '';
+  width: 50px;
+  height: 50px;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+}
+
+abbr {
+  z-index: 1000 !important;
+  position: relative;
+}
+
+.react-calendar__tile:hover:not(:disabled) {
   border: 1px solid black;
 }
 
@@ -66,10 +84,13 @@ but still have the white mouseover effect */
 
 .react-calendar__tile--range:hover {
   background-color: #f7f7f7;
-  border: 1px solid black;
-  border-radius: 100%;
+  /* border: 1px solid black; */
+  border: none !important;
+  border-radius: 0;
   color: black;
+  position: relative;
 }
+
 
 
 .react-calendar__tile--range.react-calendar__tile--rangeEnd
@@ -88,6 +109,7 @@ but still have the white mouseover effect */
   border-bottom-right-radius: 100%;
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;
+  border: none;
 }
 
 .react-calendar__tile.react-calendar__tile--rangeStart:hover {
@@ -106,6 +128,30 @@ but still have the white mouseover effect */
   border-top-left-radius: 100%;
   border-bottom-left-radius: 100%;
   position: relative;
+}
+
+.react-calendar__tile--hoverEnd::after {
+  position: absolute;
+  content: '';
+  width: 100%;
+  bottom: 0;
+  right: 0;
+  height: 100%;
+  border: 1px solid black;
+  border-radius: 100% !important;
+  z-index: 0;
+}
+
+.react-calendar__tile--hoverStart::after {
+  position: absolute;
+  content: '';
+  width: 100%;
+  bottom: 0;
+  right: 0;
+  height: 100%;
+  border: 1px solid black;
+  border-radius: 100% !important;
+  z-index: 0;
 }
 
 .react-calendar__tile--rangeStart:after {
@@ -216,7 +262,9 @@ but still have the white mouseover effect */
 }
 
 .react-calendar__tile:disabled {
-  background-color: #f0f0f0;
+  background-color: white;
+  color: #b6b6b6;
+  text-decoration: line-through;
 }
 
 .react-calendar__tile--now {
@@ -235,5 +283,23 @@ but still have the white mouseover effect */
 }
 
 .react-calendar--selectRange .react-calendar__tile--hover {
-  background-color: #e6e6e6;
+  border-radius: 0;
+}
+
+.react-calendar--selectRange .react-calendar__tile--hover:not(.react-calendar__tile--rangeStart) {
+  background-color: #f7f7f7;
+}
+
+.react-calendar__tile--hoverStart {
+  border-top-left-radius: 100% !important;
+  border-bottom-left-radius: 100% !important;
+  border: none !important;
+  position: relative;
+}
+
+.react-calendar__tile--hoverEnd {
+  border-top-right-radius: 100% !important;
+  border-bottom-right-radius: 100% !important;
+  border: none !important;
+  position: relative;
 }
