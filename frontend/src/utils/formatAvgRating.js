@@ -3,6 +3,8 @@
 
 const formatAvgRating = (rating) => {
   //console.log('FORMAT AVG RATING rating VARIABLE: ', rating)
+  // console.log('rating: ', rating)
+  // console.log(typeof rating)
   let stringRating = rating.toString();
   let ratingArr = stringRating.split('.');
 

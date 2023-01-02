@@ -47,15 +47,15 @@ const BookingsCard = ({spot, formattedAvgRating}) => {
   useEffect(() => {
     if (dateErrors.length) setDisableBooking(true)
     if (!selectedDate && (!startDate && !endDate)) {
-      console.log('first')
+      // console.log('first')
       setDisableBooking(true)
     }
     if (!selectedDate && (startDate && !endDate)) {
-      console.log('second')
+      // console.log('second')
       setDisableBooking(true)
     }
     if (selectedDate && !dateErrors.length) setDisableBooking(false)
-    console.log('disable: ', disableBooking)
+    // console.log('disable: ', disableBooking)
   },[startDate, endDate, selectedDate, dateErrors])
 
   const alreadyBooked = ({activeStartDate, date, view}) => {

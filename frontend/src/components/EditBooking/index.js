@@ -9,9 +9,10 @@ import * as spotActions from '../../store/spot'
 import BookingInstructions from "../SpotDetails/BookingInstructions";
 
 import isBetweenDates from "../../utils/isBetweenDates";
-import { initial } from "lodash";
+import formatAvgRating from '../../utils/formatAvgRating'
+// import { initial } from "lodash";
 
-
+import './EditBooking.css'
 
 const EditBooking = () => {
 
@@ -36,21 +37,21 @@ const EditBooking = () => {
 
   useEffect(() => {
     let currentBooking
-    console.log('fetching current bookings')
+    // console.log('fetching current bookings')
     dispatch(bookingActions.getCurrentBookings())
       .then(() => setInitialLoad(true))
 
     currentBooking = Object.values(bookings).find(booking => String(booking.id) === bookingId)
-    console.log('current bookings: ', Object.values(bookings))
-    console.log('currentBooking: ', currentBooking)
-    console.log(initialLoad)
+    // console.log('current bookings: ', Object.values(bookings))
+    // console.log('currentBooking: ', currentBooking)
+    // console.log(initialLoad)
     if (currentBooking) {
       setSpotId(currentBooking.spotId)
       setDate([new Date(currentBooking.startDate), new Date(currentBooking.endDate)])
       setStartDate(new Date(currentBooking.startDate))
     }
     if (spotId) {
-      console.log('fetching spot details')
+      // console.log('fetching spot details')
       dispatch(bookingActions.getAllBookings(spotId))
       dispatch(spotActions.getSpotById(spotId))
         .then(setLoaded(true))
@@ -94,8 +95,22 @@ const EditBooking = () => {
 
   useEffect(() => {
     if (dateErrors.length) setDisableBooking(true)
+    if (!selectedDate && (!startDate && !endDate)) {
+      // console.log('first')
+      setDisableBooking(true)
+    }
+    if (!selectedDate && (startDate && !endDate)) {
+      // console.log('second')
+      setDisableBooking(true)
+    }
     if (selectedDate && !dateErrors.length) setDisableBooking(false)
-  })
+    // console.log('disable: ', disableBooking)
+    if (selectedDate) {
+      setStartDate(selectedDate[0])
+      setEndDate(selectedDate[1])
+    }
+  },[startDate, endDate, selectedDate, dateErrors])
+
 
   const alreadyBooked = ({activeStartDate, date, view}) => {
     for (let tripId in bookings) {
@@ -120,9 +135,10 @@ const EditBooking = () => {
   }
 
   const clearDates = () => {
-    setDate('')
-    setStartDate('')
-    setEndDate('')
+    let currentBooking = Object.values(bookings).find(booking => String(booking.id) === bookingId)
+    console.log('clear dates booking: ', currentBooking)
+    setDate([new Date(currentBooking.startDate), new Date(currentBooking.endDate)])
+    setStartDate(new Date(currentBooking.startDate))
     setDateErrors([])
   }
 
@@ -146,37 +162,69 @@ const EditBooking = () => {
   }
 
   return (
-    <div>
+    <div className="flex outer-container edit-booking">
+    <div id="booking-card-holder">
 
-    <BookingInstructions currentUser={currentUser} startDate={startDate} endDate={endDate} selectedDate={selectedDate} spot={spot}/>
 
     <div className='calendar-container'>
+      <BookingInstructions currentUser={currentUser} startDate={startDate} endDate={endDate} selectedDate={selectedDate} spot={spot}/>
       <Calendar
+        className={'react-calendar'}
         value={selectedDate}
         onChange={setDate}
         onClickDay={selectDates}
         showDoubleView={false}
         showFixedNumberOfWeeks={false}
         minDate={new Date()}
+        minDetail={'month'}
         selectRange={true}
         goToRangeStartOnSelect={true}
         tileDisabled={alreadyBooked}
         returnValue={'range'}
+        next2Label={null}
+        prev2Label={null}
+        showNeighboringMonth={false}
         />
+        <div className='clear-dates-holder'>
+            <button className='clear-dates-button' type="button" onClick={clearDates}>Reset Dates</button>
+          </div>
     </div>
     {!currentUser || currentUser.id !== spot.ownerId && (
-      <form onSubmit={handleSubmit}>
-        <input className='date-display' value={selectedDate ? formatDateShort(selectedDate[0]) : 'Select check in date'}></input>
-        <input className='date-display' value={selectedDate ? formatDateShort(selectedDate[1]) : 'Select check out date'}></input>
-        <button type="submit" disabled={disableBooking}>Change Reservation</button>
-        <button type="button" onClick={clearDates}>Clear Dates</button>
+      <div className='reservation-card'>
+      <div className='reservation-card-top'>
+        <div>
+          <span className='price-highlight'>${spot.price}</span> night
+        </div>
+        <div className='align-bottom'>
+          <h6>
+          <i className="fa-solid fa-star"/> {spot.avgStarRating && formatAvgRating(spot.avgStarRating)}
+          <span> • </span>
+          {spot.numReviews} {(spot.numReviews > 1 || spot.numReviews < 1) && `reviews`}{spot.numReviews === 1 && 'review'}
+          </h6>
+        </div>
+      </div>
+      <form className='booking-form' onSubmit={handleSubmit}>
+        <div className='date-picker'>
+          <div className='left-input'>
+            <label>Check-in</label>
+            <input disabled className='date-display date-checkin' value={startDate ? formatDateShort(startDate) : 'Select on calendar'}></input>
+          </div>
+          <div className='right-input'>
+            <label>Check-out</label>
+            <input disabled className='date-display date-checkin' value={selectedDate ? formatDateShort(selectedDate[1]) : 'Select on calendar'}></input>
+          </div>
+        </div>
+        <button className='reservation-button login-button' type="submit" disabled={disableBooking}>{selectedDate ? 'Change reservation' : 'Select reservation'}</button>
         {dateErrors &&
           dateErrors.map(error => (
-            <div>{error}</div>
+            <div className='errors'>{error}</div>
           ))
         }
+
       </form>
+      </div>
     )}
+  </div>
   </div>
   )
 }
