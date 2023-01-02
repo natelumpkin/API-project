@@ -140,10 +140,16 @@ const BookingsCard = ({spot, formattedAvgRating}) => {
           </div>
           <form className='booking-form' onSubmit={handleSubmit}>
             <div className='date-picker'>
-              <input className='date-display' value={startDate ? formatDateShort(startDate) : 'Select check in date'}></input>
-              <input className='date-display' value={selectedDate ? formatDateShort(selectedDate[1]) : 'Select check out date'}></input>
+              <div className='left-input'>
+                <label>Check-in</label>
+                <input disabled className='date-display date-checkin' value={startDate ? formatDateShort(startDate) : 'Select on calendar'}></input>
+              </div>
+              <div className='right-input'>
+                <label>Check-out</label>
+                <input disabled className='date-display date-checkin' value={selectedDate ? formatDateShort(selectedDate[1]) : 'Select on calendar'}></input>
+              </div>
             </div>
-            <button className='reservation-button' type="submit" disabled={disableBooking}>Reserve</button>
+            <button className='reservation-button login-button' type="submit" disabled={disableBooking}>Reserve</button>
             {dateErrors &&
               dateErrors.map(error => (
                 <div>{error}</div>
