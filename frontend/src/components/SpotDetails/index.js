@@ -141,7 +141,7 @@ const SpotDetails = () => {
           <p>{singleSpot.description}</p>
         </div>
         <div className="display-info">
-              <BookingsCard spot={singleSpot}/>
+              <BookingsCard formattedAvgRating={formattedAvgRating} spot={singleSpot}/>
         </div>
         <div className="display-info">
           <ReviewsPreview setShowModal={setShowModal} spotId={spotId} avgRating={singleSpot.avgStarRating} numReviews={singleSpot.numReviews}/>

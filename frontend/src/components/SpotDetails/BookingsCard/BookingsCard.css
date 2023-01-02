@@ -1,12 +1,93 @@
+#booking-card-holder {
+  display: flex;
+  width: 100%;
+
+}
+
+.clear-dates-holder {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.react-calendar {
+  border: 1px solid red;
+}
+
+.clear-dates-button {
+  background-color: white;
+  color: black;
+  font-weight: bold;
+  padding: .5em;
+  text-decoration: underline;
+  border: none;
+  cursor: pointer;
+  /* border: 1px solid red; */
+  border-radius: 2em;
+  justify-self: flex-end;
+  width: 30%;
+}
+
+.clear-dates-button:hover {
+  background-color: #f7f7f7;
+}
+
+.reservation-card {
+  border: 1px solid red;
+  margin-left: 100px;
+  margin-top: 87px;
+  padding: 20px;
+  width: 350px;
+}
+
+.reservation-card-top {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.price-highlight {
+  font-size: 1.3em;
+  font-weight: bold;
+}
+
+.align-bottom {
+  display: flex;
+  align-items: flex-end;
+}
+
+.align-bottom h6 {
+  margin: 0;
+  font-size: 12px;
+}
+
+.booking-form {
+  width: 100%;
+}
+
+.date-picker {
+  display: flex;
+  width: 100%;
+  border: 1px solid red;
+  margin-bottom: 20px;
+}
+
+
 .calendar-container {
   display: flex;
+  flex-direction: column;
 }
 
 .date-display {
   width: 100%;
 }
 
-/* Calendar custom styling */
+.reservation-button {
+  width: 100%;
+  margin: 0;
+}
+
+/* Calendar styling */
 
 .react-calendar__navigation__prev-button {
   padding-bottom: 5px;

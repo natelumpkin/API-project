@@ -11,7 +11,7 @@ import isBetweenDates from '../../../utils/isBetweenDates';
 
 import './BookingsCard.css'
 
-const BookingsCard = ({spot}) => {
+const BookingsCard = ({spot, formattedAvgRating}) => {
 
   const dispatch = useDispatch()
 
@@ -100,10 +100,11 @@ const BookingsCard = ({spot}) => {
   return (
     <div id="booking-card-holder">
 
-      <BookingInstructions currentUser={currentUser} startDate={startDate} endDate={endDate} selectedDate={selectedDate} spot={spot}/>
 
       <div className='calendar-container'>
+        <BookingInstructions currentUser={currentUser} startDate={startDate} endDate={endDate} selectedDate={selectedDate} spot={spot}/>
         <Calendar
+          className={'react-calendar'}
           value={selectedDate}
           onChange={setDate}
           onClickDay={selectDates}
@@ -119,19 +120,37 @@ const BookingsCard = ({spot}) => {
           prev2Label={null}
           showNeighboringMonth={false}
           />
+          <div className='clear-dates-holder'>
+            <button className='clear-dates-button' type="button" onClick={clearDates}>Clear Dates</button>
+          </div>
       </div>
       {!currentUser || currentUser.id !== spot.ownerId && (
-        <form onSubmit={handleSubmit}>
-          <input className='date-display' value={startDate ? formatDateShort(startDate) : 'Select check in date'}></input>
-          <input className='date-display' value={selectedDate ? formatDateShort(selectedDate[1]) : 'Select check out date'}></input>
-          <button type="submit" disabled={disableBooking}>Reserve</button>
-          <button type="button" onClick={clearDates}>Clear Dates</button>
-          {dateErrors &&
-            dateErrors.map(error => (
-              <div>{error}</div>
-            ))
-          }
-        </form>
+        <div className='reservation-card'>
+          <div className='reservation-card-top'>
+            <div>
+              <span className='price-highlight'>${spot.price}</span> night
+            </div>
+            <div className='align-bottom'>
+              <h6>
+              <i className="fa-solid fa-star"/> {formattedAvgRating}
+              <span> • </span>
+              {spot.numReviews} {(spot.numReviews > 1 || spot.numReviews < 1) && `reviews`}{spot.numReviews === 1 && 'review'}
+              </h6>
+            </div>
+          </div>
+          <form className='booking-form' onSubmit={handleSubmit}>
+            <div className='date-picker'>
+              <input className='date-display' value={startDate ? formatDateShort(startDate) : 'Select check in date'}></input>
+              <input className='date-display' value={selectedDate ? formatDateShort(selectedDate[1]) : 'Select check out date'}></input>
+            </div>
+            <button className='reservation-button' type="submit" disabled={disableBooking}>Reserve</button>
+            {dateErrors &&
+              dateErrors.map(error => (
+                <div>{error}</div>
+              ))
+            }
+          </form>
+        </div>
       )}
     </div>
   )
