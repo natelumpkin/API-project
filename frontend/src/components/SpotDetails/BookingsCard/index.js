@@ -6,6 +6,7 @@ import BookingInstructions from '../BookingInstructions';
 
 import * as bookingActions from '../../../store/booking'
 import isBetweenDates from '../../../utils/isBetweenDates';
+import calculateNumberNights from '../../../utils/calculateNumberNights';
 
 
 
@@ -45,8 +46,17 @@ const BookingsCard = ({spot, formattedAvgRating}) => {
 
   useEffect(() => {
     if (dateErrors.length) setDisableBooking(true)
+    if (!selectedDate && (!startDate && !endDate)) {
+      console.log('first')
+      setDisableBooking(true)
+    }
+    if (!selectedDate && (startDate && !endDate)) {
+      console.log('second')
+      setDisableBooking(true)
+    }
     if (selectedDate && !dateErrors.length) setDisableBooking(false)
-  })
+    console.log('disable: ', disableBooking)
+  },[startDate, endDate, selectedDate, dateErrors])
 
   const alreadyBooked = ({activeStartDate, date, view}) => {
     for (let bookingId in bookings) {
@@ -73,6 +83,7 @@ const BookingsCard = ({spot, formattedAvgRating}) => {
     setStartDate('')
     setEndDate('')
     setDateErrors([])
+    setDisableBooking(true)
   }
 
   const selectDates = (value, event) => {
@@ -95,7 +106,7 @@ const BookingsCard = ({spot, formattedAvgRating}) => {
     return new Intl.DateTimeFormat('en-US').format(date)
   }
 
-  console.log('start date: ', startDate)
+  // console.log('start date: ', startDate)
 
   return (
     <div id="booking-card-holder">
@@ -149,13 +160,29 @@ const BookingsCard = ({spot, formattedAvgRating}) => {
                 <input disabled className='date-display date-checkin' value={selectedDate ? formatDateShort(selectedDate[1]) : 'Select on calendar'}></input>
               </div>
             </div>
-            <button className='reservation-button login-button' type="submit" disabled={disableBooking}>Reserve</button>
+            <button className='reservation-button login-button' type="submit" disabled={disableBooking}>{selectedDate ? 'Reserve' : 'Select reservation'}</button>
             {dateErrors &&
               dateErrors.map(error => (
-                <div>{error}</div>
+                <div className='errors'>{error}</div>
               ))
             }
+
           </form>
+          {selectedDate && !dateErrors.length && (
+            <>
+            <div className='not-charged'>
+              You won't be charged yet
+            </div>
+            <div className='flex price-calculator'>
+              <div className='price-underline'>${spot.price} x {calculateNumberNights(selectedDate[0], selectedDate[1])} nights </div>
+              <div>${spot.price * calculateNumberNights(selectedDate[0], selectedDate[1])}</div>
+            </div>
+            <div className='flex estimated-price'>
+              <div>Estimated total price</div>
+              <div>${spot.price * calculateNumberNights(selectedDate[0], selectedDate[1])}</div>
+            </div>
+            </>
+          )}
         </div>
       )}
     </div>
