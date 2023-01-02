@@ -79,12 +79,18 @@ const EditBooking = () => {
     // throw an error message
     for (let tripId in bookings) {
       if (bookings[tripId].id !== Number(bookingId)) {
-        const startDate = bookings[bookingId].startDate
-        const endDate = bookings[bookingId].endDate
+        let targetBooking = bookings[tripId]
+        console.log('targetbooking: ', targetBooking)
+        // console.log('id in booking list: ', bookings[tripId].id)
+        // console.log('id in params: ', bookingId)
+        const startDate = targetBooking.startDate
+        // console.log(startDate)
+        const endDate = targetBooking.endDate
         if (isBetweenDates(startDate, selectedDate[0], selectedDate[1])) {
+          // console.log(bookings[tripId].id)
           setDateErrors(['Spot is already booked for these dates'])
         }
-        if (isBetweenDates(endDate, selectedDate[0], selectedDate[1])) {
+        if (isBetweenDates(startDate, selectedDate[0], selectedDate[1])) {
           setDateErrors(['Spot is already booked for these dates'])
         }
       } else {
@@ -131,12 +137,12 @@ const EditBooking = () => {
     }
     dispatch(bookingActions.changeBooking(bookingId, booking))
       .then(() => history.push(`/trips`))
-    clearDates()
+
   }
 
   const clearDates = () => {
     let currentBooking = Object.values(bookings).find(booking => String(booking.id) === bookingId)
-    console.log('clear dates booking: ', currentBooking)
+    // console.log('clear dates booking: ', currentBooking)
     setDate([new Date(currentBooking.startDate), new Date(currentBooking.endDate)])
     setStartDate(new Date(currentBooking.startDate))
     setDateErrors([])
