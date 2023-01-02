@@ -67,6 +67,18 @@ const BookingsCard = ({spot, formattedAvgRating}) => {
     return false
   }
 
+  const formatPrice = (price) => {
+    let stringPrice = String(price)
+    let decimalSplit = stringPrice.split('.')
+    if (decimalSplit[1].length > 2) {
+      console.log(decimalSplit[1].slice(0,2))
+      return [decimalSplit[0],decimalSplit[1].slice(0,2)].join('.')
+    }
+    else {
+      return price
+    }
+  }
+
   const handleSubmit = (e) => {
     e.preventDefault()
     const booking = {
@@ -175,11 +187,11 @@ const BookingsCard = ({spot, formattedAvgRating}) => {
             </div>
             <div className='flex price-calculator'>
               <div className='price-underline'>${spot.price} x {calculateNumberNights(selectedDate[0], selectedDate[1])} nights </div>
-              <div>${spot.price * calculateNumberNights(selectedDate[0], selectedDate[1])}</div>
+              <div>${formatPrice(spot.price * calculateNumberNights(selectedDate[0], selectedDate[1]))}</div>
             </div>
             <div className='flex estimated-price'>
               <div>Estimated total price</div>
-              <div>${spot.price * calculateNumberNights(selectedDate[0], selectedDate[1])}</div>
+              <div>${formatPrice(spot.price * calculateNumberNights(selectedDate[0], selectedDate[1]))}</div>
             </div>
             </>
           )}
