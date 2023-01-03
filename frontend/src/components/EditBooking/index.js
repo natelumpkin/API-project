@@ -1,4 +1,4 @@
-import { useParams, useHistory } from "react-router-dom";
+import { useParams, useHistory, Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useState, useEffect } from "react";
 import Calendar from "react-calendar";
@@ -171,7 +171,10 @@ const EditBooking = () => {
 
   return (
     <div className="flex outer-container edit-booking">
-    <div id="booking-card-holder">
+      <div className="edit-title-holder">
+      <h1 className="edit-title">Edit Your Booking</h1><Link to='/trips'>Back</Link>
+      </div>
+    <div id="booking-card-holder" className="edit-booking-border">
 
 
     <div className='calendar-container'>
