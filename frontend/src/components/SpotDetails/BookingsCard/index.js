@@ -59,6 +59,12 @@ const BookingsCard = ({spot, formattedAvgRating}) => {
   },[startDate, endDate, selectedDate, dateErrors])
 
   const alreadyBooked = ({activeStartDate, date, view}) => {
+    const today = new Date()
+    if (date.getDate() === today.getDate() &&
+      date.getMonth() === today.getMonth() &&
+      date.getFullYear() === today.getFullYear()) {
+        return true
+      }
     for (let bookingId in bookings) {
       const startDate = bookings[bookingId].startDate
       const endDate = bookings[bookingId].endDate

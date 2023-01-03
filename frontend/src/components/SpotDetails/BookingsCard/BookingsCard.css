@@ -184,6 +184,7 @@
   text-align: center;
   line-height: 16px;
   border-radius: 100%;
+  position: relative;
 }
 
 /* when unclicked, calendar is white
@@ -196,7 +197,7 @@ black border, with no mouse-over effects */
 and end date have a grey rectangle background
 but still have the white mouseover effect */
 
-.react-calendar__tile--range::before {
+.react-calendar__tile--range:hover:not(.react-calendar__tile--rangeEnd)::before {
   background-color: #f7f7f7;
   z-index: 0;
   border-radius: 100%;
@@ -216,6 +217,7 @@ abbr {
 
 .react-calendar__tile:hover:not(:disabled) {
   border: 1px solid black;
+  position: relative;
 }
 
 .react-calendar__tile--range:not(.react-calendar__tile--rangeStart),

@@ -25,7 +25,7 @@ const CurrentBookings = () => {
   const upcomingTrips = bookingsArray.filter(booking => (new Date() - new Date(booking.startDate)) < 0)
 
   console.log('all bookings: ', bookingsArray)
-  console.log(upcomingTrips)
+  console.log('upcoming trips: ', upcomingTrips)
 
   if (!loaded) {
     return null
