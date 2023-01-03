@@ -52,9 +52,9 @@ const EditBooking = () => {
     }
     if (spotId) {
       // console.log('fetching spot details')
-      dispatch(bookingActions.getAllBookings(spotId))
+      dispatch(bookingActions.getAllBookings(spotId));
       dispatch(spotActions.getSpotById(spotId))
-        .then(setLoaded(true))
+        .then(setLoaded(true));
     }
   },[dispatch, spotId, initialLoad])
 
@@ -77,25 +77,27 @@ const EditBooking = () => {
   useEffect(() => {
     // if startDate or endDate is between the selectedDates,
     // throw an error message
-    for (let tripId in bookings) {
-      if (bookings[tripId].id !== Number(bookingId)) {
-        let targetBooking = bookings[tripId]
-        console.log('targetbooking: ', targetBooking)
-        // console.log('id in booking list: ', bookings[tripId].id)
-        // console.log('id in params: ', bookingId)
-        const startDate = targetBooking.startDate
-        // console.log(startDate)
-        const endDate = targetBooking.endDate
-        if (isBetweenDates(startDate, selectedDate[0], selectedDate[1])) {
-          // console.log(bookings[tripId].id)
-          setDateErrors(['Spot is already booked for these dates'])
+      setDateErrors([])
+      for (let tripId in bookings) {
+        if (bookings[tripId].id !== Number(bookingId)) {
+          let targetBooking = bookings[tripId]
+          console.log('targetbooking: ', targetBooking)
+          // console.log('id in booking list: ', bookings[tripId].id)
+          // console.log('id in params: ', bookingId)
+          const startDate = targetBooking.startDate
+          // console.log(startDate)
+          const endDate = targetBooking.endDate
+          if (isBetweenDates(startDate, selectedDate[0], selectedDate[1])) {
+            // console.log(bookings[tripId].id)
+            setDateErrors(['Spot is already booked for these dates'])
+          }
+          if (isBetweenDates(endDate, selectedDate[0], selectedDate[1])) {
+            setDateErrors(['Spot is already booked for these dates'])
+          }
+        } else {
+          setDateErrors([])
         }
-        if (isBetweenDates(startDate, selectedDate[0], selectedDate[1])) {
-          setDateErrors(['Spot is already booked for these dates'])
-        }
-      } else {
-        setDateErrors([])
-      }
+
     }
   },[selectedDate, bookings])
 
