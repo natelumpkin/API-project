@@ -98,6 +98,11 @@ function ProfileButton({ user }) {
 
             </li>
             </Link>
+            <Link to="/trips">
+              <li id="host-button">
+                <button>Trips</button>
+              </li>
+            </Link>
             <li onClick={logout}>
               <button >Log Out</button>
             </li>

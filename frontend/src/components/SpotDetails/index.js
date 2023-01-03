@@ -16,6 +16,7 @@ import ReviewsPreview from "./ReviewsPreview";
 import SpotImagesCard from "./SpotImagesCard";
 import SpotReviews from "../SpotReviewsModal/SpotReviews";
 import CreateReviewForm from "../CreateReviewForm";
+import BookingsCard from "./BookingsCard";
 
 // CSS
 
@@ -138,6 +139,9 @@ const SpotDetails = () => {
         </div>
         <div className="display-info">
           <p>{singleSpot.description}</p>
+        </div>
+        <div className="display-info">
+              <BookingsCard formattedAvgRating={formattedAvgRating} spot={singleSpot}/>
         </div>
         <div className="display-info">
           <ReviewsPreview setShowModal={setShowModal} spotId={spotId} avgRating={singleSpot.avgStarRating} numReviews={singleSpot.numReviews}/>

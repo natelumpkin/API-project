@@ -1,0 +1,66 @@
+
+.booking-card-holder {
+  border: 1px solid black;
+  padding: 20px;
+  width: 70%;
+  /* display: flex;÷ */
+  margin: 20px;
+  border-radius: 1em;
+}
+
+.booking-card-top {
+  display: flex;
+  justify-content: center;
+}
+
+.booking-center-holder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.booking-spot-details {
+  display: flex;
+  justify-content: space-between;
+}
+
+.booking-spot-details div {
+  padding-left: 20px;
+}
+
+.booking-link {
+  color: black;
+  width: fit-content;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.booking-card-top img {
+  margin-top: 20px;
+}
+
+.spot-name {
+  font-weight: bold;
+}
+
+.booking-dates {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.booking-dates div {
+  margin-right: 20px;
+}
+
+.booking-card-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.booking-card-buttons button {
+  width: 40%;
+  margin: 0;
+}
