@@ -17,23 +17,23 @@ const BookingInstructions = ({currentUser, startDate, endDate, selectedDate, spo
     formattedEndDate = new Intl.DateTimeFormat('en-US',{day:"numeric",month:"short",year:"numeric"}).format(selectedDate[1])
   }
 
-  if (!currentUser) {
-    return (
-      <div>
-        <h2>Log in to reserve this spot</h2>
-        <p>View its reservations on the calendar below!</p>
-      </div>
-    )
-  }
+  // if (!currentUser) {
+  //   return (
+  //     <div>
+  //       <h2>Log in to reserve this spot</h2>
+  //       <p>View its reservations on the calendar below!</p>
+  //     </div>
+  //   )
+  // }
 
-  if (currentUser.id === spot.ownerId) {
-    return (
-      <div>
-        <h2>This is your spot</h2>
-        <p>View your reservations here</p>
-      </div>
-    )
-  }
+  // if (currentUser.id === spot.ownerId) {
+  //   return (
+  //     <div>
+  //       <h2>This is your spot</h2>
+  //       <p>View your reservations here</p>
+  //     </div>
+  //   )
+  // }
 
   return (
     <div>
