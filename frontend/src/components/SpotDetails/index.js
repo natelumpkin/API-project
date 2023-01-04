@@ -140,9 +140,11 @@ const SpotDetails = () => {
         <div className="display-info">
           <p>{singleSpot.description}</p>
         </div>
+        {singleSpot.ownerId !== userInfo.id && (
         <div className="display-info">
               <BookingsCard formattedAvgRating={formattedAvgRating} spot={singleSpot}/>
         </div>
+        )}
         <div className="display-info">
           <ReviewsPreview setShowModal={setShowModal} spotId={spotId} avgRating={singleSpot.avgStarRating} numReviews={singleSpot.numReviews}/>
           <button className="show-all-reviews-button" onClick={() => setShowModal(true)}>Show all {singleSpot.numReviews > 1 && singleSpot.numReviews} reviews</button>
