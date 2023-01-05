@@ -115,12 +115,14 @@ input::-webkit-inner-spin-button {
 }
 
 .price-form {
+  width: 50%;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
 .price-input-holder {
+
   display: flex;
   justify-content: space-between;
   width: 100%;
