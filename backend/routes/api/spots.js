@@ -332,10 +332,12 @@ router.post('/:spotId/S3images',
 
     // console.log('req', req.files)
 
-    const imageUrlArray = multiplePublicFileUpload(req.files)
+    const imageUrlArray = await multiplePublicFileUpload(req.files)
     const response = {
       "Images": []
     }
+
+    console.log('imageUrlArray: ', imageUrlArray)
 
     for (let i = 0; i < imageUrlArray.length; i++) {
       let imageUrl = imageUrlArray[i]
@@ -353,8 +355,6 @@ router.post('/:spotId/S3images',
         response.Images.push(newImage.toJSON())
       }
     }
-
-
 
     return response;
 
