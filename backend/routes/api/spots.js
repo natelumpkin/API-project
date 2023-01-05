@@ -312,7 +312,7 @@ router.post('/:spotId/S3images',
   async (req, res) => {
 
     const spot = await Spot.findByPk(req.params.spotId);
-    const { preview } = req.body
+    // const { preview } = req.body
 
     if (!spot) {
       res.status(404);
@@ -330,30 +330,33 @@ router.post('/:spotId/S3images',
       })
     }
 
-    const imageUrlArray = multiplePublicFileUpload(req.file)
+    // console.log('req', req.files)
+
+    const imageUrlArray = multiplePublicFileUpload(req.files)
+    const response = {
+      "Images": []
+    }
 
     for (let i = 0; i < imageUrlArray.length; i++) {
       let imageUrl = imageUrlArray[i]
       if (i === 0) {
-        const newimage = await spot.createSpotImage({
+        const newImage = await spot.createSpotImage({
           url: imageUrl,
           preview: true
         })
+        response.Images.push(newImage.toJSON())
       } else {
-        const newimage = await spot.createSpotImage({
+        const newImage = await spot.createSpotImage({
           url: imageUrl,
           preview: false
         })
+        response.Images.push(newImage.toJSON())
       }
     }
 
 
 
-    return res.json({
-      id: newimage.id,
-      url: newimage.url,
-      preview: newimage.preview
-    });
+    return response;
 
   })
 

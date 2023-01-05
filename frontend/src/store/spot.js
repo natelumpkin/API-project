@@ -178,23 +178,36 @@ export const addSpotImageById = (spotId, imageData) => async dispatch => {
 }
 
 export const uploadSpotImageByID = (spotId, imageData) => async dispatch => {
-  const { image, preview } = imageData;
-  const formData = new FormData()
-  formData.append("preview", preview)
-  formData.append("image", image)
+  const { images } = imageData;
+  // console.log('images: ', images)
+  const formData = new FormData();
+
+  for (var i = 0; i < images.length; i++) {
+    console.log('attempting to add to formdata')
+    console.log(images[i])
+    formData.append("images", images[i]);
+  }
+
+  console.log('formData: ', formData)
 
   const response = await(csrfFetch(`/api/spots/${spotId}/S3images`, {
-    method: 'POST',
-    headers: {"Content-Type": "multipart/form-data"},
-    body: formData
+    method: "POST",
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+    body: formData,
   }))
   if (response.ok) {
-    const spotImage = await response.json()
-    dispatch(addImage(spotImage))
-    return spotImage
+    const spotImages = await response.json()
+    for (let image in spotImages) {
+      dispatch(addImage(image))
+    }
+    return spotImages
   } else {
-    const errors = await response.json()
-    return errors;
+    console.log(response)
+    // const errors = await response.json()
+    // console.log(errors)
+    // return errors;
   }
 
 }
