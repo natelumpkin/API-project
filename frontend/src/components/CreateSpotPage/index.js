@@ -58,8 +58,8 @@ const CreateSpotPage = () => {
     //console.log('url1: ', url1);
     //if (!url1.length) errors.push('At least one photo is required')
     //console.log(url1.length)
-    if (!images || images.length === 0) errors.push(' Please upload at least one image')
-    if (images?.length > 5) errors.push(' Please upload no more than five images')
+    if (!images || images.length < 5) errors.push(' Please upload at least five images')
+    if (images?.length > 10) errors.push(' Please upload no more than ten images')
     //console.log(errors);
     setPhotoErrors(errors);
     return errors;
@@ -266,7 +266,7 @@ const CreateSpotPage = () => {
           </div>
         )} */}
         <div className='form-holder'>
-          <h4 className='form-directions'>Upload up to five images</h4>
+          <h4 className='form-directions'>Choose at least five photos</h4>
           <label
             id='upload-file-label'
             htmlFor='upload-image-button'
