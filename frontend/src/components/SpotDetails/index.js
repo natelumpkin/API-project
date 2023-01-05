@@ -131,9 +131,9 @@ const SpotDetails = () => {
           )}
           </div>
         </div>
-        <div className="picture-card">
+
           <SpotImagesCard previewImg={previewImg} nonPreviewImgs={nonPreviewImgs}/>
-        </div>
+
         <div id="user-info" className="display-info">
           <h2>Spot hosted by {ownerInfo.firstName}</h2>
         </div>
