@@ -177,6 +177,28 @@ export const addSpotImageById = (spotId, imageData) => async dispatch => {
   }
 }
 
+export const uploadedSpotImageByID = (spotId, imageData) => async dispatch => {
+  const { image, preview } = imageData;
+  const formData = new FormData()
+  formData.append("preview", preview)
+  formData.append("image", image)
+
+  const response = await(csrfFetch(`/api/spots/${spotId}/S3images`, {
+    method: 'POST',
+    headers: {"Content-Type": "multipart/form-data"},
+    body: formData
+  }))
+  if (response.ok) {
+    const spotImage = await response.json()
+    dispatch(addImage(spotImage))
+    return spotImage
+  } else {
+    const errors = await response.json()
+    return errors;
+  }
+
+}
+
 export const deleteSpotImageById = (imageId) => async dispatch => {
   const response = await csrfFetch(`/api/spot-images/${imageId}`, {
     method: 'DELETE'
