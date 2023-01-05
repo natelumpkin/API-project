@@ -337,7 +337,7 @@ router.post('/:spotId/S3images',
       "Images": []
     }
 
-    console.log('imageUrlArray: ', imageUrlArray)
+    // console.log('imageUrlArray: ', imageUrlArray)
 
     for (let i = 0; i < imageUrlArray.length; i++) {
       let imageUrl = imageUrlArray[i]
@@ -356,7 +356,7 @@ router.post('/:spotId/S3images',
       }
     }
 
-    console.log('response from api: ', response)
+    // console.log('response from api: ', response)
 
     return res.json(response);
 

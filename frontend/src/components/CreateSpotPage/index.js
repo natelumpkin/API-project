@@ -24,8 +24,11 @@ const CreateSpotPage = () => {
 
   const [url1, seturl1] = useState('');
   const [images, setImages] = useState(null)
+  const [fileArray, setFileArray] = useState([])
 
   console.log('images: ', images)
+
+
 
   const [locationErrors, setLocationErrors] = useState([])
   const [photoErrors, setPhotoErrors] = useState([])
@@ -55,16 +58,17 @@ const CreateSpotPage = () => {
     //console.log('url1: ', url1);
     //if (!url1.length) errors.push('At least one photo is required')
     //console.log(url1.length)
-    if (!images && url1.length > 255) errors.push('Please provide a url of under 255 characters')
+    if (!images || images.length === 0) errors.push(' Please upload at least one image')
+    if (images?.length > 5) errors.push(' Please upload no more than five images')
     //console.log(errors);
     setPhotoErrors(errors);
     return errors;
   }
 
   useEffect(() => {
-    console.log('hello from photo errors use effect')
+    // console.log('hello from photo errors use effect')
     handlePhotoErrors();
-  }, [url1])
+  }, [images])
 
   const handleDescriptionErrors = () => {
     let errors = [];
@@ -156,7 +160,7 @@ const CreateSpotPage = () => {
         const newPhoto1 = await dispatch(uploadSpotImageByID(newSpot.id, {
           images
         }))
-        console.log('new spot: ', newSpot)
+        // console.log('new spot: ', newSpot)
         reset();
         history.push(`/spots/${newSpot.id}`)
         return newSpot;
@@ -186,8 +190,18 @@ const CreateSpotPage = () => {
 
   const updateFiles = (e) => {
     const files = e.target.files;
+    const imagesArray = []
     setImages(files)
+
+    for (let i = 0; i < files.length; i++) {
+      imagesArray.push(URL.createObjectURL(files[i]))
+    }
+
+    setFileArray(imagesArray)
+
   };
+
+  console.log('fileArray: ', fileArray)
 
   return (
     <div className='create-spot-exterior-flex'>
@@ -229,7 +243,7 @@ const CreateSpotPage = () => {
               </div>
             )}
         </div>
-        {!images && (
+        {/* {!images && (
           <div>
             <h4 className='form-directions'>Please add a preview image</h4>
             <div className='input single-input'>
@@ -250,15 +264,34 @@ const CreateSpotPage = () => {
                 </div>
               )}
           </div>
-        )}
-        <div>
-          <h4 className='form-directions'>Please upload an image</h4>
-          <label>
+        )} */}
+        <div className='form-holder'>
+          <h4 className='form-directions'>Upload up to five images</h4>
+          <label
+            id='upload-file-label'
+            htmlFor='upload-image-button'
+            className='form-directions'>
+              {images.length >= 1 ? 'Change files' : 'Upload files'}
+            </label>
             <input
               type="file"
               multiple
+              id="upload-image-button"
+              accept="image/jpeg, image/png"
               onChange={updateFiles}></input>
-          </label>
+
+          {photoErrors.length > 0 && (
+                <div className='errors'>
+                  {photoErrors.map(error => <div key={error}><i className="fa-solid fa-circle-exclamation"></i>{error}</div>)}
+                </div>
+              )}
+          {fileArray && (
+            <div className='flex preview-img-holder'>
+              {fileArray.map(url => (
+                <img className='preview-img' key={url} src={url}></img>
+              ))}
+            </div>
+          )}
         </div>
         <div>
           <h4 className='form-directions'>Let's give your place a name and description</h4>
