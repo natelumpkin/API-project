@@ -17,6 +17,7 @@ const isProduction = environment === 'production';
 // Import Routes
 
 const routes = require('./routes');
+const { urlencoded } = require('express');
 
 // Start Middleware
 
@@ -24,6 +25,7 @@ const app = express();
 
 app.use(morgan('dev'));
 app.use(cookieParser());
+app.use(urlencoded({extended: false}))
 app.use(express.json());
 
 // Security Middleware - see Readme Phase 0

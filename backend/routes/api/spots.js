@@ -4,6 +4,7 @@ const { Op } = require('sequelize');
 const { User, Spot, Review, SpotImage, Booking, ReviewImage, sequelize } = require('../../db/models');
 const { ValidationError } = require('sequelize');
 const review = require('../../db/models/review');
+const { singlePublicFileUpload, singleMulterUpload } = require('../../awsS3.js')
 
 const router = express.Router();
 
@@ -12,6 +13,7 @@ const router = express.Router();
 // Get all spots /
 // Get spots of current user /current
 // Post image to spot /:spotId/images
+// Upload image to S3 and associat URL with a spot /:spotId/S3images
 // Post review to spot /:spotId/reviews
 // Post booking to spot /:spotId/bookings
 // Get reviews by spot /:spotId/reviews
@@ -303,6 +305,45 @@ router.post('/:spotId/images', requireAuth, async (req, res) => {
     preview: newimage.preview
   });
 })
+
+router.post('/:spotId/S3images',
+  requireAuth,
+  singleMulterUpload("image"),
+  async (req, res) => {
+
+    const spot = await Spot.findByPk(req.params.spotId);
+    const { preview } = req.body
+
+    if (!spot) {
+      res.status(404);
+      return res.json({
+        message: "Spot couldn't be found",
+        statusCode: 404
+      })
+    }
+
+    if (spot.ownerId !== req.user.id) {
+      res.status(403);
+      return res.json({
+        message: "Forbidden",
+        statusCode: 403
+      })
+    }
+
+    const imageUrl = singlePublicFileUpload(req.file)
+
+    const newimage = await spot.createSpotImage({
+      url: imageUrl,
+      preview: preview
+    })
+
+    return res.json({
+      id: newimage.id,
+      url: newimage.url,
+      preview: newimage.preview
+    });
+
+  })
 
 router.post('/:spotId/reviews', requireAuth, async (req, res) => {
   const { review, stars } = req.body;
