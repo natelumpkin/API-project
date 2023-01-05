@@ -190,15 +190,17 @@ export const uploadSpotImageByID = (spotId, imageData) => async dispatch => {
 
   console.log('formData: ', formData)
 
-  const response = await(csrfFetch(`/api/spots/${spotId}/S3images`, {
+  const response = await csrfFetch(`/api/spots/${spotId}/S3images`, {
     method: "POST",
     headers: {
       "Content-Type": "multipart/form-data",
     },
     body: formData,
-  }))
+  })
+  console.log('we are outside of the if block')
   if (response.ok) {
     const spotImages = await response.json()
+    console.log('return from thunk: ', spotImages)
     for (let image in spotImages) {
       dispatch(addImage(image))
     }
@@ -209,7 +211,6 @@ export const uploadSpotImageByID = (spotId, imageData) => async dispatch => {
     // console.log(errors)
     // return errors;
   }
-
 }
 
 export const deleteSpotImageById = (imageId) => async dispatch => {

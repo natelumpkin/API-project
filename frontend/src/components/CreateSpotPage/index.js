@@ -148,17 +148,22 @@ const CreateSpotPage = () => {
       if (!images) {
         if (photo1) {
           const newPhoto1 = await dispatch(addSpotImageById(newSpot.id, photo1))
+          reset();
+          history.push(`/spots/${newSpot.id}`)
+          return newSpot;
         }
       } else {
         const newPhoto1 = await dispatch(uploadSpotImageByID(newSpot.id, {
           images
         }))
+        console.log('new spot: ', newSpot)
+        reset();
+        history.push(`/spots/${newSpot.id}`)
+        return newSpot;
       }
 
 
-      reset();
-      history.push(`/spots/${newSpot.id}`)
-      return newSpot;
+
     }
   }
 

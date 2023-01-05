@@ -356,7 +356,9 @@ router.post('/:spotId/S3images',
       }
     }
 
-    return response;
+    console.log('response from api: ', response)
+
+    return res.json(response);
 
   })
 
