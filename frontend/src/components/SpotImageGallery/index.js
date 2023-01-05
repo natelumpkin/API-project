@@ -1,6 +1,6 @@
 import { useSelector } from 'react-redux'
 import ImageGallery from 'react-image-gallery'
-import 'react-image-gallery/styles/css/image-gallery.css'
+import './SpotImageGallery.css'
 
 const SpotImageGallery = ({setShowModal, previewImg, nonPreviewImgs}) => {
 
@@ -10,14 +10,20 @@ const SpotImageGallery = ({setShowModal, previewImg, nonPreviewImgs}) => {
   for (let image of spotImages) {
     images.push({
       original: image.url,
-      thumbnail: image.url
+
     })
   }
-  console.log(images)
+  // console.log(images)
 
 
   return (
-      <ImageGallery items={images}/>
+      <ImageGallery
+        items={images}
+        showPlayButton={false}
+        showBullets={true}
+        slideDuration={0}
+
+        />
   )
 }
 
