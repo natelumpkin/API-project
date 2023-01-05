@@ -4,7 +4,7 @@ const { Op } = require('sequelize');
 const { User, Spot, Review, SpotImage, Booking, ReviewImage, sequelize } = require('../../db/models');
 const { ValidationError } = require('sequelize');
 const review = require('../../db/models/review');
-const { singlePublicFileUpload, singleMulterUpload } = require('../../awsS3.js')
+const { singlePublicFileUpload, singleMulterUpload, multiplePublicFileUpload, multipleMulterUpload } = require('../../awsS3.js')
 
 const router = express.Router();
 
@@ -308,7 +308,7 @@ router.post('/:spotId/images', requireAuth, async (req, res) => {
 
 router.post('/:spotId/S3images',
   requireAuth,
-  singleMulterUpload("image"),
+  multipleMulterUpload("images"),
   async (req, res) => {
 
     const spot = await Spot.findByPk(req.params.spotId);
@@ -330,12 +330,24 @@ router.post('/:spotId/S3images',
       })
     }
 
-    const imageUrl = singlePublicFileUpload(req.file)
+    const imageUrlArray = multiplePublicFileUpload(req.file)
 
-    const newimage = await spot.createSpotImage({
-      url: imageUrl,
-      preview: preview
-    })
+    for (let i = 0; i < imageUrlArray.length; i++) {
+      let imageUrl = imageUrlArray[i]
+      if (i === 0) {
+        const newimage = await spot.createSpotImage({
+          url: imageUrl,
+          preview: true
+        })
+      } else {
+        const newimage = await spot.createSpotImage({
+          url: imageUrl,
+          preview: false
+        })
+      }
+    }
+
+
 
     return res.json({
       id: newimage.id,

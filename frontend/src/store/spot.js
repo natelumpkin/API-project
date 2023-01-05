@@ -177,7 +177,7 @@ export const addSpotImageById = (spotId, imageData) => async dispatch => {
   }
 }
 
-export const uploadedSpotImageByID = (spotId, imageData) => async dispatch => {
+export const uploadSpotImageByID = (spotId, imageData) => async dispatch => {
   const { image, preview } = imageData;
   const formData = new FormData()
   formData.append("preview", preview)

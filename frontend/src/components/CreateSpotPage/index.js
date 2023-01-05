@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useHistory, Link } from 'react-router-dom';
 
-import { createNewSpot, addSpotImageById } from '../../store/spot';
+import { createNewSpot, addSpotImageById, uploadSpotImageByID } from '../../store/spot';
 
 import './CreateSpotPage.css'
 
@@ -15,6 +15,7 @@ const CreateSpotPage = () => {
   const [city, setCity] = useState('')
   const [state, setState] = useState('')
   const [country, setCountry] = useState('')
+
   // const [lat, setLat] = useState('')
   // const [lng, setLng] = useState('')
   const [name, setName] = useState('')
@@ -22,6 +23,7 @@ const CreateSpotPage = () => {
   const [price, setPrice] = useState(100)
 
   const [url1, seturl1] = useState('');
+  const [images, setImages] = useState(null)
 
   const [locationErrors, setLocationErrors] = useState([])
   const [photoErrors, setPhotoErrors] = useState([])
@@ -133,13 +135,21 @@ const CreateSpotPage = () => {
         price
       }
 
+
+
       const photo1 = { url: url1, preview: true }
 
 
       //console.log('photo1: ', photo1);
       const newSpot = await dispatch(createNewSpot(spotData));
-      if (photo1) {
-        const newPhoto1 = await dispatch(addSpotImageById(newSpot.id, photo1))
+      if (!images) {
+        if (photo1) {
+          const newPhoto1 = await dispatch(addSpotImageById(newSpot.id, photo1))
+        }
+      } else {
+        const newPhoto1 = await dispatch(uploadSpotImageByID(newSpot.id, {
+          images,
+        }))
       }
 
 
@@ -148,6 +158,7 @@ const CreateSpotPage = () => {
       return newSpot;
     }
   }
+
 
   const incrementPrice = (e) => {
     //console.log('increment running')
@@ -164,6 +175,11 @@ const CreateSpotPage = () => {
       return;
     }
   }
+
+  const updateFiles = (e) => {
+    const files = e.target.files;
+    setImages(files)
+  };
 
   return (
     <div className='create-spot-exterior-flex'>
@@ -216,6 +232,15 @@ const CreateSpotPage = () => {
                 {photoErrors.map(error => <div key={error}><i className="fa-solid fa-circle-exclamation"></i>{error}</div>)}
               </div>
             )}
+        </div>
+        <div>
+          <h4 className='form-directions'>Please upload an image</h4>
+          <label>
+            <input
+              type="file"
+              multiple
+              onChange={updateFiles}></input>
+          </label>
         </div>
         <div>
           <h4 className='form-directions'>Let's give your place a name and description</h4>
