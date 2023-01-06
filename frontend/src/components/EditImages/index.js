@@ -1,7 +1,9 @@
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { useState, useEffect } from "react";
 import { updateSpotImageById } from "../../store/spot";
 import EditImageCard from "./EditImageCard";
+
+import * as spotActions from '../../store/spot'
 
 const EditImages = () => {
 
@@ -9,6 +11,7 @@ const EditImages = () => {
 
   const spotImages = useSelector(state => state.spots.singleSpot.SpotImages)
   const spotId = useSelector(state => state.spots.singleSpot.id)
+  const dispatch = useDispatch()
 
   const [showEditImages, setShowEditImages] = useState(false)
   const [images, setImages] = useState(null)
@@ -47,7 +50,7 @@ const EditImages = () => {
   };
 
   const addImages = async () => {
-    await dispatchEvent(updateSpotImageById(spotId, { images }))
+    await dispatch(spotActions.uploadSpotImageByID(spotId, { images }))
     setImages(null)
     setFileArray([])
   }
