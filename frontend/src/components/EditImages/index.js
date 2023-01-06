@@ -1,12 +1,16 @@
 import { useSelector } from "react-redux";
 import { useState, useEffect } from "react";
+import { updateSpotImageById } from "../../store/spot";
+import EditImageCard from "./EditImageCard";
 
 const EditImages = () => {
 
   // what's the plan here?
 
   const spotImages = useSelector(state => state.spots.singleSpot.SpotImages)
+  const spotId = useSelector(state => state.spots.singleSpot.id)
 
+  const [showEditImages, setShowEditImages] = useState(false)
   const [images, setImages] = useState(null)
   const [fileArray, setFileArray] = useState([])
   const [photoErrors, setPhotoErrors] = useState([])
@@ -36,19 +40,25 @@ const EditImages = () => {
     const files = e.target.files;
     const imagesArray = []
     setImages(files)
-
     for (let i = 0; i < files.length; i++) {
       imagesArray.push(URL.createObjectURL(files[i]))
     }
-
     setFileArray(imagesArray)
-
   };
+
+  const addImages = async () => {
+    await dispatchEvent(updateSpotImageById(spotId, { images }))
+    setImages(null)
+    setFileArray([])
+  }
 
 
   return (
     <div>
       <h1>Hello from Edit Images!</h1>
+        <button type="button" onClick={() => setShowEditImages(!showEditImages)}>Edit Images</button>
+        {showEditImages && (
+          <>
         <label
             id='upload-file-label'
             htmlFor='upload-image-button'
@@ -62,12 +72,15 @@ const EditImages = () => {
           accept="image/jpeg, image/png"
           onChange={updateFiles}>
         </input>
+        <button onClick={() => addImages()} type="button">Add Images</button>
         {spotImages && (
           <div className='flex preview-img-holder'>
             {spotImages.map(image => (
-              <img className='preview-img' key={image.url} src={image.url}></img>
+              <EditImageCard image={image} key={image.id}/>
             ))}
           </div>
+        )}
+        </>
         )}
     </div>
   )
