@@ -4,6 +4,9 @@ const { User, Spot, Review, SpotImage, Booking, ReviewImage, sequelize } = requi
 
 const router = express.Router();
 
+// Delete image
+// Update image
+
 router.delete('/:imageId', requireAuth, async (req, res) => {
   const image = await SpotImage.findByPk(req.params.imageId,
     {
@@ -32,6 +35,40 @@ router.delete('/:imageId', requireAuth, async (req, res) => {
   return res.json({
     message: "Successfully deleted",
     statusCode: 200
+  })
+})
+
+router.put('/:imageId', async (req, res) => {
+
+  // this route does nothing but changes the preview-boolean
+  // on the target image to true,
+  // and changes the preview-boolean on all the other images
+  // to false
+
+  const image = await SpotImage.findByPk(req.params.imageId,
+    {
+      include: {
+        model: Spot
+      }
+    });
+  const otherImages = await SpotImage.findAll({
+    where: {
+      spotId: image.spotId
+    }
+  })
+
+  // console.log(image)
+  await image.update({
+    preview: true
+  })
+  for (let image of otherImages) {
+    await image.update({
+      preview: false
+    })
+  }
+  // console.log(otherImages)
+  return res.json({
+    image
   })
 })
 

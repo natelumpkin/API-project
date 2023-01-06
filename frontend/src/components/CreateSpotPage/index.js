@@ -26,7 +26,7 @@ const CreateSpotPage = () => {
   const [images, setImages] = useState(null)
   const [fileArray, setFileArray] = useState([])
 
-  console.log('images: ', images)
+  // console.log('images: ', images)
 
 
 

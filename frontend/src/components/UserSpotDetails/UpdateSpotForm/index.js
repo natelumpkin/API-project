@@ -5,12 +5,13 @@ import { useEffect, useState } from "react";
 import { updateSpotById, getSpotById } from "../../../store/spot";
 
 import DeleteSpotModal from "../../DeleteSpotModal";
+import EditImages from "../../EditImages";
 
 
 const UpdateSpotForm = () => {
   const dispatch = useDispatch();
   const { spotId } = useParams();
-  //console.log('UPDATE SPOT FORM spotId is now: ', spotId)
+
   const history = useHistory();
 
   const spotInfo = useSelector(state => state.spots.singleSpot);
@@ -25,7 +26,7 @@ const UpdateSpotForm = () => {
   const [description, setDescription] = useState("loading" || spotInfo.description)
   const [price, setPrice] = useState("loading" || spotInfo.price)
 
-  //console.log('address: ', address)
+
 
   const [locationErrors, setLocationErrors] = useState([])
   const [descriptionErrors, setDescriptionErrors] = useState([])
@@ -34,7 +35,7 @@ const UpdateSpotForm = () => {
   const [isLoaded, setIsLoaded] = useState(false)
 
   useEffect(() => {
-    //console.log('entering use effect 1!')
+
     dispatch(getSpotById(spotId))
       .then(() => setIsLoaded(true))
       .catch(() => history.push('/not-found'))
@@ -49,10 +50,7 @@ const UpdateSpotForm = () => {
 
   }, [dispatch, isLoaded])
 
-  // useEffect( async () => {
-  //   await dispatch(getSpotById(spotId))
-  //   setIsLoaded(true))
-  // }, [dispatch, isLoaded]
+
 
   const handleLocationErrors = () => {
     const locationErrors = []
@@ -108,8 +106,6 @@ const UpdateSpotForm = () => {
 
   const locationErrors = handleLocationErrors();
   setLocationErrors(locationErrors);
-  //console.log('location errors: ', locationErrors);
-
 
   const descriptionErrors = handleDescriptionErrors();
   setDescriptionErrors(descriptionErrors);
@@ -118,10 +114,6 @@ const UpdateSpotForm = () => {
   setPriceErrors(priceErrors);
 
   if (locationErrors.length > 0 || descriptionErrors.length > 0 || priceErrors.length > 0) {
-    // console.log('location errors:', locationErrors)
-    // console.log('description errors: ', descriptionErrors)
-    // console.log('price errors: ', priceErrors)
-    // console.log('entering if statement')
     return;
   } else {
 
@@ -146,12 +138,10 @@ const UpdateSpotForm = () => {
   }
 
   const incrementPrice = (e) => {
-    //console.log('increment running')
     setPrice(Number(price) + 5);
   }
 
   const decrementPrice = (e) => {
-    //console.log('decrement running')
     if (!price) return;
     if (price > 5) {
       setPrice(Number(price) - 5);
@@ -207,6 +197,7 @@ const UpdateSpotForm = () => {
               </div>
             )}
         </div>
+        <EditImages/>
         <div>
         <h4 className='form-directions'>Spot Title and Description</h4>
           <div className='input description-input'>
