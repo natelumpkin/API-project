@@ -10,10 +10,10 @@ const SpotImageGallery = ({setShowModal, previewImg, nonPreviewImgs}) => {
   for (let image of spotImages) {
     images.push({
       original: image.url,
-
     })
   }
-  // console.log(images)
+  // images.sort(img => img.preview)
+
 
 
   return (

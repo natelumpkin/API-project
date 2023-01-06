@@ -8,7 +8,7 @@ const EditImageCard = ({image}) => {
   const spotImages = useSelector(state => state.spots.singleSpot.SpotImages)
   const spotId = useSelector(state => state.spots.singleSpot.id)
 
-  console.log('image: ', image)
+  // console.log('image: ', image)
 
   const deleteImage = async (imageId) => {
     // const spotId = image.spotId

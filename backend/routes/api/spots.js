@@ -336,8 +336,8 @@ router.post('/:spotId/S3images',
       }
     })
 
-    console.log('images: ', images)
-    console.log(images.length)
+    // console.log('images: ', images)
+    // console.log(images.length)
 
     const imageUrlArray = await multiplePublicFileUpload(req.files)
     const response = {
@@ -510,9 +510,12 @@ router.get('/:spotId', async(req, res) => {
       ]
     },
     group: ["Spot.id","SpotImages.id","Reviews.id","Owner.id"],
+    order: [
+      [SpotImage, 'preview', 'DESC']
+    ],
     include: [{
       model: SpotImage,
-      attributes: ['id','url','preview']
+      attributes: ['id','url','preview'],
     },
     {
       model: Review,
