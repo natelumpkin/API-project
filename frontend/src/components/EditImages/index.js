@@ -18,6 +18,7 @@ const EditImages = () => {
   const [images, setImages] = useState(null)
   const [fileArray, setFileArray] = useState([])
   const [photoErrors, setPhotoErrors] = useState([])
+  const [imageLoading, setImageLoading] = useState(false)
 
   // display the images you already have
   // choose one to be the preview --> ??
@@ -51,7 +52,9 @@ const EditImages = () => {
   };
 
   const addImages = async () => {
+    setImageLoading(true)
     await dispatch(spotActions.uploadSpotImageByID(spotId, { images }))
+    setImageLoading(false)
     setImages(null)
     setFileArray([])
   }
@@ -73,7 +76,7 @@ const EditImages = () => {
       {showEditImages && (
         <div className="edit-photos-main">
           {spotImages && (
-        <div className='preview-img-holder current-photos'>
+        <div className='bottom-border preview-img-holder current-photos'>
           <h4>Current Photos</h4>
           <div className="current-photos-holder">
           {spotImages.map(image => (
@@ -82,21 +85,54 @@ const EditImages = () => {
           </div>
         </div>
       )}
-      <div>
-        <label
-            id='upload-file-label'
-            htmlFor='upload-image-button'
-            className='form-directions upload-photos-button'>
-              {images?.length >= 1 ? 'Change files' : 'Choose photos to upload'}
-        </label>
-        <input
-          type="file"
-          multiple
-          id="upload-image-button"
-          accept="image/jpeg, image/png"
-          onChange={updateFiles}>
-        </input>
-        <button onClick={() => addImages()} type="button">Add Images</button>
+      <div className="preview-photos-bottom">
+      <h4>Upload New Photos</h4>
+        <div className="upload-photos-holder">
+          <label
+              id='upload-file-label'
+              htmlFor='upload-image-button'
+              className='form-directions upload-photos-button'>
+                {images?.length >= 1 ? 'Change files' : 'Choose photos to upload'}
+          </label>
+          {images && (
+            <>
+            <button
+              className="add-photos-button"
+              onClick={() => addImages()}
+              type="button"
+              >
+                Upload Files
+            </button>
+            <button
+              className="edit-photos-button cancel-upload"
+              onClick={() => {
+              setImages(null)
+              setFileArray([])
+              }}
+              type="button"
+              >
+                Cancel
+            </button>
+            </>
+          )}
+          <input
+            type="file"
+            multiple
+            id="upload-image-button"
+            accept="image/jpeg, image/png"
+            onChange={updateFiles}>
+          </input>
+        </div>
+        {fileArray && !imageLoading && (
+            <div className='flex preview-img-holder upload-preview-imgs-holder'>
+              {fileArray.map(url => (
+                <img className='preview-img' key={url} src={url}></img>
+              ))}
+            </div>
+          )}
+        {imageLoading && (
+          <h4>Uploading files, please wait...</h4>
+        )}
       </div>
 
       </div>
