@@ -38,7 +38,7 @@ router.delete('/:imageId', requireAuth, async (req, res) => {
   })
 })
 
-router.put('/:imageId', async (req, res) => {
+router.put('/:imageId', requireAuth, async (req, res) => {
 
   // this route does nothing but changes the preview-boolean
   // on the target image to true,
@@ -51,6 +51,22 @@ router.put('/:imageId', async (req, res) => {
         model: Spot
       }
     });
+
+  if (!image) {
+    res.status(404);
+    return res.json({
+      message: "Spot Image couldn't be found",
+      statusCode: 404
+    })
+  }
+
+  if (image.Spot.ownerId !== req.user.id) {
+    res.status(403);
+    return res.json({
+      message: "Forbidden"
+    })
+  }
+
   const otherImages = await SpotImage.findAll({
     where: {
       spotId: image.spotId

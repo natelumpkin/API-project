@@ -11,6 +11,7 @@ const CREATE_SPOT = '/spots/createNewSpot';
 const DELETE_SPOT = '/spots/deleteSpot'
 const ADD_SPOTIMAGE = '/spots/addSpotImage';
 const DELETE_SPOTIMAGE = '/spots/deleteSpotImage';
+const CHANGE_PREVIEW = '/spots/changePreviewImage'
 
 // ACTION CREATORS
 
@@ -67,6 +68,13 @@ const addImage = (imageData) => {
 const removeImage = (imageId) => {
   return {
     type: DELETE_SPOTIMAGE,
+    imageId
+  }
+}
+
+const changePreview = (imageId) => {
+  return {
+    type: CHANGE_PREVIEW,
     imageId
   }
 }
@@ -229,6 +237,20 @@ export const deleteSpotImageById = (imageId) => async dispatch => {
   }
 }
 
+export const updateSpotImageById = (imageId) => async dispatch => {
+  const response = await csrfFetch(`/api/spot-images/${imageId}`,{
+    method: 'PUT'
+  })
+  if (response.ok) {
+    const newImage = await response.json();
+    dispatch(changePreview(imageId));
+    return newImage
+  } else {
+    const errors = await response.json();
+    return errors
+  }
+}
+
 // SOME DEMO DATA FOR TESTING REQUESTS
 
 // const badReqBody = {
@@ -368,12 +390,31 @@ const spotReducer = (state = initialState, action) => {
         allSpots: { ...state.allSpots },
         singleSpot: {
           ...state.singleSpot,
-          spotImages: [ ...spotImagesCopy ],
-          owner: { ...state.singleSpot.Owner }
+          SpotImages: spotImagesCopy,
+          Owner: { ...state.singleSpot.Owner }
         },
         userSpots: { ...state.userSpots }
       };
       //console.log('NEW STATE: ', newState)
+      return newState;
+    }
+    case CHANGE_PREVIEW: {
+      const newState = {
+        allSpots: { ...state.allSpots },
+        singleSpot: {
+          ...state.singleSpot,
+          SpotImages: [ ...state.singleSpot.SpotImages],
+          Owner: { ...state.singleSpot.Owner },
+          userSpots: { ...state.userSpots }
+        }
+      }
+      for (let image of newState.singleSpot.SpotImages) {
+        if (image.id === action.imageId) {
+          image.preview = true
+        } else {
+          image.preview = false
+        }
+      }
       return newState;
     }
     default: {
