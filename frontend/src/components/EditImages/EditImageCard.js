@@ -21,17 +21,31 @@ const EditImageCard = ({image}) => {
   }
 
   return (
-    <div>
-      <img className='preview-img' src={image.url}></img>
-      {spotImages.length > 5 && (
-      <button type="button" onClick={() => deleteImage(image.id)} >Delete Image</button>
-      )}
+    <div className="current-img-preview">
+      <div className="single-img-holder">
+        <img className='preview-img edit-preview-img' src={image.url}></img>
+      </div>
+      <div className="img-card-button-holder">
       {!image.preview && (
-      <button type="button" onClick={() => makePreview(image.id)}>Make Preview</button>
+      <button
+        type="button"
+        onClick={() => makePreview(image.id)}
+        >
+          Make this photo your cover
+      </button>
       )}
       {image.preview && (
-        <h4>Cover image</h4>
+        <h4>This is your cover image</h4>
       )}
+      {spotImages.length > 5 && (
+      <button
+        type="button"
+        onClick={() => deleteImage(image.id)}
+        >
+          Permanently Remove Photo
+        </button>
+      )}
+      </div>
     </div>
   )
 }

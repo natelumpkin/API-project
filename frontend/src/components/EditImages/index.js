@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { updateSpotImageById } from "../../store/spot";
 import EditImageCard from "./EditImageCard";
 
+import './EditImages.css'
 import * as spotActions from '../../store/spot'
 
 const EditImages = () => {
@@ -57,15 +58,35 @@ const EditImages = () => {
 
 
   return (
-    <div>
-      <h1>Hello from Edit Images!</h1>
-        <button type="button" onClick={() => setShowEditImages(!showEditImages)}>Edit Images</button>
+    <div className="edit-images-holder">
+      <div className="flex half space-between">
+        <h4 className="form-directions photo-title">Photos</h4>
+        {!showEditImages && (
+        <button className="edit-photos-button" type="button" onClick={() => setShowEditImages(true)}>Edit Images</button>
+        )}
         {showEditImages && (
-          <>
+          <div onClick={() => setShowEditImages(false)} className="close-photos circle">
+          <i className="fa-solid fa-xmark"></i>
+          </div>
+        )}
+      </div>
+      {showEditImages && (
+        <div className="edit-photos-main">
+          {spotImages && (
+        <div className='preview-img-holder current-photos'>
+          <h4>Current Photos</h4>
+          <div className="current-photos-holder">
+          {spotImages.map(image => (
+            <EditImageCard image={image} key={image.id}/>
+          ))}
+          </div>
+        </div>
+      )}
+      <div>
         <label
             id='upload-file-label'
             htmlFor='upload-image-button'
-            className='form-directions'>
+            className='form-directions upload-photos-button'>
               {images?.length >= 1 ? 'Change files' : 'Choose photos to upload'}
         </label>
         <input
@@ -76,15 +97,10 @@ const EditImages = () => {
           onChange={updateFiles}>
         </input>
         <button onClick={() => addImages()} type="button">Add Images</button>
-        {spotImages && (
-          <div className='flex preview-img-holder'>
-            {spotImages.map(image => (
-              <EditImageCard image={image} key={image.id}/>
-            ))}
-          </div>
-        )}
-        </>
-        )}
+      </div>
+
+      </div>
+      )}
     </div>
   )
 }

@@ -1,0 +1,85 @@
+.edit-images-holder {
+  margin-top: 20px;
+}
+
+.form-directions.photo-title {
+  margin-bottom: 0;
+  margin-top: 0;
+}
+
+.edit-photos-button {
+  background-color: white;
+  border: none;
+  text-decoration: underline;
+  font-weight: bold;
+  cursor: pointer;
+  width: fit-content;
+  padding: 0;
+  padding-bottom: 4px;
+  display: flex;
+  align-items: flex-end;
+}
+
+.close-photos.circle {
+  margin: 0;
+}
+
+.edit-photos-main {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.current-photos-holder {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  margin-bottom: 15px;
+}
+
+.current-img-preview {
+  width: fit-content;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 350px;
+  justify-content: flex-start;
+}
+
+.current-img-preview button {
+  width: fit-content;
+  margin-left: 0;
+  background-color: white;
+  border: 1px solid black;
+  border-radius: 1em;
+  cursor: pointer;
+  margin-bottom: 10px;
+  margin-top: 5px;
+}
+
+.single-img-holder {
+  height: 225px;
+}
+
+.img-card-button-holder {
+  display: flex;
+  flex-direction: column;
+}
+
+.preview-img.edit-preview-img {
+  margin-bottom: 10px;
+  max-width: 200px;
+  max-height: 200px;
+}
+
+.preview-img-holder.current-photos {
+  height: fit-content;
+  max-height: fit-content;
+}
+
+#upload-file-label.form-directions.upload-photos-button {
+  width: fit-content;
+  margin: 0;
+  padding: 10px;
+  height: fit-content;
+}
