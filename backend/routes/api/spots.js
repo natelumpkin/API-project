@@ -13,7 +13,7 @@ const router = express.Router();
 // Get all spots /
 // Get spots of current user /current
 // Post image to spot /:spotId/images
-// Upload image to S3 and associat URL with a spot /:spotId/S3images
+// Upload image to S3 and associate URL with a spot /:spotId/S3images
 // Post review to spot /:spotId/reviews
 // Post booking to spot /:spotId/bookings
 // Get reviews by spot /:spotId/reviews
@@ -330,7 +330,14 @@ router.post('/:spotId/S3images',
       })
     }
 
-    // console.log('req', req.files)
+    const images = await SpotImage.findAll({
+      where: {
+        spotId: spot.id
+      }
+    })
+
+    console.log('images: ', images)
+    console.log(images.length)
 
     const imageUrlArray = await multiplePublicFileUpload(req.files)
     const response = {
@@ -341,7 +348,7 @@ router.post('/:spotId/S3images',
 
     for (let i = 0; i < imageUrlArray.length; i++) {
       let imageUrl = imageUrlArray[i]
-      if (i === 0) {
+      if (i === 0 && !images.length) {
         const newImage = await spot.createSpotImage({
           url: imageUrl,
           preview: true
