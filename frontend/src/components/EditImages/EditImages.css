@@ -21,7 +21,8 @@
 }
 
 .close-photos.circle {
-  margin: 0;
+  margin-top: 10px;
+  margin-right: 16px;
 }
 
 .edit-photos-main {
@@ -34,6 +35,11 @@
   margin-bottom: 15px;
   /* padding: 10px;
   padding-left: 20px; */
+}
+
+.current-photos-title {
+  display: flex;
+  justify-content: space-between;
 }
 
 .bottom-border {
@@ -50,7 +56,6 @@
   display: flex;
   flex-wrap: wrap;
   gap: 15px;
-  margin-bottom: 15px;
 }
 
 .current-img-preview {
@@ -122,6 +127,7 @@
   justify-content: flex-start;
   gap: 25px;
   margin-bottom: 15px;
+
 }
 
 .add-photos-button {

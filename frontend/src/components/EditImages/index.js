@@ -67,17 +67,17 @@ const EditImages = () => {
         {!showEditImages && (
         <button className="edit-photos-button" type="button" onClick={() => setShowEditImages(true)}>Edit Images</button>
         )}
-        {showEditImages && (
-          <div onClick={() => setShowEditImages(false)} className="close-photos circle">
-          <i className="fa-solid fa-xmark"></i>
-          </div>
-        )}
       </div>
       {showEditImages && (
         <div className="edit-photos-main">
           {spotImages && (
         <div className='bottom-border preview-img-holder current-photos'>
-          <h4>Current Photos</h4>
+          <div className="current-photos-title">
+            <h4>Current Photos</h4>
+            <div onClick={() => setShowEditImages(false)} className="close-photos circle">
+              <i className="fa-solid fa-xmark"></i>
+            </div>
+          </div>
           <div className="current-photos-holder">
           {spotImages.map(image => (
             <EditImageCard image={image} key={image.id}/>
