@@ -25,6 +25,7 @@ const CreateSpotPage = () => {
   const [url1, seturl1] = useState('');
   const [images, setImages] = useState(null)
   const [fileArray, setFileArray] = useState([])
+  const [imageLoading, setImageLoading] = useState(false)
 
   // console.log('images: ', images)
 
@@ -121,6 +122,8 @@ const CreateSpotPage = () => {
   const priceErrors = handlePriceErrors();
   setPriceErrors(priceErrors);
 
+  setImageLoading(true)
+
   if (locationErrors.length > 0 || photoErrors.length > 0 || descriptionErrors.length > 0 || priceErrors.length > 0) {
     // console.log('location errors:', locationErrors)
     // console.log('photo errors: ', photoErrors)
@@ -152,6 +155,7 @@ const CreateSpotPage = () => {
       if (!images) {
         if (photo1) {
           const newPhoto1 = await dispatch(addSpotImageById(newSpot.id, photo1))
+          setImageLoading(false)
           reset();
           history.push(`/spots/${newSpot.id}`)
           return newSpot;
@@ -160,6 +164,7 @@ const CreateSpotPage = () => {
         const newPhoto1 = await dispatch(uploadSpotImageByID(newSpot.id, {
           images
         }))
+        setImageLoading(false)
         // console.log('new spot: ', newSpot)
         reset();
         history.push(`/spots/${newSpot.id}`)
@@ -202,6 +207,12 @@ const CreateSpotPage = () => {
   };
 
   console.log('fileArray: ', fileArray)
+
+  if (imageLoading) {
+    return (
+      <h1>We're creating your spot! Hold up just a sec {':)'}</h1>
+    )
+  }
 
   return (
     <div className='create-spot-exterior-flex'>
@@ -271,7 +282,7 @@ const CreateSpotPage = () => {
             id='upload-file-label'
             htmlFor='upload-image-button'
             className='form-directions'>
-              {images.length >= 1 ? 'Change files' : 'Upload files'}
+              {images?.length >= 1 ? 'Change files' : 'Upload files'}
             </label>
             <input
               type="file"
