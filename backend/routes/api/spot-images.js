@@ -30,7 +30,23 @@ router.delete('/:imageId', requireAuth, async (req, res) => {
     })
   }
 
+  const spotId = image.spotId
+  const preview = image.preview
+
   await image.destroy();
+
+  if (preview) {
+    const newImage = await SpotImage.findOne({
+      where: {
+        spotId: spotId
+      }
+    })
+    // console.log(newImage)
+    await newImage.update({
+      preview: true
+    })
+  }
+
 
   return res.json({
     message: "Successfully deleted",
