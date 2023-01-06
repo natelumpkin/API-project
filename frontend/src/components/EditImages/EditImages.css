@@ -44,7 +44,8 @@
 
 .bottom-border {
   border-bottom: 1px solid #b0b0b0;
-  padding-left: 15px;
+  padding-left: 25px;
+  padding-right: 25px;
 }
 
 .preview-photos-bottom {
@@ -127,6 +128,7 @@
   justify-content: flex-start;
   gap: 25px;
   margin-bottom: 15px;
+  padding-left: 25px;
 
 }
 
@@ -153,4 +155,6 @@
 
 .preview-img-holder.upload-preview-imgs-holder {
   gap: 25px;
+  padding-left: 25px;
+  padding-right: 25px;
 }

@@ -88,13 +88,15 @@ const EditImages = () => {
       <div className="preview-photos-bottom">
       <h4>Upload New Photos</h4>
         <div className="upload-photos-holder">
+          {!imageLoading && (
           <label
               id='upload-file-label'
               htmlFor='upload-image-button'
               className='form-directions upload-photos-button'>
                 {images?.length >= 1 ? 'Change files' : 'Choose photos to upload'}
           </label>
-          {images && (
+          )}
+          {images && !imageLoading && (
             <>
             <button
               className="add-photos-button"
