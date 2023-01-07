@@ -37,6 +37,7 @@ img.landing-page-image {
   width: 18.5em;
   height: 17em;
   border-radius: .8em;
+  object-fit: cover;
 }
 
 a {

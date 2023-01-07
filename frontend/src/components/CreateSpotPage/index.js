@@ -122,7 +122,7 @@ const CreateSpotPage = () => {
   const priceErrors = handlePriceErrors();
   setPriceErrors(priceErrors);
 
-  setImageLoading(true)
+
 
   if (locationErrors.length > 0 || photoErrors.length > 0 || descriptionErrors.length > 0 || priceErrors.length > 0) {
     // console.log('location errors:', locationErrors)
@@ -154,6 +154,7 @@ const CreateSpotPage = () => {
       const newSpot = await dispatch(createNewSpot(spotData));
       if (!images) {
         if (photo1) {
+          setImageLoading(true)
           const newPhoto1 = await dispatch(addSpotImageById(newSpot.id, photo1))
           setImageLoading(false)
           reset();
@@ -161,6 +162,7 @@ const CreateSpotPage = () => {
           return newSpot;
         }
       } else {
+        setImageLoading(true)
         const newPhoto1 = await dispatch(uploadSpotImageByID(newSpot.id, {
           images
         }))
@@ -206,13 +208,7 @@ const CreateSpotPage = () => {
 
   };
 
-  console.log('fileArray: ', fileArray)
 
-  if (imageLoading) {
-    return (
-      <h1>We're creating your spot! Hold up just a sec {':)'}</h1>
-    )
-  }
 
   return (
     <div className='create-spot-exterior-flex'>
@@ -277,12 +273,13 @@ const CreateSpotPage = () => {
           </div>
         )} */}
         <div className='form-holder'>
-          <h4 className='form-directions'>Choose at least five photos</h4>
+          <h4 className='form-directions photo-form'>Add some photos of your listing</h4>
+          <h5 className='photo-directions'>You'll need at least five photos to get started. You can add more or make changes later.</h5>
           <label
             id='upload-file-label'
             htmlFor='upload-image-button'
-            className='form-directions'>
-              {images?.length >= 1 ? 'Change files' : 'Upload files'}
+            className='form-directions create-spot-photos-button'>
+              {images?.length >= 1 ? 'Change photos' : 'Upload from your device'}
             </label>
             <input
               type="file"
@@ -291,18 +288,18 @@ const CreateSpotPage = () => {
               accept="image/jpeg, image/png"
               onChange={updateFiles}></input>
 
+          {fileArray && (
+            <div className='flex preview-img-holder'>
+              {fileArray.map(url => (
+                <img className='preview-img' key={url} src={url}></img>
+                ))}
+            </div>
+          )}
           {photoErrors.length > 0 && (
                 <div className='errors'>
                   {photoErrors.map(error => <div key={error}><i className="fa-solid fa-circle-exclamation"></i>{error}</div>)}
                 </div>
               )}
-          {fileArray && (
-            <div className='flex preview-img-holder'>
-              {fileArray.map(url => (
-                <img className='preview-img' key={url} src={url}></img>
-              ))}
-            </div>
-          )}
         </div>
         <div>
           <h4 className='form-directions'>Let's give your place a name and description</h4>
@@ -347,7 +344,12 @@ const CreateSpotPage = () => {
 
         </div>
         <div className='button-holder'>
-        <button className='publish-button'>Publish Your Listing</button>
+        {!imageLoading && (
+          <button className='publish-button'>Publish Your Listing</button>
+        )}
+        {imageLoading && (
+          <h2>We're creating your spot! Hold up just a sec {':)'}</h2>
+        )}
         </div>
       </form>
     </div>

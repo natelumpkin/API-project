@@ -11,6 +11,7 @@ const EditImages = () => {
   // what's the plan here?
 
   const spotImages = useSelector(state => state.spots.singleSpot.SpotImages)
+  const coverPhoto = spotImages.find(image => image.preview === true)
   const spotId = useSelector(state => state.spots.singleSpot.id)
   const dispatch = useDispatch()
 
@@ -19,6 +20,8 @@ const EditImages = () => {
   const [fileArray, setFileArray] = useState([])
   const [photoErrors, setPhotoErrors] = useState([])
   const [imageLoading, setImageLoading] = useState(false)
+  const [disableUpload, setDisableUpload] = useState(false)
+
 
   // display the images you already have
   // choose one to be the preview --> ??
@@ -31,12 +34,21 @@ const EditImages = () => {
 
   useEffect(() => {
     handlePhotoErrors();
-  }, [images])
+  }, [images, fileArray])
 
   const handlePhotoErrors = () => {
     let errors = [];
-    if (!images || images.length < 5) errors.push(' Please upload at least five images')
-    if (images?.length > 10) errors.push(' Please upload no more than ten images')
+    if (!spotImages || spotImages.length < 5) {
+      errors.push(' Please upload at least five images')
+      setDisableUpload(true)
+    }
+    else if (spotImages?.length + images?.length > 10) {
+      errors.push(` Your listing can have no more than ten photos, this brings your total to ${spotImages?.length + images?.length}`)
+      setDisableUpload(true)
+    }
+    else {
+      setDisableUpload(false)
+    }
     setPhotoErrors(errors);
     return errors;
   }
@@ -73,57 +85,87 @@ const EditImages = () => {
           {spotImages && (
         <div className='bottom-border preview-img-holder current-photos'>
           <div className="current-photos-title">
-            <h4>Current Photos</h4>
+            {/* <h4>Current Photos</h4> */}
             <div onClick={() => setShowEditImages(false)} className="close-photos circle">
               <i className="fa-solid fa-xmark"></i>
             </div>
           </div>
           <div className="current-photos-holder">
-          {spotImages.map(image => (
-            <EditImageCard image={image} key={image.id}/>
-          ))}
+            <div className="cover-photo-holder">
+              <div className="cover-photo-directions">
+                <h4 className='cover-main-directions form-directions photo-form'>Cover Photo</h4>
+                <h5 className='cover-directions photo-directions'>Your cover photo is a guest’s first impression of your listing.</h5>
+                <h5 className='cover-directions photo-directions'>Choose a different cover below.</h5>
+              </div>
+              <img id="cover-photo" className='preview-img edit-preview-img' src={coverPhoto.url}></img>
+            </div>
+            <div className="cover-photo-directions">
+              <h4 className='cover-main-directions form-directions photo-form'>All Photos</h4>
+              <h5 className='cover-directions photo-directions'>Upload new photos below</h5>
+
+            </div>
+            <div className="current-photos-holder">
+              {spotImages.map(image => (
+                <EditImageCard image={image} key={image.id}/>
+              ))}
+            </div>
+
           </div>
         </div>
       )}
       <div className="preview-photos-bottom">
-      <h4>Upload New Photos</h4>
-        <div className="upload-photos-holder">
-          {!imageLoading && (
-          <label
-              id='upload-file-label'
-              htmlFor='upload-image-button'
-              className='form-directions upload-photos-button'>
-                {images?.length >= 1 ? 'Change files' : 'Choose photos to upload'}
-          </label>
-          )}
-          {images && !imageLoading && (
-            <>
-            <button
-              className="add-photos-button"
-              onClick={() => addImages()}
-              type="button"
-              >
-                Upload Files
-            </button>
-            <button
-              className="edit-photos-button cancel-upload"
-              onClick={() => {
-              setImages(null)
-              setFileArray([])
-              }}
-              type="button"
-              >
-                Cancel
-            </button>
-            </>
-          )}
-          <input
-            type="file"
-            multiple
-            id="upload-image-button"
-            accept="image/jpeg, image/png"
-            onChange={updateFiles}>
-          </input>
+        <div className="upload-photos-top">
+          <div className="upload-photos-directions cover-photo-directions">
+            <h4 className='cover-main-directions form-directions photo-form'>Upload New Photos</h4>
+            <h5 className='cover-directions photo-directions'>Upload up to ten photos</h5>
+            {photoErrors.length > 0 && (
+                <div className='errors'>
+                  {photoErrors.map(error => <div key={error}><i className="fa-solid fa-circle-exclamation"></i>{error}</div>)}
+                </div>
+              )}
+          </div>
+          <div className="upload-photos-holder">
+            {!imageLoading && (
+            <label
+                id='upload-file-label'
+                htmlFor='upload-image-button'
+                className='form-directions upload-photos-button thirty-four'>
+                  {images?.length >= 1 ? 'Change files' : 'Choose photos to upload'}
+            </label>
+            )}
+            {images && !imageLoading && (
+              <>
+              <button
+                className="add-photos-button thirty-four"
+                onClick={() => addImages()}
+                type="button"
+                disabled={disableUpload}
+                >
+                  Upload Files
+              </button>
+              <div className="cancel-holder">
+                <button
+                  className="edit-photos-button cancel-upload"
+                  onClick={() => {
+                  setImages(null)
+                  setFileArray([])
+                  }}
+                  type="button"
+                  >
+                    Cancel
+                </button>
+              </div>
+              </>
+            )}
+            <input
+              type="file"
+              multiple
+              id="upload-image-button"
+              accept="image/jpeg, image/png"
+              onChange={updateFiles}>
+            </input>
+          </div>
+
         </div>
         {fileArray && !imageLoading && (
             <div className='flex preview-img-holder upload-preview-imgs-holder'>

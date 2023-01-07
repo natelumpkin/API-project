@@ -39,8 +39,19 @@ input::-webkit-inner-spin-button {
   width: 50%;
 }
 
+.form-directions.photo-form {
+  margin-bottom: 15px;
+}
+
 .form-directions {
   font-size: 1.5em;
+}
+
+.photo-directions {
+  font-size: 1em;
+  color: rgba(0, 0, 0, 0.517);
+  margin-top: 0;
+  margin-left: 24px;
 }
 
 .input {
@@ -226,6 +237,10 @@ input[type=file] {
   margin-right: 2em;
   font-size: 1em;
   cursor: pointer;
+}
+
+#upload-file-label.form-directions.create-spot-photos-button {
+  margin-bottom: 32px;
 }
 
 #upload-file-label:hover {
