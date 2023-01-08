@@ -4,6 +4,7 @@ const { Op } = require('sequelize');
 const { User, Spot, Review, SpotImage, Booking, ReviewImage, sequelize } = require('../../db/models');
 const { ValidationError } = require('sequelize');
 const review = require('../../db/models/review');
+const { singlePublicFileUpload, singleMulterUpload, multiplePublicFileUpload, multipleMulterUpload } = require('../../awsS3.js')
 
 const router = express.Router();
 
@@ -12,6 +13,7 @@ const router = express.Router();
 // Get all spots /
 // Get spots of current user /current
 // Post image to spot /:spotId/images
+// Upload image to S3 and associate URL with a spot /:spotId/S3images
 // Post review to spot /:spotId/reviews
 // Post booking to spot /:spotId/bookings
 // Get reviews by spot /:spotId/reviews
@@ -304,6 +306,69 @@ router.post('/:spotId/images', requireAuth, async (req, res) => {
   });
 })
 
+router.post('/:spotId/S3images',
+  requireAuth,
+  multipleMulterUpload("images"),
+  async (req, res) => {
+
+    const spot = await Spot.findByPk(req.params.spotId);
+    // const { preview } = req.body
+
+    if (!spot) {
+      res.status(404);
+      return res.json({
+        message: "Spot couldn't be found",
+        statusCode: 404
+      })
+    }
+
+    if (spot.ownerId !== req.user.id) {
+      res.status(403);
+      return res.json({
+        message: "Forbidden",
+        statusCode: 403
+      })
+    }
+
+    const images = await SpotImage.findAll({
+      where: {
+        spotId: spot.id
+      }
+    })
+
+    // console.log('images: ', images)
+    // console.log(images.length)
+
+    const imageUrlArray = await multiplePublicFileUpload(req.files)
+    const response = {
+      "Images": []
+    }
+
+    // console.log('imageUrlArray: ', imageUrlArray)
+
+    for (let i = 0; i < imageUrlArray.length; i++) {
+      let imageUrl = imageUrlArray[i]
+      if (i === 0 && !images.length) {
+        const newImage = await spot.createSpotImage({
+          url: imageUrl,
+          preview: true
+        })
+        response.Images.push(newImage.toJSON())
+      } else {
+        const newImage = await spot.createSpotImage({
+          url: imageUrl,
+          preview: false
+        })
+        response.Images.push(newImage.toJSON())
+      }
+    }
+
+    // console.log('response from api: ', response)
+
+    return res.json(response);
+
+  })
+
 router.post('/:spotId/reviews', requireAuth, async (req, res) => {
   const { review, stars } = req.body;
   const spot = await Spot.findByPk(req.params.spotId);
@@ -445,9 +510,12 @@ router.get('/:spotId', async(req, res) => {
       ]
     },
     group: ["Spot.id","SpotImages.id","Reviews.id","Owner.id"],
+    order: [
+      [SpotImage, 'preview', 'DESC']
+    ],
     include: [{
       model: SpotImage,
-      attributes: ['id','url','preview']
+      attributes: ['id','url','preview'],
     },
     {
       model: Review,

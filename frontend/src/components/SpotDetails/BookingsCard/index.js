@@ -3,6 +3,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import Calendar from 'react-calendar'
 
 import BookingInstructions from '../BookingInstructions';
+import { Modal } from '../../../context/Modal';
+import LoginForm from '../../LoginFormModal/LoginForm';
 
 import * as bookingActions from '../../../store/booking'
 import isBetweenDates from '../../../utils/isBetweenDates';
@@ -19,6 +21,7 @@ const BookingsCard = ({spot, formattedAvgRating}) => {
   const bookings = useSelector(state => state.bookings)
   const currentUser = useSelector(state => state.session.user)
 
+  const [showLoginModal, setShowLoginModal] = useState(false)
   const [selectedDate, setDate] = useState('')
   const [startDate, setStartDate] = useState('')
   const [endDate, setEndDate] = useState('')
@@ -87,13 +90,17 @@ const BookingsCard = ({spot, formattedAvgRating}) => {
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    const booking = {
-      "startDate": selectedDate[0],
-      "endDate": selectedDate[1]
+    if (!currentUser) {
+      setShowLoginModal(true)
+    } else {
+      const booking = {
+        "startDate": selectedDate[0],
+        "endDate": selectedDate[1]
+      }
+      dispatch(bookingActions.postNewBooking(spot.id, booking))
+        .then(() => dispatch(bookingActions.getAllBookings(spot.id)))
+      clearDates()
     }
-    dispatch(bookingActions.postNewBooking(spot.id, booking))
-      .then(() => dispatch(bookingActions.getAllBookings(spot.id)))
-    clearDates()
   }
 
   const clearDates = () => {
@@ -153,7 +160,7 @@ const BookingsCard = ({spot, formattedAvgRating}) => {
             <button className='clear-dates-button' type="button" onClick={clearDates}>Clear Dates</button>
           </div>
       </div>
-      {!currentUser || currentUser.id !== spot.ownerId && (
+
         <div className='reservation-card'>
           <div className='reservation-card-top'>
             <div>
@@ -179,6 +186,11 @@ const BookingsCard = ({spot, formattedAvgRating}) => {
               </div>
             </div>
             <button className='reservation-button login-button' type="submit" disabled={disableBooking}>{selectedDate ? 'Reserve' : 'Select reservation'}</button>
+            {showLoginModal && (
+              <Modal onClose={() => setShowLoginModal(false)}>
+                <LoginForm setShowLoginModal={setShowLoginModal}  />
+              </Modal>
+            )}
             {dateErrors &&
               dateErrors.map(error => (
                 <div className='errors'>{error}</div>
@@ -202,7 +214,6 @@ const BookingsCard = ({spot, formattedAvgRating}) => {
             </>
           )}
         </div>
-      )}
     </div>
   )
 }

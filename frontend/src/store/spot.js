@@ -11,6 +11,7 @@ const CREATE_SPOT = '/spots/createNewSpot';
 const DELETE_SPOT = '/spots/deleteSpot'
 const ADD_SPOTIMAGE = '/spots/addSpotImage';
 const DELETE_SPOTIMAGE = '/spots/deleteSpotImage';
+const CHANGE_PREVIEW = '/spots/changePreviewImage'
 
 // ACTION CREATORS
 
@@ -67,6 +68,13 @@ const addImage = (imageData) => {
 const removeImage = (imageId) => {
   return {
     type: DELETE_SPOTIMAGE,
+    imageId
+  }
+}
+
+const changePreview = (imageId) => {
+  return {
+    type: CHANGE_PREVIEW,
     imageId
   }
 }
@@ -177,6 +185,44 @@ export const addSpotImageById = (spotId, imageData) => async dispatch => {
   }
 }
 
+export const uploadSpotImageByID = (spotId, imageData) => async dispatch => {
+  const { images } = imageData;
+  // console.log('images: ', images)
+  const formData = new FormData();
+
+  for (var i = 0; i < images.length; i++) {
+    console.log('attempting to add to formdata')
+    console.log(images[i])
+    formData.append("images", images[i]);
+  }
+
+  // console.log('formData: ', formData)
+
+  const response = await csrfFetch(`/api/spots/${spotId}/S3images`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+    body: formData,
+  })
+  // console.log('we are outside of the if block')
+  if (response.ok) {
+    const spotImages = await response.json()
+    // console.log('return from thunk: ', spotImages)
+    for (let image of spotImages.Images) {
+      console.log('image in thunk: ', image)
+      console.log('spotImages in thunk: ', spotImages)
+      dispatch(addImage(image))
+    }
+    return spotImages
+  } else {
+    // console.log(response)
+    const errors = await response.json()
+    // console.log(errors)
+    return errors;
+  }
+}
+
 export const deleteSpotImageById = (imageId) => async dispatch => {
   const response = await csrfFetch(`/api/spot-images/${imageId}`, {
     method: 'DELETE'
@@ -190,6 +236,20 @@ export const deleteSpotImageById = (imageId) => async dispatch => {
     const errorMessage = await response.json();
     //console.log(errorMessage);
     return errorMessage;
+  }
+}
+
+export const updateSpotImageById = (imageId) => async dispatch => {
+  const response = await csrfFetch(`/api/spot-images/${imageId}`,{
+    method: 'PUT'
+  })
+  if (response.ok) {
+    const newImage = await response.json();
+    dispatch(changePreview(imageId));
+    return newImage
+  } else {
+    const errors = await response.json();
+    return errors
   }
 }
 
@@ -332,12 +392,31 @@ const spotReducer = (state = initialState, action) => {
         allSpots: { ...state.allSpots },
         singleSpot: {
           ...state.singleSpot,
-          spotImages: [ ...spotImagesCopy ],
-          owner: { ...state.singleSpot.Owner }
+          SpotImages: spotImagesCopy,
+          Owner: { ...state.singleSpot.Owner }
         },
         userSpots: { ...state.userSpots }
       };
       //console.log('NEW STATE: ', newState)
+      return newState;
+    }
+    case CHANGE_PREVIEW: {
+      const newState = {
+        allSpots: { ...state.allSpots },
+        singleSpot: {
+          ...state.singleSpot,
+          SpotImages: [ ...state.singleSpot.SpotImages],
+          Owner: { ...state.singleSpot.Owner },
+          userSpots: { ...state.userSpots }
+        }
+      }
+      for (let image of newState.singleSpot.SpotImages) {
+        if (image.id === action.imageId) {
+          image.preview = true
+        } else {
+          image.preview = false
+        }
+      }
       return newState;
     }
     default: {

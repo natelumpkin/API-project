@@ -35,8 +35,6 @@ module.exports = (sequelize, DataTypes) => {
           let sameIdRecords = await Booking.findAll({ where: { spotId: this.spotId } })
           let strDate = value.toString();
           for (let bookingRecord of sameIdRecords) {
-            console.log('booking record id: ', bookingRecord.id)
-            console.log('this.id: ', this.id)
             if (bookingRecord.id !== this.id) {
               if ((Validator.isAfter(strDate,bookingRecord.startDate.toString()) && Validator.isBefore(strDate,bookingRecord.endDate.toString())) || strDate === bookingRecord.startDate.toString()) {
                 throw new Error('Startdate cannot conflict with other booking dates');

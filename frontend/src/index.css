@@ -27,3 +27,11 @@
 .full-width {
   width: 100%;
 }
+
+.half {
+  width: 50%;
+}
+
+.space-between {
+  justify-content: space-between;
+}

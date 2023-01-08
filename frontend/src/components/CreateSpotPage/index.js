@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useHistory, Link } from 'react-router-dom';
 
-import { createNewSpot, addSpotImageById } from '../../store/spot';
+import { createNewSpot, addSpotImageById, uploadSpotImageByID } from '../../store/spot';
 
 import './CreateSpotPage.css'
 
@@ -15,6 +15,7 @@ const CreateSpotPage = () => {
   const [city, setCity] = useState('')
   const [state, setState] = useState('')
   const [country, setCountry] = useState('')
+
   // const [lat, setLat] = useState('')
   // const [lng, setLng] = useState('')
   const [name, setName] = useState('')
@@ -22,6 +23,13 @@ const CreateSpotPage = () => {
   const [price, setPrice] = useState(100)
 
   const [url1, seturl1] = useState('');
+  const [images, setImages] = useState(null)
+  const [fileArray, setFileArray] = useState([])
+  const [imageLoading, setImageLoading] = useState(false)
+
+  // console.log('images: ', images)
+
+
 
   const [locationErrors, setLocationErrors] = useState([])
   const [photoErrors, setPhotoErrors] = useState([])
@@ -51,15 +59,17 @@ const CreateSpotPage = () => {
     //console.log('url1: ', url1);
     //if (!url1.length) errors.push('At least one photo is required')
     //console.log(url1.length)
-    if (url1.length > 255) errors.push('Please provide a url of under 255 characters')
+    if (!images || images.length < 5) errors.push(' Please upload at least five images')
+    if (images?.length > 10) errors.push(' Please upload no more than ten images')
     //console.log(errors);
     setPhotoErrors(errors);
     return errors;
   }
 
   useEffect(() => {
+    // console.log('hello from photo errors use effect')
     handlePhotoErrors();
-  }, [photoErrors])
+  }, [images])
 
   const handleDescriptionErrors = () => {
     let errors = [];
@@ -112,6 +122,8 @@ const CreateSpotPage = () => {
   const priceErrors = handlePriceErrors();
   setPriceErrors(priceErrors);
 
+
+
   if (locationErrors.length > 0 || photoErrors.length > 0 || descriptionErrors.length > 0 || priceErrors.length > 0) {
     // console.log('location errors:', locationErrors)
     // console.log('photo errors: ', photoErrors)
@@ -133,21 +145,39 @@ const CreateSpotPage = () => {
         price
       }
 
+
+
       const photo1 = { url: url1, preview: true }
 
 
       //console.log('photo1: ', photo1);
       const newSpot = await dispatch(createNewSpot(spotData));
-      if (photo1) {
-        const newPhoto1 = await dispatch(addSpotImageById(newSpot.id, photo1))
+      if (!images) {
+        if (photo1) {
+          setImageLoading(true)
+          const newPhoto1 = await dispatch(addSpotImageById(newSpot.id, photo1))
+          setImageLoading(false)
+          reset();
+          history.push(`/spots/${newSpot.id}`)
+          return newSpot;
+        }
+      } else {
+        setImageLoading(true)
+        const newPhoto1 = await dispatch(uploadSpotImageByID(newSpot.id, {
+          images
+        }))
+        setImageLoading(false)
+        // console.log('new spot: ', newSpot)
+        reset();
+        history.push(`/spots/${newSpot.id}`)
+        return newSpot;
       }
 
 
-      reset();
-      history.push(`/spots/${newSpot.id}`)
-      return newSpot;
+
     }
   }
+
 
   const incrementPrice = (e) => {
     //console.log('increment running')
@@ -164,6 +194,21 @@ const CreateSpotPage = () => {
       return;
     }
   }
+
+  const updateFiles = (e) => {
+    const files = e.target.files;
+    const imagesArray = []
+    setImages(files)
+
+    for (let i = 0; i < files.length; i++) {
+      imagesArray.push(URL.createObjectURL(files[i]))
+    }
+
+    setFileArray(imagesArray)
+
+  };
+
+
 
   return (
     <div className='create-spot-exterior-flex'>
@@ -205,17 +250,56 @@ const CreateSpotPage = () => {
               </div>
             )}
         </div>
-        <div>
-          <h4 className='form-directions'>Please add a preview image</h4>
-          <div className='input single-input'>
-          <label className='location-label photo-label' htmlFor='previewPhoto'>Preview Photo</label>
-          <input className='location-input photo-input' id="previewPhoto" placeholder='URL here...' type='text' value={url1} onBlur={handlePhotoErrors} required onChange={(e) => seturl1(e.target.value)}></input>
+        {/* {!images && (
+          <div>
+            <h4 className='form-directions'>Please add a preview image</h4>
+            <div className='input single-input'>
+            <label className='location-label photo-label' htmlFor='previewPhoto'>Preview Photo</label>
+            <input
+              className='location-input photo-input'
+              id="previewPhoto"
+              placeholder='URL here...'
+              type='text' value={url1}
+              onBlur={handlePhotoErrors}
+              required
+              onChange={(e) => seturl1(e.target.value)}>
+            </input>
+            </div>
+            {photoErrors.length > 0 && (
+                <div className='errors'>
+                  {photoErrors.map(error => <div key={error}><i className="fa-solid fa-circle-exclamation"></i>{error}</div>)}
+                </div>
+              )}
           </div>
+        )} */}
+        <div className='form-holder'>
+          <h4 className='form-directions photo-form'>Add some photos of your listing</h4>
+          <h5 className='photo-directions'>You'll need at least five photos to get started. You can add more or make changes later.</h5>
+          <label
+            id='upload-file-label'
+            htmlFor='upload-image-button'
+            className='form-directions create-spot-photos-button'>
+              {images?.length >= 1 ? 'Change photos' : 'Upload from your device'}
+            </label>
+            <input
+              type="file"
+              multiple
+              id="upload-image-button"
+              accept="image/jpeg, image/png"
+              onChange={updateFiles}></input>
+
+          {fileArray && (
+            <div className='flex preview-img-holder'>
+              {fileArray.map(url => (
+                <img className='preview-img' key={url} src={url}></img>
+                ))}
+            </div>
+          )}
           {photoErrors.length > 0 && (
-              <div className='errors'>
-                {photoErrors.map(error => <div key={error}><i className="fa-solid fa-circle-exclamation"></i>{error}</div>)}
-              </div>
-            )}
+                <div className='errors'>
+                  {photoErrors.map(error => <div key={error}><i className="fa-solid fa-circle-exclamation"></i>{error}</div>)}
+                </div>
+              )}
         </div>
         <div>
           <h4 className='form-directions'>Let's give your place a name and description</h4>
@@ -260,7 +344,12 @@ const CreateSpotPage = () => {
 
         </div>
         <div className='button-holder'>
-        <button className='publish-button'>Publish Your Listing</button>
+        {!imageLoading && (
+          <button className='publish-button'>Publish Your Listing</button>
+        )}
+        {imageLoading && (
+          <h2>We're creating your spot! Hold up just a sec {':)'}</h2>
+        )}
         </div>
       </form>
     </div>
