@@ -5,8 +5,12 @@ const { User, Spot } = require('../models')
 const UserSpotBookings = {
   "demouser1": [
     {"Smallest House": {
-      startDate: "2022-04-30T08:00:00.000Z",
-      endDate: "2022-05-30T08:00:00.000Z"
+      startDate: "2023-04-30T08:00:00.000Z",
+      endDate: "2023-05-30T08:00:00.000Z"
+    }},
+    {"Smallest House": {
+      startDate: "2023-02-01T08:00:00.000Z",
+      endDate: "2023-02-21T08:00:00.000Z"
     }},
     {"An inviting house in the clouds": {
       startDate: "2023-05-31T08:00:00.000Z",
@@ -15,18 +19,18 @@ const UserSpotBookings = {
   ],
   "demouser2": [
     {"Beautiful House": {
-      startDate: "2022-07-30T08:00:00.000Z",
-      endDate: "2022-08-30T08:00:00.000Z"
+      startDate: "2023-07-30T08:00:00.000Z",
+      endDate: "2023-08-30T08:00:00.000Z"
     }},
     {"Biggest House": {
-      startDate: "2022-09-30T08:00:00.000Z",
-      endDate: "2022-10-30T08:00:00.000Z"
+      startDate: "2023-09-30T08:00:00.000Z",
+      endDate: "2023-10-30T08:00:00.000Z"
     }}
   ],
   "demouser3": [
     {"An inviting house in the clouds": {
-      startDate: "2022-11-30T08:00:00.000Z",
-      endDate: "2022-12-30T08:00:00.000Z"
+      startDate: "2023-11-30T08:00:00.000Z",
+      endDate: "2023-12-30T08:00:00.000Z"
     }}
   ]
 }
