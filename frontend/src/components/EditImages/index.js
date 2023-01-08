@@ -97,7 +97,7 @@ const EditImages = () => {
                 <h5 className='cover-directions photo-directions'>Your cover photo is a guest’s first impression of your listing.</h5>
                 <h5 className='cover-directions photo-directions'>Choose a different cover below.</h5>
               </div>
-              <img id="cover-photo" className='preview-img edit-preview-img' src={coverPhoto.url}></img>
+              <img id="cover-photo" className='preview-img edit-preview-img' src={coverPhoto?.url}></img>
             </div>
             <div className="cover-photo-directions">
               <h4 className='cover-main-directions form-directions photo-form'>All Photos</h4>
