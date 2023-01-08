@@ -208,18 +208,18 @@ export const uploadSpotImageByID = (spotId, imageData) => async dispatch => {
   // console.log('we are outside of the if block')
   if (response.ok) {
     const spotImages = await response.json()
-    console.log('ok response from upload images: ', spotImages)
+    // console.log('ok response from upload images: ', spotImages)
     // console.log('return from thunk: ', spotImages)
     for (let image of spotImages.Images) {
-      console.log('image in thunk: ', image)
-      console.log('spotImages in thunk: ', spotImages)
+      // console.log('image in thunk: ', image)
+      // console.log('spotImages in thunk: ', spotImages)
       dispatch(addImage(image))
     }
     return spotImages
   } else {
     // console.log(response)
     const errors = await response.json()
-    console.log('error response from upload images: ', errors)
+    // console.log('error response from upload images: ', errors)
     return errors;
   }
 }
