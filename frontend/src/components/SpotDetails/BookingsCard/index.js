@@ -35,15 +35,27 @@ const BookingsCard = ({spot, formattedAvgRating}) => {
   useEffect(() => {
     // if startDate or endDate is between the selectedDates,
     // throw an error message
+    console.log(selectedDate)
     for (let bookingId in bookings) {
       const startDate = bookings[bookingId].startDate
       const endDate = bookings[bookingId].endDate
       if (isBetweenDates(startDate, selectedDate[0], selectedDate[1])) {
         setDateErrors(['Spot is already booked for these dates'])
+        return
       }
       if (isBetweenDates(endDate, selectedDate[0], selectedDate[1])) {
         setDateErrors(['Spot is already booked for these dates'])
+        return
       }
+    }
+    if (new Date(selectedDate[0]).getDay() === new Date(selectedDate[1]).getDay() &&
+        new Date(selectedDate[0]).getMonth() === new Date(selectedDate[1]).getMonth() &&
+        new Date(selectedDate[0]).getFullYear() === new Date(selectedDate[1]).getFullYear()) {
+        setDateErrors(['Please select two different dates to reserve this listing'])
+        setStartDate('')
+        setEndDate('')
+    } else {
+      setDateErrors([])
     }
   },[selectedDate])
 
@@ -57,6 +69,7 @@ const BookingsCard = ({spot, formattedAvgRating}) => {
       // console.log('second')
       setDisableBooking(true)
     }
+
     if (selectedDate && !dateErrors.length) setDisableBooking(false)
     // console.log('disable: ', disableBooking)
   },[startDate, endDate, selectedDate, dateErrors])
@@ -79,8 +92,8 @@ const BookingsCard = ({spot, formattedAvgRating}) => {
   const formatPrice = (price) => {
     let stringPrice = String(price)
     let decimalSplit = stringPrice.split('.')
-    if (decimalSplit[1].length > 2) {
-      console.log(decimalSplit[1].slice(0,2))
+    if (decimalSplit[1]?.length > 2) {
+      // console.log(decimalSplit[1].slice(0,2))
       return [decimalSplit[0],decimalSplit[1].slice(0,2)].join('.')
     }
     else {
@@ -114,17 +127,21 @@ const BookingsCard = ({spot, formattedAvgRating}) => {
   const selectDates = (value, event) => {
     if (!startDate) setStartDate(new Date(value))
     if (startDate && startDate < new Date(value)) {
+      // console.log('1')
       setEndDate(new Date(value))
     }
     if (startDate && startDate > new Date(value)) {
+      // console.log('2')
       setEndDate(startDate)
       setStartDate(new Date(value))
     }
     if (endDate) {
+      // console.log('3')
       setStartDate(new Date(value))
       setEndDate('')
       setDate('')
     }
+    // console.log('end date in select: ', endDate)
   }
 
   const formatDateShort = (date) => {
@@ -132,6 +149,7 @@ const BookingsCard = ({spot, formattedAvgRating}) => {
   }
 
   // console.log('start date: ', startDate)
+  // console.log('end date: ', endDate)
 
   return (
     <div id="booking-card-holder">
@@ -182,7 +200,7 @@ const BookingsCard = ({spot, formattedAvgRating}) => {
               </div>
               <div className='right-input'>
                 <label>Check-out</label>
-                <input disabled className='date-display date-checkin' value={selectedDate ? formatDateShort(selectedDate[1]) : 'Select on calendar'}></input>
+                <input disabled className='date-display date-checkin' value={endDate ? formatDateShort(endDate) : 'Select on calendar'}></input>
               </div>
             </div>
             <button className='reservation-button login-button' type="submit" disabled={disableBooking}>{selectedDate ? 'Reserve' : 'Select reservation'}</button>
@@ -198,7 +216,7 @@ const BookingsCard = ({spot, formattedAvgRating}) => {
             }
 
           </form>
-          {selectedDate && !dateErrors.length && (
+          {selectedDate && !dateErrors?.length && (
             <>
             <div className='not-charged'>
               You won't be charged yet

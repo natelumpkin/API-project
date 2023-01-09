@@ -191,8 +191,8 @@ export const uploadSpotImageByID = (spotId, imageData) => async dispatch => {
   const formData = new FormData();
 
   for (var i = 0; i < images.length; i++) {
-    console.log('attempting to add to formdata')
-    console.log(images[i])
+    // console.log('attempting to add to formdata')
+    // console.log(images[i])
     formData.append("images", images[i]);
   }
 
