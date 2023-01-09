@@ -72,8 +72,6 @@ const EditBooking = () => {
   // fetch bookings for that spot
   // display the calendar
 
-  // console.log('selected date: ', selectedDate)
-
   useEffect(() => {
     // if startDate or endDate is between the selectedDates,
     // throw an error message
