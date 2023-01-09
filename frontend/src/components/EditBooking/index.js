@@ -97,7 +97,13 @@ const EditBooking = () => {
         } else {
           setDateErrors([])
         }
-
+    }
+    if (new Date(selectedDate[0]).getDay() === new Date(selectedDate[1]).getDay() &&
+    new Date(selectedDate[0]).getMonth() === new Date(selectedDate[1]).getMonth() &&
+    new Date(selectedDate[0]).getFullYear() === new Date(selectedDate[1]).getFullYear()) {
+    setDateErrors(['Please select two different dates to reserve this listing'])
+    setStartDate('')
+    setEndDate('')
     }
   },[selectedDate, bookings])
 
@@ -152,10 +158,20 @@ const EditBooking = () => {
 
   const selectDates = (value, event) => {
     if (!startDate) setStartDate(new Date(value))
-    if (startDate) setEndDate(new Date(value))
+    if (startDate && startDate < new Date(value)) {
+      console.log('1')
+      setEndDate(new Date(value))
+    }
+    if (startDate && startDate > new Date(value)) {
+      console.log('2')
+      setEndDate(startDate)
+      setStartDate(new Date(value))
+    }
     if (endDate) {
+      console.log('3')
       setStartDate(new Date(value))
       setEndDate('')
+      setDate('')
     }
   }
 
@@ -222,7 +238,7 @@ const EditBooking = () => {
           </div>
           <div className='right-input'>
             <label>Check-out</label>
-            <input disabled className='date-display date-checkin' value={selectedDate ? formatDateShort(selectedDate[1]) : 'Select on calendar'}></input>
+            <input disabled className='date-display date-checkin' value={endDate ? formatDateShort(endDate) : 'Select on calendar'}></input>
           </div>
         </div>
         <button className='reservation-button login-button' type="submit" disabled={disableBooking}>{selectedDate ? 'Change reservation' : 'Select reservation'}</button>

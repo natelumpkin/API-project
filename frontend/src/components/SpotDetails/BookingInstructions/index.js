@@ -25,7 +25,7 @@ const BookingInstructions = ({currentUser, startDate, endDate, selectedDate, spo
 
   return (
     <div>
-      {!selectedDate && !startDate && (
+      {!startDate && (
         <>
         <h2>Select check-in date</h2>
         <p>Select booking dates to reserve this spot</p>
