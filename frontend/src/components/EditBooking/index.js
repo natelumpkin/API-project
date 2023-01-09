@@ -99,9 +99,9 @@ const EditBooking = () => {
     if (new Date(selectedDate[0]).getDate() === new Date(selectedDate[1]).getDate() &&
     new Date(selectedDate[0]).getMonth() === new Date(selectedDate[1]).getMonth() &&
     new Date(selectedDate[0]).getFullYear() === new Date(selectedDate[1]).getFullYear()) {
-      console.log('selected date: ', selectedDate)
-      console.log('startdate: ', startDate)
-      console.log('endDate: ', endDate)
+      // console.log('selected date: ', selectedDate)
+      // console.log('startdate: ', startDate)
+      // console.log('endDate: ', endDate)
       setDateErrors(['Please select two different dates to reserve this listing'])
       setStartDate('')
       setEndDate('')

@@ -8,8 +8,8 @@ const SpotImagesCard = ({previewImg, nonPreviewImgs}) => {
 
   const [showModal, setShowModal] = useState(false)
 
-  console.log('preview image: ', previewImg)
-  console.log('non preview images: ', nonPreviewImgs);
+  // console.log('preview image: ', previewImg)
+  // console.log('non preview images: ', nonPreviewImgs);
 
   if (!previewImg) {
     return null;
