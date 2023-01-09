@@ -15,25 +15,13 @@ const BookingInstructions = ({currentUser, startDate, endDate, selectedDate, spo
   if (selectedDate) {
     formattedStartDate = new Intl.DateTimeFormat('en-US',{day:"numeric",month:"short",year:"numeric"}).format(selectedDate[0])
     formattedEndDate = new Intl.DateTimeFormat('en-US',{day:"numeric",month:"short",year:"numeric"}).format(selectedDate[1])
+  } else {
+    formattedStartDate = undefined
+    formattedEndDate = undefined
   }
 
-  // if (!currentUser) {
-  //   return (
-  //     <div>
-  //       <h2>Log in to reserve this spot</h2>
-  //       <p>View its reservations on the calendar below!</p>
-  //     </div>
-  //   )
-  // }
-
-  // if (currentUser.id === spot.ownerId) {
-  //   return (
-  //     <div>
-  //       <h2>This is your spot</h2>
-  //       <p>View your reservations here</p>
-  //     </div>
-  //   )
-  // }
+  console.log('formatted start: ', formattedStartDate)
+  console.log('formatted end: ', formattedEndDate)
 
   return (
     <div>
@@ -49,7 +37,7 @@ const BookingInstructions = ({currentUser, startDate, endDate, selectedDate, spo
         <p>Select booking dates to reserve this spot</p>
         </>
       )}
-      {selectedDate && (
+      {selectedDate && !(formattedStartDate === formattedEndDate) && (
         <>
         <h2>{calculateNumberNights(selectedDate[0], selectedDate[1])} nights in {spot.city}</h2>
         <p>{formattedStartDate} - {formattedEndDate}</p>
