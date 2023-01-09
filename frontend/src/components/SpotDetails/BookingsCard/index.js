@@ -35,15 +35,25 @@ const BookingsCard = ({spot, formattedAvgRating}) => {
   useEffect(() => {
     // if startDate or endDate is between the selectedDates,
     // throw an error message
+    console.log(selectedDate)
     for (let bookingId in bookings) {
       const startDate = bookings[bookingId].startDate
       const endDate = bookings[bookingId].endDate
       if (isBetweenDates(startDate, selectedDate[0], selectedDate[1])) {
         setDateErrors(['Spot is already booked for these dates'])
+        return
       }
       if (isBetweenDates(endDate, selectedDate[0], selectedDate[1])) {
         setDateErrors(['Spot is already booked for these dates'])
+        return
       }
+    }
+    if (new Date(selectedDate[0]).getDay() === new Date(selectedDate[1]).getDay() &&
+        new Date(selectedDate[0]).getMonth() === new Date(selectedDate[1]).getMonth() &&
+        new Date(selectedDate[0]).getFullYear() === new Date(selectedDate[1]).getFullYear()) {
+        setDateErrors(['Please select two different dates to reserve this listing'])
+    } else {
+      setDateErrors([])
     }
   },[selectedDate])
 
@@ -57,6 +67,7 @@ const BookingsCard = ({spot, formattedAvgRating}) => {
       // console.log('second')
       setDisableBooking(true)
     }
+
     if (selectedDate && !dateErrors.length) setDisableBooking(false)
     // console.log('disable: ', disableBooking)
   },[startDate, endDate, selectedDate, dateErrors])
@@ -79,7 +90,7 @@ const BookingsCard = ({spot, formattedAvgRating}) => {
   const formatPrice = (price) => {
     let stringPrice = String(price)
     let decimalSplit = stringPrice.split('.')
-    if (decimalSplit[1].length > 2) {
+    if (decimalSplit[1]?.length > 2) {
       console.log(decimalSplit[1].slice(0,2))
       return [decimalSplit[0],decimalSplit[1].slice(0,2)].join('.')
     }
@@ -198,7 +209,7 @@ const BookingsCard = ({spot, formattedAvgRating}) => {
             }
 
           </form>
-          {selectedDate && !dateErrors.length && (
+          {selectedDate && !dateErrors?.length && (
             <>
             <div className='not-charged'>
               You won't be charged yet
