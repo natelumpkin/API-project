@@ -93,7 +93,7 @@ const BookingsCard = ({spot, formattedAvgRating}) => {
     let stringPrice = String(price)
     let decimalSplit = stringPrice.split('.')
     if (decimalSplit[1]?.length > 2) {
-      console.log(decimalSplit[1].slice(0,2))
+      // console.log(decimalSplit[1].slice(0,2))
       return [decimalSplit[0],decimalSplit[1].slice(0,2)].join('.')
     }
     else {
@@ -127,21 +127,21 @@ const BookingsCard = ({spot, formattedAvgRating}) => {
   const selectDates = (value, event) => {
     if (!startDate) setStartDate(new Date(value))
     if (startDate && startDate < new Date(value)) {
-      console.log('1')
+      // console.log('1')
       setEndDate(new Date(value))
     }
     if (startDate && startDate > new Date(value)) {
-      console.log('2')
+      // console.log('2')
       setEndDate(startDate)
       setStartDate(new Date(value))
     }
     if (endDate) {
-      console.log('3')
+      // console.log('3')
       setStartDate(new Date(value))
       setEndDate('')
       setDate('')
     }
-    console.log('end date in select: ', endDate)
+    // console.log('end date in select: ', endDate)
   }
 
   const formatDateShort = (date) => {

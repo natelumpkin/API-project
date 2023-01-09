@@ -81,7 +81,7 @@ const EditBooking = () => {
       for (let tripId in bookings) {
         if (bookings[tripId].id !== Number(bookingId)) {
           let targetBooking = bookings[tripId]
-          console.log('targetbooking: ', targetBooking)
+          // console.log('targetbooking: ', targetBooking)
           // console.log('id in booking list: ', bookings[tripId].id)
           // console.log('id in params: ', bookingId)
           const startDate = targetBooking.startDate
@@ -159,16 +159,16 @@ const EditBooking = () => {
   const selectDates = (value, event) => {
     if (!startDate) setStartDate(new Date(value))
     if (startDate && startDate < new Date(value)) {
-      console.log('1')
+      // console.log('1')
       setEndDate(new Date(value))
     }
     if (startDate && startDate > new Date(value)) {
-      console.log('2')
+      // console.log('2')
       setEndDate(startDate)
       setStartDate(new Date(value))
     }
     if (endDate) {
-      console.log('3')
+      // console.log('3')
       setStartDate(new Date(value))
       setEndDate('')
       setDate('')

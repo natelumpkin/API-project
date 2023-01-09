@@ -20,8 +20,8 @@ const BookingInstructions = ({currentUser, startDate, endDate, selectedDate, spo
     formattedEndDate = undefined
   }
 
-  console.log('formatted start: ', formattedStartDate)
-  console.log('formatted end: ', formattedEndDate)
+  // console.log('formatted start: ', formattedStartDate)
+  // console.log('formatted end: ', formattedEndDate)
 
   return (
     <div>

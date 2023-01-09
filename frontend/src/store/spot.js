@@ -191,8 +191,8 @@ export const uploadSpotImageByID = (spotId, imageData) => async dispatch => {
   const formData = new FormData();
 
   for (var i = 0; i < images.length; i++) {
-    console.log('attempting to add to formdata')
-    console.log(images[i])
+    // console.log('attempting to add to formdata')
+    // console.log(images[i])
     formData.append("images", images[i]);
   }
 
@@ -210,8 +210,8 @@ export const uploadSpotImageByID = (spotId, imageData) => async dispatch => {
     const spotImages = await response.json()
     // console.log('return from thunk: ', spotImages)
     for (let image of spotImages.Images) {
-      console.log('image in thunk: ', image)
-      console.log('spotImages in thunk: ', spotImages)
+      // console.log('image in thunk: ', image)
+      // console.log('spotImages in thunk: ', spotImages)
       dispatch(addImage(image))
     }
     return spotImages
