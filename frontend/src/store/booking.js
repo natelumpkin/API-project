@@ -78,7 +78,7 @@ export const changeBooking = (bookingId, booking) => async dispatch => {
     return data
   } else {
     const errors = await response.json()
-    console.log(errors)
+    // console.log(errors)
     return errors;
   }
 }
