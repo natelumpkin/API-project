@@ -142,7 +142,8 @@ const SpotDetails = () => {
         </div>
         {singleSpot.ownerId !== userInfo?.id && (
         <div className="display-info">
-              <BookingsCard formattedAvgRating={formattedAvgRating} spot={singleSpot}/>
+          <h2 id="reservation-instructions">Book a reservation at {ownerInfo.firstName}'s Spot</h2>
+          <BookingsCard formattedAvgRating={formattedAvgRating} spot={singleSpot}/>
         </div>
         )}
         <div className="display-info">

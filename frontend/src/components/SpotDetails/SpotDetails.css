@@ -46,6 +46,10 @@
   border-bottom: 1px solid #ebebeb;
 }
 
+#reservation-instructions {
+  margin-bottom: 0;
+}
+
 #user-info {
   padding-bottom: .8em;
   font-size: .9em;
