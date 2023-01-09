@@ -26,6 +26,11 @@ The servers and database are hosted on Heroku.
 ![Postgres](https://img.shields.io/badge/postgres-%23316192.svg?style=for-the-badge&logo=postgresql&logoColor=white)
 ![Heroku](https://img.shields.io/badge/heroku-%23430098.svg?style=for-the-badge&logo=heroku&logoColor=white)
 ![Sequelize](https://img.shields.io/badge/Sequelize-52B0E7?style=for-the-badge&logo=Sequelize&logoColor=white)
+![AWS](https://img.shields.io/badge/AWS-%23FF9900.svg?style=for-the-badge&logo=amazon-aws&logoColor=white)
+
+**| [React Calendar](https://www.npmjs.com/package/react-calendar) |**
+**| [React Image Gallery](https://www.npmjs.com/package/react-image-gallery) |**
+
 
 LIVE FEATURES
 
@@ -49,15 +54,24 @@ All users are able to view reviews for any displayed spot. The user is able to c
 
 ![](demo-images/Screen%20Shot%202022-10-22%20at%209.35.22%20PM.png)
 
-Road Map for Future Features
+Bookings CRUD
 
-Currently the spot details page feels a little empty, as users are unable to load images past the first. As a result, I would like to implement the ability to load more photos, change which one is the preview image, change the order, and look at full versions of the images when they are clicked.
+All users are able to interact with a booking calendar for other users' listings, where they can see what dates the listing is reserved for. Logged in users are able to make reservations, and then view upcoming reservations on a separate page, where they can then modify the reservation.
+
+![Alt text](demo-images/Screen%20Shot%202023-01-08%20at%207.18.45%20PM.png)
+
+Images CRUD
+
+All users are able to view listing images on an image carousel on each listing's details page. Logged in users are able to upload images from their device on creating a new listing, and are able to upload and remove images from an already created listing, as well as change which image will serve as their cover image.
+
+![Alt text](demo-images/Screen%20Shot%202023-01-08%20at%207.18.10%20PM.png)
+![Alt text](demo-images/Screen%20Shot%202023-01-08%20at%207.19.12%20PM.png)
+
+Road Map for Future Features
 
 I'd like to implement a basic user profile which displays all of a user's current listings and reviews. These routes are already complete in the backend.
 
 I would like to make the Navbar more dynamic, including being stuck to the top of the page, and changing width depending on which page the user is looking at. In addition, I'd like to code a basic footer, to give the page some boundaries.
-
-I'd like to implement a bookings feature, with a calendar, booking card, and checkout option similar to the one on AirBnB's live site.
 
 Finally I'd like to implement the GoogleMaps Location API, as my backend allows data for latitude and longitude.
 
