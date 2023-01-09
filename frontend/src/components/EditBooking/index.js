@@ -214,7 +214,7 @@ const EditBooking = () => {
             <button className='clear-dates-button' type="button" onClick={clearDates}>Reset Dates</button>
           </div>
     </div>
-    {!currentUser || currentUser.id !== spot.ownerId && (
+
       <div className='reservation-card'>
       <div className='reservation-card-top'>
         <div>
@@ -248,7 +248,6 @@ const EditBooking = () => {
 
       </form>
       </div>
-    )}
   </div>
   </div>
   )
