@@ -48,7 +48,7 @@ const BookingsCard = ({spot, formattedAvgRating}) => {
         return
       }
     }
-    if (new Date(selectedDate[0]).getDay() === new Date(selectedDate[1]).getDay() &&
+    if (new Date(selectedDate[0]).getDate() === new Date(selectedDate[1]).getDate() &&
         new Date(selectedDate[0]).getMonth() === new Date(selectedDate[1]).getMonth() &&
         new Date(selectedDate[0]).getFullYear() === new Date(selectedDate[1]).getFullYear()) {
         setDateErrors(['Please select two different dates to reserve this listing'])
