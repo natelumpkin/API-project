@@ -5,7 +5,7 @@ const { User } = require('../models')
 
 const SpotUsers =
   {
-    'demouser1': [
+    'demouser2': [
       {
         address: '100 Small Ave',
         city: 'Smalltown',
@@ -39,7 +39,7 @@ const SpotUsers =
         price: 49.99
       }
     ],
-    'demouser2': [
+    'demouser1': [
       {
         address: '200 Big St',
         city: 'Bigville',
