@@ -7,6 +7,8 @@ import * as bookingActions from '../../store/booking'
 import * as spotActions from '../../store/spot'
 
 import BookingInstructions from "../SpotDetails/BookingInstructions";
+import EditConfirmation from "./EditConfirmation";
+import { Modal } from '../../context/Modal'
 
 import isBetweenDates from "../../utils/isBetweenDates";
 import formatAvgRating from '../../utils/formatAvgRating'
@@ -32,6 +34,7 @@ const EditBooking = () => {
   const [endDate, setEndDate] = useState('')
   const [dateErrors, setDateErrors] = useState([])
   const [disableBooking, setDisableBooking] = useState(true)
+  const [showConfirmationModal, setShowConfirmationModal] = useState(false)
 
   // console.log(initialLoad)
 
@@ -145,8 +148,7 @@ const EditBooking = () => {
       "endDate": selectedDate[1]
     }
     dispatch(bookingActions.changeBooking(bookingId, booking))
-      .then(() => history.push(`/trips`))
-
+      .then(() => setShowConfirmationModal(true))
   }
 
   const clearDates = () => {
@@ -243,6 +245,11 @@ const EditBooking = () => {
           </div>
         </div>
         <button className='reservation-button login-button' type="submit" disabled={disableBooking}>{selectedDate ? 'Change reservation' : 'Select reservation'}</button>
+        {showConfirmationModal && (
+          <Modal onClose={() => setShowConfirmationModal(false)}>
+            <EditConfirmation spot={spot} setShowConfirmationModal={setShowConfirmationModal}/>
+          </Modal>
+        )}
         {dateErrors &&
           dateErrors.map(error => (
             <div className='errors'>{error}</div>
