@@ -38,8 +38,8 @@ const EditImages = () => {
 
   const handlePhotoErrors = () => {
     let errors = [];
-    if (!spotImages || spotImages.length < 5) {
-      errors.push(' Please upload at least five images')
+    if (!spotImages || spotImages.length < 1) {
+      errors.push(' Please upload at least one images')
       setDisableUpload(true)
     }
     else if (spotImages?.length + images?.length > 10) {
