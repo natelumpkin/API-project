@@ -1,7 +1,6 @@
 #booking-card-holder {
   display: flex;
   width: 100%;
-
 }
 
 .clear-dates-holder {
@@ -185,6 +184,14 @@
   line-height: 16px;
   border-radius: 100%;
   position: relative;
+}
+
+#reservation-confirmation-link {
+  /* border: 1px solid red; */
+  width: fit-content;
+  height: fit-content;
+  padding: 5px;
+
 }
 
 /* when unclicked, calendar is white

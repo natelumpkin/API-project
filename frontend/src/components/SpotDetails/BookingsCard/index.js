@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import Calendar from 'react-calendar'
 
 import BookingInstructions from '../BookingInstructions';
@@ -13,15 +14,18 @@ import calculateNumberNights from '../../../utils/calculateNumberNights';
 
 
 import './BookingsCard.css'
+import BookingConfirmation from './BookingConfirmation';
 
 const BookingsCard = ({spot, formattedAvgRating}) => {
 
   const dispatch = useDispatch()
+  const history = useHistory()
 
   const bookings = useSelector(state => state.bookings)
   const currentUser = useSelector(state => state.session.user)
 
   const [showLoginModal, setShowLoginModal] = useState(false)
+  const [showConfirmationModal, setShowConfirmationModal] = useState(false)
   const [selectedDate, setDate] = useState('')
   const [startDate, setStartDate] = useState('')
   const [endDate, setEndDate] = useState('')
@@ -112,6 +116,7 @@ const BookingsCard = ({spot, formattedAvgRating}) => {
       }
       dispatch(bookingActions.postNewBooking(spot.id, booking))
         .then(() => dispatch(bookingActions.getAllBookings(spot.id)))
+        .then(() => setShowConfirmationModal(true))
       clearDates()
     }
   }
@@ -207,6 +212,11 @@ const BookingsCard = ({spot, formattedAvgRating}) => {
             {showLoginModal && (
               <Modal onClose={() => setShowLoginModal(false)}>
                 <LoginForm setShowLoginModal={setShowLoginModal}  />
+              </Modal>
+            )}
+            {showConfirmationModal && (
+              <Modal onClose={() => setShowConfirmationModal(false)}>
+                <BookingConfirmation setShowConfirmationModal={setShowConfirmationModal} spot={spot}/>
               </Modal>
             )}
             {dateErrors &&
