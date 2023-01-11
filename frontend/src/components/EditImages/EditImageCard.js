@@ -37,7 +37,7 @@ const EditImageCard = ({image}) => {
       {image.preview && (
         <h4>This is your cover image</h4>
       )}
-      {spotImages.length > 5 && (
+      {spotImages.length > 1 && (
       <button
         type="button"
         onClick={() => deleteImage(image.id)}

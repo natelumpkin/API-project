@@ -28,28 +28,28 @@ const SpotImagesCard = ({previewImg, nonPreviewImgs}) => {
             src={nonPreviewImgs[0]?.url || ''}
             onError={({target})=> {
               target.onerror=null
-              target.src='https://64.media.tumblr.com/3c3453410ef214313e58198f4500ffda/878fd4b058e05c10-a1/s1280x1920/d4a6287be8d81eb973b23031037598f3ca5b31cc.jpg'}}/>
+              target.src='https://nlumpkinbucket.s3.us-west-1.amazonaws.com/tumblr_069463f2d7d25be54473563bddf11d33_349a1684_1280.jpeg'}}/>
           </div>
           <div className='right-image-box top-right'>
             <img
             className='details-other-image top-right-img'
             onError={({target})=> {
               target.onerror=null
-              target.src='https://64.media.tumblr.com/3c3453410ef214313e58198f4500ffda/878fd4b058e05c10-a1/s1280x1920/d4a6287be8d81eb973b23031037598f3ca5b31cc.jpg'}}
+              target.src='https://nlumpkinbucket.s3.us-west-1.amazonaws.com/tumblr_1a36d644dd3375cd76cf4f34fac11224_a0f1c035_500.jpeg'}}
             src={nonPreviewImgs[1]?.url || ''}/></div>
           <div className='right-image-box bottom-left'>
             <img
             className='details-other-image curved bottom-left-img'
             onError={({target})=> {
               target.onerror=null
-              target.src='https://64.media.tumblr.com/3c3453410ef214313e58198f4500ffda/878fd4b058e05c10-a1/s1280x1920/d4a6287be8d81eb973b23031037598f3ca5b31cc.jpg'}}
+              target.src='https://nlumpkinbucket.s3.us-west-1.amazonaws.com/tumblr_3c3453410ef214313e58198f4500ffda_d4a6287b_1280.jpeg'}}
             src={nonPreviewImgs[2]?.url || ''}/></div>
           <div className='right-image-box bottom-right'>
             <img
             className='details-other-image curved bottom-right-img'
             onError={({target})=> {
               target.onerror=null
-              target.src='https://64.media.tumblr.com/3c3453410ef214313e58198f4500ffda/878fd4b058e05c10-a1/s1280x1920/d4a6287be8d81eb973b23031037598f3ca5b31cc.jpg'}}
+              target.src='https://nlumpkinbucket.s3.us-west-1.amazonaws.com/tumblr_faf9a455132dd8e67fe9f07d668333a0_fdc909cc_1280.jpeg'}}
             src={nonPreviewImgs[3]?.url || ''}/></div>
         </div>
         </div>

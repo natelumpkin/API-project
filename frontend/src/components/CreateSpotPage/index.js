@@ -59,7 +59,7 @@ const CreateSpotPage = () => {
     //console.log('url1: ', url1);
     //if (!url1.length) errors.push('At least one photo is required')
     //console.log(url1.length)
-    if (!images || images.length < 5) errors.push(' Please upload at least five images')
+    if (!images || images.length < 1) errors.push(' Please upload at least one image')
     if (images?.length > 10) errors.push(' Please upload no more than ten images')
     //console.log(errors);
     setPhotoErrors(errors);

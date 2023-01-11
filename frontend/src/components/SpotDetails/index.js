@@ -135,7 +135,15 @@ const SpotDetails = () => {
           <SpotImagesCard previewImg={previewImg} nonPreviewImgs={nonPreviewImgs}/>
 
         <div id="user-info" className="display-info">
-          <h2>Spot hosted by {ownerInfo.firstName}</h2>
+          {singleSpot.ownerId !== userInfo?.id && (
+            <h2>Spot hosted by {ownerInfo.firstName}</h2>
+          )}
+          {singleSpot.ownerId === userInfo?.id && (
+            <>
+              <h2>This is your listing!</h2>
+              <p>Make edits from the edit page above, or view your reviews below. To make reservations, view another user's listing.</p>
+            </>
+          )}
         </div>
         <div className="display-info">
           <p>{singleSpot.description}</p>
